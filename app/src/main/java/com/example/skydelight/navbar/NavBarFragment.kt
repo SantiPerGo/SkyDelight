@@ -56,8 +56,8 @@ class NavBarFragment : Fragment() {
         // Setting back button
         backAction()
 
-        // Setting fab buttons
-        fabAction()
+        // Setting Img Help buttons
+        ImgAction()
 
         // Setting navbar buttons
         navBarActions()
@@ -69,22 +69,22 @@ class NavBarFragment : Fragment() {
         backEventState = state
     }
 
-    fun updateFab(state: Boolean){
-        binding.fab.isClickable = state
+    fun updateImgHelp(state: Boolean){
+        binding.ImgHelp.isClickable = state
 
         if(state)
-            binding.fab.animate().alpha(1f)
+            binding.ImgHelp.animate().alpha(1f)
         else
-            binding.fab.animate().alpha(0f)
+            binding.ImgHelp.animate().alpha(0f)
     }
 
-    fun updateFabReload(state: Boolean){
-        binding.fabReload.isClickable = state
+    fun updateImgReload(state: Boolean){
+        binding.ImgReload.isClickable = state
 
         if(state)
-            binding.fabReload.animate().alpha(1f)
+            binding.ImgReload.animate().alpha(1f)
         else
-            binding.fabReload.animate().alpha(0f)
+            binding.ImgReload.animate().alpha(0f)
     }
 
     // Function to change fragment of navbar host
@@ -114,8 +114,8 @@ class NavBarFragment : Fragment() {
     private fun initialTest(){
         // Deactivating navbar
         changeNavBarButtonsClickable(false)
-        updateFabReload(false)
-        updateFab(false)
+        updateImgReload(false)
+        updateImgHelp(false)
 
         // Creating tutorial dialogs
 
@@ -285,8 +285,8 @@ class NavBarFragment : Fragment() {
                     activity?.runOnUiThread {
                         binding.navBar.selectedItemId = R.id.nav_home
                         changeNavBarButtonsClickable(true)
-                        updateFabReload(true)
-                        updateFab(true)
+                        updateImgReload(true)
+                        updateImgHelp(true)
                     }
 
                     backEventState = true
@@ -340,7 +340,7 @@ class NavBarFragment : Fragment() {
                     when (itemId) {
                         R.id.navbar_test_data_fragment ->{
                             updateNavBarHost(TestFragment(), R.id.nav_test, false)
-                            updateFab(true)
+                            updateImgHelp(true)
                         }
                         R.id.navbar_test_answer_fragment ->
                             binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
@@ -358,18 +358,18 @@ class NavBarFragment : Fragment() {
         })
     }
 
-    private fun fabAction(){
-        binding.fabReload.setOnClickListener {
-            // Hiding reload fab
-            updateFabReload(false)
+    private fun ImgAction(){
+        binding.ImgReload.setOnClickListener {
+            // Hiding Img Reload
+            updateImgReload(false)
 
             // Updating home advice
             val fragment = binding.navbarHostFragment.getFragment() as HomeFragment
-            // Showing reload fab after advice
-            fragment.showAdvice{ updateFabReload(true) }
+            // Showing Img Reload after advice
+            fragment.showAdvice{ updateImgReload(true) }
         }
 
-        binding.fab.setOnClickListener {
+        binding.ImgHelp.setOnClickListener {
             val dialog = MaterialAlertDialogBuilder(findNavController().context)
                 .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
 
@@ -405,14 +405,14 @@ class NavBarFragment : Fragment() {
     private fun navBarActions(){
         // Bottom navigation bar actions
         binding.navBar.setOnItemSelectedListener{
-            // Showing fab
-            updateFab(true)
-            updateFabReload(false)
+            // Showing Img Help and Img Reload
+            updateImgHelp(true)
+            updateImgReload(false)
 
             when(it.itemId){
                 R.id.nav_home -> {
-                    // Showing reload fab
-                    updateFabReload(true)
+                    // Showing Img Reload
+                    updateImgReload(true)
 
                     // Changing fragment if actual fragment is not the same
                     // Fragment enters from left
@@ -455,8 +455,8 @@ class NavBarFragment : Fragment() {
                     true
                 }
                 R.id.nav_profile -> {
-                    // Hiding fab
-                    updateFab(false)
+                    // Hiding Img Help
+                    updateImgHelp(false)
 
                     // Changing fragment if actual fragment is not the same
                     if(itemId != R.id.nav_profile)

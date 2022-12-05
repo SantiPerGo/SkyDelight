@@ -4,6 +4,7 @@
     <dimen name="icon_padding">25dp</dimen>
     <dimen name="corner_radius">20dp</dimen>
     <dimen name="switch_padding">10dp</dimen>
+    <dimen name="icon_padding_2">1dp</dimen>
 
     <!-- Text Auto Sizes in SP's -->
     <dimen name="min_size">10sp</dimen>

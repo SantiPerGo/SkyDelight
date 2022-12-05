@@ -268,7 +268,7 @@ class TestAnswerFragment : Fragment() {
                     // Fragment enters from right
                     (parentFragment as NavBarFragment).updateNavBarHost(
                         TestFragment(), R.id.nav_test, false)
-                    (parentFragment as NavBarFragment).updateFab(true)
+                    (parentFragment as NavBarFragment).updateImgHelp(true)
                 }.show()
         } else {
             // Changing text of button if it's not last question

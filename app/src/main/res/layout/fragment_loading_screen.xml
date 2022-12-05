@@ -51,14 +51,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.425" />
+        app:layout_constraintGuide_percent="0.445" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_heart_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.535" />
+        app:layout_constraintGuide_percent="0.555" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_heart_left"

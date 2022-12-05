@@ -8,6 +8,80 @@
     android:background="?attr/fragment_background"
     tools:context=".navbar.NavBarFragment">
 
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/colorPrimaryVariant"
+        android:fontFamily="@font/comfortaa"
+        android:gravity="center"
+        android:textColor="@color/ultralight"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="@dimen/min_size"
+        app:autoSizeMaxTextSize="@dimen/max_size"
+        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:src="?attr/loading_icon"
+        android:padding="@dimen/icon_padding_2"
+        app:tint="@color/ultralight"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
+        app:layout_constraintEnd_toStartOf="@id/guideline_title_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_title_left"
+        app:layout_constraintTop_toTopOf="@+id/txtTitle" />
+
+    <ImageView
+        android:id="@+id/ImgReload"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_baseline_autorenew_24"
+        android:padding="@dimen/switch_padding"
+        app:tint="@color/ultralight"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
+        app:layout_constraintEnd_toEndOf="@id/guideline_title_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtTitle" />
+
+    <ImageView
+        android:id="@+id/ImgHelp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_baseline_help_outline_24"
+        android:padding="@dimen/switch_padding"
+        app:tint="@color/ultralight"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_title_right"
+        app:layout_constraintTop_toTopOf="@+id/txtTitle" />
+
+    <ImageView
+        android:id="@+id/ImgWaveTop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_wave"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:scaleY="-1"
+        app:tint="?attr/colorPrimaryVariant"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_wave_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navbar_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -15,48 +89,24 @@
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ImgWaveTop"
         app:layout_constraintBottom_toTopOf="@id/navBar"
         app:defaultNavHost="true"
         app:navGraph="@navigation/navbar_graph" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <ImageView
+        android:id="@+id/ImgWaveBottom"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/navBar">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="?attr/android:navigationBarColor"
-            android:layout_gravity="bottom|end"
-            android:clickable="true"
-            android:layout_margin="@dimen/switch_padding"
-            android:src="@drawable/ic_baseline_help_outline_24"
-            android:animateLayoutChanges="true"
-            app:maxImageSize="35dp"
-            app:borderWidth="0dp"
-            app:tint="@color/ultralight" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabReload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="?attr/android:navigationBarColor"
-            android:layout_gravity="bottom|start"
-            android:clickable="true"
-            android:layout_margin="@dimen/switch_padding"
-            android:src="@drawable/ic_baseline_autorenew_24"
-            android:animateLayoutChanges="true"
-            app:maxImageSize="35dp"
-            app:borderWidth="0dp"
-            app:tint="@color/ultralight" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_wave"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        app:tint="?attr/colorPrimaryVariant"
+        app:layout_constraintBottom_toTopOf="@id/navBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_wave_bottom" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navBar"
@@ -64,10 +114,47 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?attr/android:navigationBarColor"
+        app:itemRippleColor="?attr/android:navigationBarColor"
+        app:elevation="0dp"
         app:menu="@menu/menu_nav"
         app:layout_constraintTop_toBottomOf="@id/navbar_host_fragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.075" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_wave_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_wave_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.91" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_title_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_title_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

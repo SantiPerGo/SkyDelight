@@ -64,7 +64,7 @@ class TestDataFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Deactivating help fab
-        (parentFragment as NavBarFragment).updateFab(false)
+        (parentFragment as NavBarFragment).updateImgHelp(false)
 
         if(btnCancelState == true || testResult == true) {
             // Hiding cancel button
@@ -194,7 +194,7 @@ class TestDataFragment : Fragment() {
         binding.btnCancel.setOnClickListener {
             // Fragment enters from right
             (parentFragment as NavBarFragment).updateNavBarHost(TestFragment(), R.id.nav_test, false)
-            (parentFragment as NavBarFragment).updateFab(true)
+            (parentFragment as NavBarFragment).updateImgHelp(true)
         }
 
         // Changing to answer test fragment
@@ -202,8 +202,8 @@ class TestDataFragment : Fragment() {
             if(testResult  == true) {
                 // Fragment enters from right
                 (parentFragment as NavBarFragment).updateNavBarHost(HomeFragment(), R.id.nav_home, false)
-                (parentFragment as NavBarFragment).updateFab(true)
-                (parentFragment as NavBarFragment).updateFabReload(true)
+                (parentFragment as NavBarFragment).updateImgHelp(true)
+                (parentFragment as NavBarFragment).updateImgReload(true)
             } else {
                 // Setting parameters for the next fragment
                 var bundle = bundleOf(TEST_PARAM to testNumber)

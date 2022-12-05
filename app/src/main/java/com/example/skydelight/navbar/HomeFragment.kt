@@ -109,7 +109,7 @@ class HomeFragment : Fragment() {
                             null, 500,null, null) {
                             // Changing http body to json and changing advice text
                             MainScope().launch {
-                                binding.txtTitle.text = "Consejo ${JSONObject(it).getString("id")} de 50"
+                                binding.txtTitle.text = "Recomendación\n${JSONObject(it).getString("id")} de 50"
                                 binding.textView.text = JSONObject(it).getString("consejo")
                                 function()
                             }
