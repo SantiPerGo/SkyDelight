@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typical Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#rrggbb</color>
+
+    <!-- Theme Colors -->
+    <color name="lightblue1">#e6ffff</color>
+    <color name="lightblue2">#b3d7ff</color>
+    <color name="lightblue3">#82a6cc</color>
+    <color name="darkblue1">#7da8eb</color>
+    <color name="darkblue2">#4979b8</color>
+    <color name="darkblue3">#013861</color>
+
+    <!-- Blue Principal Colors -->
+    <color name="ultralight">#D8EAFF</color>
+    <color name="light">#B3D7FF</color>
+    <color name="medium">#6AB1FF</color>
+    <color name="dark">#4979B8</color>
+    <color name="ultradark">#39567C</color>
+    <color name="ultradark2">#2C476A</color>
+
+    <!-- Green Principal Colors -->
+    <color name="lightgreen">#97F1E9</color>
+    <color name="green">#009688</color>
+    <color name="darkgreen">#004d40</color>
+
+    <!-- Red Principal Colors -->
+    <color name="lightred">#ffa4a2</color>
+    <color name="red">#e57373</color>
+    <color name="darkred">#882D30</color>
+
+    <!-- Yellow Principal Colors -->
+    <color name="lightyellow">#FFEBA2</color>
+    <color name="yellow">#E5CC73</color>
+    <color name="darkyellow">#88792D</color>
+</resources>

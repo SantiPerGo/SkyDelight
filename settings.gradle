@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "SkyDelight"
+include ':app'
+include ':unityLibrary'
+include ':launcher'
+include ':ARModule1'
+include ':ARModule2'
+include ':ARModule3'
+include ':ARModule4'
+include ':ARModule5'

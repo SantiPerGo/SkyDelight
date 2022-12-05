@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/loading_screen_fragment">
+
+    <fragment
+        android:id="@+id/start_screen_fragment"
+        android:name="com.example.skydelight.initial.StartScreenFragment"
+        android:label="fragment_start_screen"
+        tools:layout="@layout/fragment_start_screen" >
+        <action
+            android:id="@+id/action_startScreen_to_login"
+            app:destination="@id/login_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right" />
+        <action
+            android:id="@+id/action_startScreen_to_registerFirst"
+            app:destination="@id/register_first_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right" />
+        <action
+            android:id="@+id/action_startScreen_to_recoverPassword"
+            app:destination="@id/recover_password_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.example.skydelight.initial.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_navBar"
+            app:destination="@id/navbar_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right"
+            app:popUpTo="@+id/start_screen_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_startScreen"
+            app:destination="@id/start_screen_fragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_exit_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_exit_to_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recover_password_fragment"
+        android:name="com.example.skydelight.initial.RecoverPasswordFragment"
+        android:label="fragment_recover_password"
+        tools:layout="@layout/fragment_recover_password" >
+        <action
+            android:id="@+id/action_recoverPassword_to_startScreen"
+            app:destination="@id/start_screen_fragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_exit_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_exit_to_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_first_fragment"
+        android:name="com.example.skydelight.initial.RegisterFirstFragment"
+        android:label="fragment_register_first"
+        tools:layout="@layout/fragment_register_first" >
+        <action
+            android:id="@+id/action_registerFirst_to_registerSecond"
+            app:destination="@id/register_second_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right" />
+        <action
+            android:id="@+id/action_registerFirst_to_startScreen"
+            app:destination="@id/start_screen_fragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_exit_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_exit_to_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_second_fragment"
+        android:name="com.example.skydelight.initial.RegisterSecondFragment"
+        android:label="fragment_register_second"
+        tools:layout="@layout/fragment_register_second" >
+        <action
+            android:id="@+id/action_registerSecond_to_registerThird"
+            app:destination="@id/register_third_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right"
+            app:popUpTo="@+id/start_screen_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registerSecond_to_registerFirst"
+            app:destination="@id/register_first_fragment"
+            app:enterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/slide_exit_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_exit_to_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loading_screen_fragment"
+        android:name="com.example.skydelight.initial.LoadingScreenFragment"
+        android:label="fragment_loading_screen"
+        tools:layout="@layout/fragment_loading_screen" >
+        <action
+            android:id="@+id/action_loadingScreen_to_startScreen"
+            app:destination="@id/start_screen_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_exit_to_left"
+            app:popUpTo="@+id/loading_screen_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loadingScreen_to_navBar"
+            app:destination="@id/navbar_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/slide_exit_to_left"
+            app:popUpTo="@+id/loading_screen_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_third_fragment"
+        android:name="com.example.skydelight.initial.RegisterThirdFragment"
+        android:label="fragment_register_third"
+        tools:layout="@layout/fragment_register_third" >
+        <action
+            android:id="@+id/action_registerThird_to_navBar"
+            app:destination="@id/navbar_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right"
+            app:popUpTo="@+id/register_third_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navbar_fragment"
+        android:name="com.example.skydelight.navbar.NavBarFragment"
+        android:label="fragment_navbar"
+        tools:layout="@layout/fragment_navbar" >
+        <action
+            android:id="@+id/action_navBar_to_startScreen"
+            app:destination="@id/start_screen_fragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_exit_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_exit_to_right"
+            app:popUpTo="@+id/navbar_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

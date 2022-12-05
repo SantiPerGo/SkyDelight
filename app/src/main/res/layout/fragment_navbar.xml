@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/fragment_background"
+    tools:context=".navbar.NavBarFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navbar_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navBar"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navbar_graph" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navBar">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/android:navigationBarColor"
+            android:layout_gravity="bottom|end"
+            android:clickable="true"
+            android:layout_margin="@dimen/switch_padding"
+            android:src="@drawable/ic_baseline_help_outline_24"
+            android:animateLayoutChanges="true"
+            app:maxImageSize="35dp"
+            app:borderWidth="0dp"
+            app:tint="@color/ultralight" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabReload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/android:navigationBarColor"
+            android:layout_gravity="bottom|start"
+            android:clickable="true"
+            android:layout_margin="@dimen/switch_padding"
+            android:src="@drawable/ic_baseline_autorenew_24"
+            android:animateLayoutChanges="true"
+            app:maxImageSize="35dp"
+            app:borderWidth="0dp"
+            app:tint="@color/ultralight" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/android:navigationBarColor"
+        app:menu="@menu/menu_nav"
+        app:layout_constraintTop_toBottomOf="@id/navbar_host_fragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

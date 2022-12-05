@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="numberPickerStyle">
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColorPrimary">?attr/text_color</item>
+        <item name="android:colorControlNormal">?attr/text_color_hint</item>
+    </style>
+
+    <!-- Slider Tooltip -->
+    <style name="Tooltip" parent="Widget.Material3.Tooltip">
+        <item name="android:textAppearance">@style/TextAppearance.Tooltip</item>
+        <item name="backgroundTint">?attr/btn_background_blue</item>
+        <item name="android:padding">15dp</item>
+    </style>
+    <style name="TextAppearance.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
+        <item name="android:textColor">?attr/btn_text_color_blue</item>
+        <item name="fontFamily">@font/comfortaa</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <!-- Principal Style Called from Themes.xml -->
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceOverlay">@null</item>
+    </style>
+
+    <!-- Color of Dialog Title -->
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
+        <item name="android:textColor">?attr/text_color</item>
+        <item name="fontFamily">@font/comfortaa</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+
+    <!-- Color of Dialog Title -->
+    <style name="MaterialAlertDialog.MaterialComponents.Body.Text." parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">?attr/text_color_hint</item>
+        <item name="fontFamily">@font/comfortaa</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_input_size</item>
+    </style>
+
+    <!-- Color of Dialog Buttons -->
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="backgroundTint">?attr/btn_background_blue</item>
+        <item name="android:textColor">?attr/btn_text_color_blue</item>
+        <item name="fontFamily">@font/comfortaa</item>
+        <item name="android:textStyle">bold</item>
+        <!-- Eliminating Conversion to UpperCase -->
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+
+    <!-- Dialog Form -->
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+</resources>

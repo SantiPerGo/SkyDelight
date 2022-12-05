@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\assas\\AndroidStudioProjects\\SkyDelight\\launcher\\build\\intermediates\\merged_res\\release\\mipmap-mdpi-v4\\ic_launcher_foreground.png",
+        "source": "C:\\Users\\assas\\AndroidStudioProjects\\SkyDelight\\launcher\\src\\main\\res\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\assas\\AndroidStudioProjects\\SkyDelight\\launcher\\build\\intermediates\\merged_res\\release\\mipmap-mdpi-v4\\app_icon.png",
+        "source": "C:\\Users\\assas\\AndroidStudioProjects\\SkyDelight\\launcher\\src\\main\\res\\mipmap-mdpi\\app_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\assas\\AndroidStudioProjects\\SkyDelight\\launcher\\build\\intermediates\\merged_res\\release\\mipmap-mdpi-v4\\ic_launcher_background.png",
+        "source": "C:\\Users\\assas\\AndroidStudioProjects\\SkyDelight\\launcher\\src\\main\\res\\mipmap-mdpi\\ic_launcher_background.png"
+    }
+]

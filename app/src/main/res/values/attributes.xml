@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SkyDelight Icons -->
+    <attr name="loading_icon" format="reference" />
+    <attr name="loading_icon_2" format="reference" />
+
+    <!-- Background Color -->
+    <attr name="fragment_background" format="reference" />
+
+    <!-- Text Colors -->
+    <attr name="text_color" format="reference" />
+    <attr name="text_color_hint" format="reference" />
+
+    <!-- Blue Button -->
+    <attr name="btn_text_color_blue" format="reference" />
+    <attr name="btn_background_blue" format="reference" />
+
+    <!-- Green Button -->
+    <attr name="btn_text_color_green" format="reference" />
+    <attr name="btn_background_green" format="reference" />
+
+    <!-- Red Button -->
+    <attr name="btn_text_color_red" format="reference" />
+    <attr name="btn_background_red" format="reference" />
+
+    <!-- Yellow Button -->
+    <attr name="btn_text_color_yellow" format="reference" />
+    <attr name="btn_background_yellow" format="reference" />
+</resources>

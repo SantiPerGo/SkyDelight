@@ -1,0 +1,237 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">SkyDelight</string>
+
+    <!-- General Strings -->
+    <string name="btn_login">Iniciar Sesión</string>
+    <string name="btn_return">Regresar</string>
+    <string name="btn_update">Actualizar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_next">Siguiente</string>
+    <string name="email">Correo Electrónico:</string>
+    <string name="email_hint">ejemplo@hotmail.com</string>
+    <string name="password">Contraseña:</string>
+    <string name="password_hint">AbC123#*</string>
+    <string name="remember_session">Mantener Sesión Iniciada</string>
+    <string name="name">Nombre Completo:</string>
+    <string name="sex">Sexo:</string>
+    <string name="birthday">Edad:</string>
+    <string name="loading">Cargando…</string>
+
+    <!-- Custom Snackbar Strings -->
+    <string name="snackbar_success_recover">"¡Recuperación Exitosa!\n¡Se te ha enviado un mensaje al correo!"</string>
+    <string name="snackbar_success_register">"¡Registro Exitoso!\n¡Cuenta creada correctamente!"</string>
+    <string name="snackbar_success_delete_account">"¡Eliminación Exitosa!\n¡Tu cuenta ha sido eliminada!"</string>
+    <string name="snackbar_success_update_data">"¡Actualización Exitosa!\n¡Datos actualizados correctamente!"</string>
+    <string name="snackbar_success_update_password">"¡Actualización Exitosa!\n¡Contraseña actualizada correctamente!"</string>
+    <string name="snackbar_error_login">"¡Error! ¡Acceso Prohibido!\n¡Cuenta inexistente o datos erróneos!"</string>
+    <string name="snackbar_error_recover">"¡Error! ¡Correo Inválido!\n¡El correo no es de ninguna cuenta!"</string>
+    <string name="snackbar_error_sex">"¡Parece que olvidaste elegir tu sexo!"</string>
+    <string name="snackbar_error_register">"¡Error! ¡Cuenta Existente!\n¡Ya existe una cuenta con ese correo!"</string>
+    <string name="snackbar_error_connection">"¡Ups! ¡Hubo un Problema de Conexión! ¡Parece que Estamos Teniendo Algunas Dificultades!"</string>
+    <string name="snackbar_error_update_data">"¡Error! ¡Cambios Faltantes!\n¡Olvidaste actualizar tu información!"</string>
+
+    <!-- Other Strings -->
+    <!-- Start Screen Fragment Strings -->
+    <string name="startScreen_welcome">Bienvenido(a) a</string>
+    <string name="startScreen_relax">La Nueva Forma de Relajarse</string>
+    <string name="startScreen_btn_register">¿Sin Cuenta? ¡Crea Una!</string>
+    <string name="startScreen_recover_password">¿Olvidaste tu Contraseña?</string>
+
+    <!-- Login Screen Fragment Strings -->
+    <string name="loginScreen_title">¡Qué Bueno Que Volviste!</string>
+
+    <!-- Recover Password Fragment Strings -->
+    <string name="recoverScreen_title">¡Descuida! ¡Te Tenemos Cubierto!</string>
+    <string name="recoverScreen_subtitle">Ingresa el Correo con el que te Registraste</string>
+    <string name="recoverScreen_btn_recover">Recuperar</string>
+
+    <!-- Register First and Second Fragments Srings -->
+    <string name="registerScreen_title">Creemos tu Cuenta</string>
+    <string name="registerScreen_name_hint">Nombre Paterno Materno</string>
+    <string name="registerScreen_male">Masculino</string>
+    <string name="registerScreen_female">Femenino</string>
+    <string name="registerScreen_title_2">¡Ya Casi Terminamos!</string>
+    <string name="registerScreen_confirm_password">Confirmar Contraseña:</string>
+    <string name="registerScreen_btn_create">Crear Cuenta</string>
+
+    <!-- Register Third Fragments Srings -->
+    <!-- Optional text
+    <string name="registerScreen_explanation_6">Las respuestas son analizadas para brindar una mejor experiencia</string> -->
+    <string name="registerScreen_title_3">Es Importante que Sepas lo Siguiente:</string>
+    <string name="registerScreen_explanation_1">SkyDelight es un sistema para prevención del estrés académico</string>
+    <string name="registerScreen_explanation_2">La aplicación móvil brinda consejos, test y actividades recreativas</string>
+    <string name="registerScreen_explanation_3">El sitio web proporciona un dashboard para dar seguimiento al estrés</string>
+    <string name="registerScreen_explanation_4">El uso de este sistema no asegura la reducción del estrés</string>
+    <string name="registerScreen_explanation_5">Este sistema no reemplaza ni sustituye asistencia profesional</string>
+    <string name="registerScreen_btn_understand">¡Entendido!</string>
+
+    <!-- Bottom Navigation Bar Srings -->
+    <string name="navBar_home">Inicio</string>
+    <string name="navBar_test">Test</string>
+    <string name="navBar_games">Juegos</string>
+    <string name="navBar_profile">Configuración</string>
+
+    <!-- Home Navbar Fragment Strings -->
+    <string name="home_title">¡Qué Bien que Volviste!</string>
+
+    <!-- Games Navbar Fragment Strings -->
+    <string name="games_title">¡Hora de Relajarse!</string>
+    <string name="games_relaxAR_title">Actividades Relajantes</string>
+    <string name="games_relaxAR_description">En esta actividad podrás usar una puerta para visitar lugares relajantes como: una playa, una costa, un lago o una cascada</string>
+    <string name="games_extremeAR_title">Actividades Extremas</string>
+    <string name="games_extremeAR_description">En esta actividad podrás sentarte a disfrutar experiencias extremas como: descenso en trineo, caída libre, montaña rusa o paracaidismo</string>
+
+    <!-- Profile Navbar Fragment Strings -->
+    <string name="profile_title">¿Necesitas un Cambio?</string>
+    <string name="profile_update_profile">Actualizar Datos</string>
+    <string name="profile_change_password">Cambiar Contraseña</string>
+    <string name="profile_delete_account">Eliminar Cuenta</string>
+    <string name="profile_btn_close_session">Cerrar Sesión</string>
+    <string name="profile_update_password">Nueva Contraseña</string>
+    <string name="profile_update_data">Ingresa tus Datos</string>
+    <string name="profile_number">00</string>
+    <string name="profile_note">Nota: el correo no puede cambiarse</string>
+    <string name="profile_new_password">Ingresar Contraseña:</string>
+
+    <!-- Test Navbar Fragment Strings -->
+    <string name="test_title">Elige un Cuestionario</string>
+    <string name="test_title_2">¿Todo Listo?</string>
+    <string name="test_title_3">¡Buen Trabajo!</string>
+    <string name="test_title_4">Resultados</string>
+    <string name="test_title_5">¡Oh No!</string>
+    <string name="test_title_6">¡Por Poco!</string>
+    <string name="test_btn_start">¡Empezar!</string>
+    <string name="test_btn_end">Finalizar</string>
+
+    <string name="test_result_low">Presentas un nivel leve o bajo de estrés, se recomienda que apliques los consejos mostrados en la pantalla de inicio para prevenir el estrés</string>
+    <string name="test_result_medium">Presentas un nivel moderado de estrés, debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
+    <string name="test_result_high">Presentas un nivel alto o severo de estrés, es necesario que busques ayuda externa, también debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
+    <string name="test_result_vulnerable_low">No eres vulnerable al estrés, se recomienda que apliques los consejos mostrados en la pantalla de inicio para mejorar tu forma de prevenir el estrés</string>
+    <string name="test_result_vulnerable_medium">Eres levemente vulnerable al estrés, se recomienda que apliques los consejos mostrados en la pantalla de inicio para mejorar tu forma de prevenir el estrés</string>
+    <string name="test_result_vulnerable_high">Tu vulnerabilidad al estrés es grave, debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
+    <string name="test_result_vulnerable_extreme">Tu vulnerabilidad al estrés es extrema, es necesario que busques ayuda externa, también debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
+
+    <string name="test_sisco">Inventario Sistémico Cognoscitivista (SISCO) SV-21</string>
+    <string name="test_sisco_description">Este cuestionario mide tu estrés académico a partir de lo que te causa estrés, síntomas producidos y formas como lo enfrentas</string>
+    <string name="test_sisco_number">Cantidad de Preguntas: 21</string>
+    <string name="test_sisco_answer_0">Nunca</string>
+    <string name="test_sisco_answer_1">Casi Nunca</string>
+    <string name="test_sisco_answer_2">Rara Vez</string>
+    <string name="test_sisco_answer_3">Algunas Veces</string>
+    <string name="test_sisco_answer_4">Casi Siempre</string>
+    <string name="test_sisco_answer_5">Siempre</string>
+    <string name="test_sisco_question_1">¿Con qué frecuencia me estresa la sobrecarga de tareas y trabajos escolares que tengo que realizar todos los días?</string>
+    <string name="test_sisco_question_2">¿Con qué frecuencia me estresa la personalidad y el carácter de los/as profesores/as que me imparten clases?</string>
+    <string name="test_sisco_question_3">¿Con qué frecuencia me estresa la forma de evaluación de mis profesores/as (a través de ensayos, trabajos de investigación, búsquedas en Internet, etc.)?</string>
+    <string name="test_sisco_question_4">¿Con qué frecuencia me estresa el nivel de exigencia de mis profesores/as?</string>
+    <string name="test_sisco_question_5">¿Con qué frecuencia me estresa el tipo de trabajo que me piden los profesores? (consulta de temas, fichas de trabajo, ensayos, mapas conceptuales, etc.)</string>
+    <string name="test_sisco_question_6">¿Con qué frecuencia me estresa tener tiempo limitado para hacer el trabajo que me encargan los/as profesores/as?</string>
+    <string name="test_sisco_question_7">¿Con qué frecuencia me estresa la poca claridad que tengo sobre lo que quieren los/as profesores/as?</string>
+    <string name="test_sisco_question_8">¿Con qué frecuencia presento fatiga crónica cuando estoy estresado?</string>
+    <string name="test_sisco_question_9">¿Con qué frecuencia presento sentimientos de depresión y tristeza (decaído) cuando estoy estresado?</string>
+    <string name="test_sisco_question_10">¿Con qué frecuencia presento ansiedad, angustia o desesperación cuando estoy estresado?</string>
+    <string name="test_sisco_question_11">¿Con qué frecuencia presento problemas de concentración cuando estoy estresado?</string>
+    <string name="test_sisco_question_12">¿Con qué frecuencia presento sentimiento de agresividad o aumento de irritabilidad cuando estoy estresado?</string>
+    <string name="test_sisco_question_13">¿Con qué frecuencia presento conflictos o tendencia a polemizar o discutir cuando estoy estresado?</string>
+    <string name="test_sisco_question_14">¿Con qué frecuencia presento desgano para realizar las labores escolares cuando estoy estresado?</string>
+    <string name="test_sisco_question_15">¿Con qué frecuencia me concentro en resolver la situación que me preocupa?</string>
+    <string name="test_sisco_question_16">¿Con qué frecuencia establezco soluciones concretas para la situación que me preocupa?</string>
+    <string name="test_sisco_question_17">¿Con qué frecuencia analizo lo positivo y negativo de las soluciones pensadas para solucionar la situación que me preocupa?</string>
+    <string name="test_sisco_question_18">¿Con qué frecuencia mantengo el control sobre mis emociones para que no me afecte lo que me estresa?</string>
+    <string name="test_sisco_question_19">¿Con qué frecuencia recuerdo situaciones similares ocurridas anteriormente y pienso en cómo las solucione?</string>
+    <string name="test_sisco_question_20">¿Con qué frecuencia elaboro un plan para enfrentar lo que me estresa y ejecuto sus tareas?</string>
+    <string name="test_sisco_question_21">¿Con qué frecuencia me fijo o trato de obtener lo positivo de la situación que me preocupa?</string>
+
+    <string name="test_svq">Test de Vulnerabilidad al Estrés (SVQ)</string>
+    <string name="test_svq_description">Este cuestionario mide qué tan vulnerable eres al estrés y a situaciones que pueden producirlo</string>
+    <string name="test_svq_number">Cantidad de Preguntas: 20</string>
+    <string name="test_svq_answer_1">Siempre</string>
+    <string name="test_svq_answer_2">Casi Siempre</string>
+    <string name="test_svq_answer_3">Frecuentemente</string>
+    <string name="test_svq_answer_4">Casi Nunca</string>
+    <string name="test_svq_answer_5">Nunca</string>
+    <string name="test_svq_question_1">Hago por lo menos una comida caliente y balanceada al día</string>
+    <string name="test_svq_question_2">Por lo menos cuatro noches a la semana duermo de 7 a 8 horas</string>
+    <string name="test_svq_question_3">Doy y recibo afecto regularmente</string>
+    <string name="test_svq_question_4">En 50 millas a la redonda poseo, por lo menos, un familiar en el que puedo confiar</string>
+    <string name="test_svq_question_5">Por lo menos dos veces a la semana hago ejercicios hasta sudar</string>
+    <string name="test_svq_question_6">Fumo menos de media cajetilla de cigarros al día</string>
+    <string name="test_svq_question_7">Tomo menos de 5 tragos (de bebida alcohólica) a la semana</string>
+    <string name="test_svq_question_8">Tengo el peso apropiado para mi estatura</string>
+    <string name="test_svq_question_9">Mis ingresos satisfacen mis gastos fundamentales</string>
+    <string name="test_svq_question_10">Mis creencias me hacen fuerte</string>
+    <string name="test_svq_question_11">Asisto regularmente a actividades sociales o del club</string>
+    <string name="test_svq_question_12">Tengo una red de amigos y conocidos</string>
+    <string name="test_svq_question_13">Tengo uno o más amigos a quienes puedo confiarles mis problemas personales</string>
+    <string name="test_svq_question_14">Tengo buena salud (es decir, mi vista, oído, dentadura, etc. está en buenas condiciones)</string>
+    <string name="test_svq_question_15">Soy capaz de hablar abiertamente sobre mis sentimientos cuando me siento irritado o preocupado</string>
+    <string name="test_svq_question_16">Converso regularmente sobre problemas domésticos (es decir, sobre tareas del hogar, dinero, problemas de la vida cotidiana) con las personas que conviven conmigo</string>
+    <string name="test_svq_question_17">Por lo menos una vez a la semana hago algo para divertirme</string>
+    <string name="test_svq_question_18">Soy capaz de organizar racionalmente mi tiempo</string>
+    <string name="test_svq_question_19">Tomo menos de tres tazas de café (o de té o refresco de cola) al día</string>
+    <string name="test_svq_question_20">Durante el día me dedico a mí mismo un rato de tranquilidad</string>
+
+    <!-- <string name="test_cses">Escala de Autoeficacia para el Afrontamiento del Estrés (CSES)</string>
+    <string name="test_cses_description">Este cuestionario mide qué tan bien puedes hacer frente al estrés ante nuevos desafíos y problemas</string>
+    <string name="test_cses_number">Cantidad de Preguntas: 26</string>
+    <string name="test_cses_answer_0">No Puedo Hacerlo</string>
+    <string name="test_cses_answer_5">Moderadamente Puedo Hacerlo</string>
+    <string name="test_cses_answer_10">Puedo Hacerlo</string> -->
+
+    <string name="test_pss">Escala de Estrés Percibido (PSS)</string>
+    <string name="test_pss_description">Este cuestionario mide el estrés de acuerdo con tu forma de percibir ciertas situaciones</string>
+    <string name="test_pss_number">Cantidad de Preguntas: 10</string>
+    <string name="test_pss_answer_0">Nunca</string>
+    <string name="test_pss_answer_1">Casi Nunca</string>
+    <string name="test_pss_answer_2">De Vez En Cuando</string>
+    <string name="test_pss_answer_3">A Menudo</string>
+    <string name="test_pss_answer_4">Muy A Menudo</string>
+    <string name="test_pss_question_1">En el último mes, ¿con qué frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?</string>
+    <string name="test_pss_question_2">En el último mes, ¿con qué frecuencia se ha sentido incapaz de controlar las cosas importantes en su vida?</string>
+    <string name="test_pss_question_3">En el último mes, ¿con qué frecuencia se ha sentido nervioso o estresado?</string>
+    <string name="test_pss_question_4">En el último mes, ¿con qué frecuencia ha estado seguro sobre su capacidad para manejar sus problemas personales?</string>
+    <string name="test_pss_question_5">En el último mes, ¿con qué frecuencia ha sentido que las cosas le van bien?</string>
+    <string name="test_pss_question_6">En el último mes, ¿con qué frecuencia ha sentido que no podría afrontar todas las cosas que tenía que hacer?</string>
+    <string name="test_pss_question_7">En el último mes, ¿con qué frecuencia ha podido controlar las dificultades de su vida?</string>
+    <string name="test_pss_question_8">En el último mes, ¿con qué frecuencia ha sentido que tenia todo bajo control?</string>
+    <string name="test_pss_question_9">En el último mes, ¿con qué frecuencia ha estado enfadado porque las cosas que le han ocurrido estaban fuera de su control?</string>
+    <string name="test_pss_question_10">En el último mes, ¿con qué frecuencia ha sentido que las dificultades se acumulan tanto que no puede superarlas?</string>
+
+    <!-- Extra questions to generate the PSS original version
+    <string name="test_pss_question_4">En el último mes, ¿con qué frecuencia ha manejado con éxito los pequeños problemas irritantes de la vida?</string>
+    <string name="test_pss_question_5">En el último mes, ¿con qué frecuencia ha sentido que ha afrontado efectivamente los cambios importantes que han estado ocurriendo en su vida?</string>
+    <string name="test_pss_question_12">En el último mes, ¿con qué frecuencia ha pensado sobre las cosas que le quedan por hacer?</string>
+    <string name="test_pss_question_13">En el último mes, ¿con qué frecuencia ha podido controlar la forma de pasar el tiempo?</string>
+    -->
+
+    <string name="test_svs">Lista de Indicadores de Vulnerabilidad al Estrés (SVS)</string>
+    <string name="test_svs_description">Este cuestionario mide qué tan fácil puedes estresarte mientras realizas tus actividades diarias</string>
+    <string name="test_svs_number">Cantidad de Preguntas: 20</string>
+    <string name="test_svs_answer_0">Nada Frecuente</string>
+    <string name="test_svs_answer_1">Poco Frecuente</string>
+    <string name="test_svs_answer_2">Medianamente Presente</string>
+    <string name="test_svs_answer_3">Frecuentemente Presente</string>
+    <string name="test_svs_answer_4">Muy Frecuentemente Presente</string>
+    <string name="test_svs_question_1">Frecuencia con que presenta tendencia a sufrir dolores de cabeza</string>
+    <string name="test_svs_question_2">Frecuencia con que presenta sensación de malestar y tensión</string>
+    <string name="test_svs_question_3">Frecuencia con que tiende a sentirse cansado la mayoría del tiempo, aun después de dormir</string>
+    <string name="test_svs_question_4">Frecuencia con que presenta sensación de falta de energía o de impulso en la realización de las tareas diarias</string>
+    <string name="test_svs_question_5">Frecuencia con que presenta trastornos del sueño, pesadillas, etc.</string>
+    <string name="test_svs_question_6">Frecuencia con que tiende a mostrar excesiva sensibilidad ante eventos cotidianos</string>
+    <string name="test_svs_question_7">Frecuencia con que tiende a concentrarse en aspectos negativos del futuro o pasado</string>
+    <string name="test_svs_question_8">Frecuencia con que tiende a prestar excesiva atención a los procesos orgánicos tales como: latidos del corazón, respiración, etc.</string>
+    <string name="test_svs_question_9">Frecuencia con que tiende a tomar a nivel personal todo lo que sale mal</string>
+    <string name="test_svs_question_10">Frecuencia con que presenta dificultad para concentrarse y fijar la atención en actividades que así lo requieren</string>
+    <string name="test_svs_question_11">Frecuencia con que tiende a sentir ansiedad o temor sin motivos aparentes</string>
+    <string name="test_svs_question_12">Frecuencia con que presenta dificultad para tomar decisiones</string>
+    <string name="test_svs_question_13">Frecuencia con que tiende a sentir que se está perdiendo el control sobre situaciones importantes de la propia vida</string>
+    <string name="test_svs_question_14">Frecuencia con que tiende a estar preocupado por algo</string>
+    <string name="test_svs_question_15">Frecuencia con que tiende a sufrir la presencia de pensamientos poco deseados de manera compulsiva</string>
+    <string name="test_svs_question_16">Frecuencia con que tiende a esperar que suceda lo peor sin razón para ello</string>
+    <string name="test_svs_question_17">Frecuencia con que tiende a sentir que los propios recursos son insuficientes para afrontar las situaciones</string>
+    <string name="test_svs_question_18">Frecuencia con que presenta síntomas como: sudores, taquicardias, sensación de ahogo</string>
+    <string name="test_svs_question_19">Frecuencia con que tiende a sentir falta de motivación para emprender las tareas laborales</string>
+    <string name="test_svs_question_20">Frecuencia con que presenta trastornos en el área sexual (falta de deseos, impotencia, frigidez, etc.)</string>
+
+</resources>

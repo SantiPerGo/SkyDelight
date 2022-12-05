@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/fragment_background"
+    tools:context=".navbar.GamesFragment">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/colorPrimaryVariant"
+        android:text="@string/games_title"
+        android:fontFamily="@font/comfortaa"
+        android:gravity="center"
+        android:textColor="@color/ultralight"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="@dimen/min_size"
+        app:autoSizeMaxTextSize="@dimen/max_size"
+        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/cardsLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/relaxCard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/icon_padding" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Media -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/beach"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/games_relaxAR_title"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:includeFontPadding="false"
+                        android:text="@string/games_relaxAR_title"
+                        android:fontFamily="@font/comfortaa"
+                        android:textColor="?attr/btn_text_color_blue"
+                        android:background="?attr/btn_background_blue"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/corner_radius"
+                        android:paddingStart="@dimen/corner_radius"
+                        android:paddingEnd="@dimen/corner_radius"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="@dimen/min_size"
+                        app:autoSizeMaxTextSize="@dimen/max_size"
+                        app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:includeFontPadding="false"
+                        android:text="@string/games_relaxAR_description"
+                        android:fontFamily="@font/comfortaa"
+                        android:textColor="?attr/btn_text_color_blue"
+                        android:background="?attr/btn_background_blue"
+                        android:gravity="center"
+                        android:padding="@dimen/corner_radius"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="@dimen/min_size"
+                        app:autoSizeMaxTextSize="@dimen/max_size"
+                        app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/extremeCard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/icon_padding"
+            android:layout_marginStart="@dimen/icon_padding"
+            android:layout_marginEnd="@dimen/icon_padding" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Media -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/wingsuit"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/games_relaxAR_title"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:includeFontPadding="false"
+                        android:text="@string/games_extremeAR_title"
+                        android:fontFamily="@font/comfortaa"
+                        android:textColor="?attr/btn_text_color_blue"
+                        android:background="?attr/btn_background_blue"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/corner_radius"
+                        android:paddingStart="@dimen/corner_radius"
+                        android:paddingEnd="@dimen/corner_radius"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="@dimen/min_size"
+                        app:autoSizeMaxTextSize="@dimen/max_size"
+                        app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:includeFontPadding="false"
+                        android:text="@string/games_extremeAR_description"
+                        android:fontFamily="@font/comfortaa"
+                        android:textColor="?attr/btn_text_color_blue"
+                        android:background="?attr/btn_background_blue"
+                        android:gravity="center"
+                        android:padding="@dimen/corner_radius"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="@dimen/min_size"
+                        app:autoSizeMaxTextSize="@dimen/max_size"
+                        app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
