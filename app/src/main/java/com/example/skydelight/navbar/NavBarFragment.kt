@@ -1,6 +1,8 @@
 package com.example.skydelight.navbar
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.BuildConfig
+import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
 import com.example.skydelight.custom.ValidationsDialogsRequests
@@ -46,6 +49,10 @@ class NavBarFragment : Fragment() {
     // After the view is created we can do things
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // CHiding image view after 1 second
+        Handler(Looper.getMainLooper()).postDelayed({
+            (activity as MainActivity).imgBackgroundVisibility(false) }, 1000)
 
         // Check if user has done the initial test
         initialTest()

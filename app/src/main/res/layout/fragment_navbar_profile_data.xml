@@ -10,22 +10,21 @@ tools:context=".navbar.ProfileDataFragment">
 
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/colorPrimaryVariant"
         android:text="@string/profile_update_data"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
-        android:textColor="@color/ultralight"
+        android:textColor="?attr/text_color"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:autoSizeStepGranularity="@dimen/granularity_size"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_title_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
     <TextView
         android:id="@+id/txtName"
@@ -258,7 +257,14 @@ tools:context=".navbar.ProfileDataFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_title_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_name_top"

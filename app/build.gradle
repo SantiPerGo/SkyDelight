@@ -79,6 +79,9 @@ dependencies {
     // https://developer.android.com/training/data-storage/room
     def room_version = "2.4.3"
 
+    // Palete Generator
+    implementation 'androidx.palette:palette:1.0.0'
+
     // Kotlin
     implementation("androidx.room:room-runtime:$room_version")
     implementation "androidx.room:room-ktx:$room_version"

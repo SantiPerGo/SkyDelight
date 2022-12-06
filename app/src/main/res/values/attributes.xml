@@ -4,6 +4,9 @@
     <attr name="loading_icon" format="reference" />
     <attr name="loading_icon_2" format="reference" />
 
+    <!-- Background Pictures -->
+    <attr name="start_screen_picture" format="reference" />
+
     <!-- Background Color -->
     <attr name="fragment_background" format="reference" />
 

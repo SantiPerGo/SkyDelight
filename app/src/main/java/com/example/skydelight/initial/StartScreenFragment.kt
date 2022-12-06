@@ -1,11 +1,19 @@
 package com.example.skydelight.initial
 
+import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.palette.graphics.Palette
+import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.databinding.FragmentStartScreenBinding
 
@@ -26,6 +34,9 @@ class StartScreenFragment : Fragment() {
     // After the view is created we can do things
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Showing image view
+        (activity as MainActivity).imgBackgroundVisibility(true)
 
         // Changing to the login fragment
         binding.btnLogin.setOnClickListener{findNavController().navigate(R.id.action_startScreen_to_login)}

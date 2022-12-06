@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?attr/text_color_hint" android:state_checked="false" />
-    <item android:color="?attr/text_color" android:state_checked="true" />
+    <item android:color="?attr/text_color_hint" android:shadowColor="?attr/text_color_hint"
+        android:shadowDx="0.0" android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius" android:state_checked="false" />
+    <item android:color="?attr/text_color" android:shadowColor="?attr/text_color"
+        android:shadowDx="0.0" android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius" android:state_checked="true" />
 </selector>
