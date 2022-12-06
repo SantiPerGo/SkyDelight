@@ -21,4 +21,14 @@
 
     <!-- Text Shadow's -->
     <dimen name="shadow_radius">5</dimen>
+
+    <!-- Guidelines -->
+    <dimen name="guideline_top">0.05</dimen>
+    <dimen name="guideline_navbar_top">0.02</dimen>
+    <dimen name="guideline_bottom">0.95</dimen>
+    <dimen name="guideline_navbar_bottom">0.93</dimen>
+    <dimen name="guideline_left">0.1</dimen>
+    <dimen name="guideline_navbar_left">0.05</dimen>
+    <dimen name="guideline_right">0.9</dimen>
+    <dimen name="guideline_navbar_right">0.95</dimen>
 </resources>

@@ -169,28 +169,29 @@ class TestFragment : Fragment() {
 
                 // Validating if is the same day
                 var isSameDay = false
+                var isLessThanOneDay = false
                 if(testCalendar.year == LocalDateTime.now().year &&
                     testCalendar.month == LocalDateTime.now().month){
                     if(testCalendar.dayOfMonth == LocalDateTime.now().dayOfMonth) {
                         isSameDay = true
                     } else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
                         && LocalDateTime.now().hour - testCalendar.hour < 0){
-                        isSameDay = true
+                        isLessThanOneDay = true
                     }
                     else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
                         && LocalDateTime.now().hour - testCalendar.hour == 0
                         && LocalDateTime.now().minute - testCalendar.minute < 0){
-                        isSameDay = true
+                        isLessThanOneDay = true
                     }
                     else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
                         && LocalDateTime.now().hour - testCalendar.hour == 0
                         && LocalDateTime.now().minute - testCalendar.minute == 0
                         && LocalDateTime.now().second - testCalendar.second < 0){
-                        isSameDay = true
+                        isLessThanOneDay = true
                     }
                 }
 
-                if(isSameDay){
+                if(isSameDay || isLessThanOneDay){
                     // Calculating time left to answer the test again
                     var hour = if (testCalendar.hour > LocalDateTime.now().hour)
                             (testCalendar.hour - LocalDateTime.now().hour) else (LocalDateTime.now().hour - testCalendar.hour)
@@ -201,15 +202,17 @@ class TestFragment : Fragment() {
                     var second = if (testCalendar.second > LocalDateTime.now().second)
                         (testCalendar.second - LocalDateTime.now().second) else (LocalDateTime.now().second - testCalendar.second)
 
-                    hour = 23 - hour
-                    minute = 59 - minute
-                    second = 59 - second
+                    if(isSameDay) {
+                        hour = 23 - hour
+                        minute = 59 - minute
+                        second = 59 - second
+                    }
 
                     // Showing introduction for the user
                     val dialog = MaterialAlertDialogBuilder(findNavController().context)
                         .setTitle("¡Espera!")
                         .setMessage("\nNo puedes responder más de una vez la prueba de estrés $testName en un lapso de 24 horas\n\n" +
-                                "Debes esperar $hour horas con $minute minutos y $second segundos para responder de nuevo\n")
+                                "Debes esperar $hour hora(s) con $minute minuto(s) y $second segundo(s) para responder de nuevo\n")
                         .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
                         .show()
 
