@@ -1,6 +1,8 @@
 package com.example.skydelight.initial
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -64,6 +66,9 @@ class RegisterSecondFragment : Fragment() {
         binding.editTxtConfirmPassword.doOnTextChanged { _, _, _, _ ->
             if(binding.FieldConfirmPassword.error != null) binding.FieldConfirmPassword.error = null }
 
+        // Showing elements
+        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
+
         binding.btnCreateAccount.setOnClickListener{
             val email = binding.editTxtEmail.text.toString()
             val password = binding.editTxtPassword.text.toString()
@@ -85,9 +90,24 @@ class RegisterSecondFragment : Fragment() {
             val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
 
             // Starting previous fragment
-            findNavController().navigate(R.id.action_registerSecond_to_registerFirst, bundle)
-            findNavController().popBackStack(R.id.register_second_fragment, true)
+            elementsVisibility(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_registerSecond_to_registerFirst, bundle)
+                findNavController().popBackStack(R.id.register_second_fragment, true)
+            }, 500)
         }
+    }
+
+    private fun elementsVisibility(state: Boolean){
+        val elementsArray = arrayOf(binding.txtTitle, binding.txtEmail, binding.FieldEmail,
+            binding.txtPassword, binding.FieldPassword, binding.txtConfirmPassword,
+            binding.FieldConfirmPassword, binding.btnCreateAccount, binding.btnReturn)
+
+        for(element in elementsArray)
+            if(state)
+                element.animate().alpha(1f)
+            else
+                element.animate().alpha(0f)
     }
 
     // Function to connect with the api
@@ -165,7 +185,10 @@ class RegisterSecondFragment : Fragment() {
                         getString(R.string.snackbar_success_register), null, requireView(), btnColor, textColor,
                         requireActivity(), requireContext(), null, null, null, null,
                         null, null) {
-                        findNavController().navigate(R.id.action_registerSecond_to_registerThird)
+                        elementsVisibility(false)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            findNavController().navigate(R.id.action_registerSecond_to_registerThird)
+                        }, 500)
                     }
                 }
             }

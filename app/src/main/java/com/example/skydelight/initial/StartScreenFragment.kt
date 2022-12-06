@@ -3,6 +3,8 @@ package com.example.skydelight.initial
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -38,13 +40,42 @@ class StartScreenFragment : Fragment() {
         // Showing image view
         (activity as MainActivity).imgBackgroundVisibility(true)
 
+        // Showing elements
+        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
+
         // Changing to the login fragment
-        binding.btnLogin.setOnClickListener{findNavController().navigate(R.id.action_startScreen_to_login)}
+        binding.btnLogin.setOnClickListener{
+            elementsVisibility(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_startScreen_to_login)
+            }, 500)
+        }
 
         // Changing to the register first fragment
-        binding.btnRegister.setOnClickListener {findNavController().navigate(R.id.action_startScreen_to_registerFirst)}
+        binding.btnRegister.setOnClickListener {
+            elementsVisibility(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_startScreen_to_registerFirst)
+            }, 500)
+        }
 
         // Changing to the recover password fragment
-        binding.txtRecoverPassword.setOnClickListener {findNavController().navigate(R.id.action_startScreen_to_recoverPassword)}
+        binding.txtRecoverPassword.setOnClickListener {
+            elementsVisibility(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_startScreen_to_recoverPassword)
+            }, 500)
+        }
+    }
+
+    private fun elementsVisibility(state: Boolean){
+        val elementsArray = arrayOf(binding.txtWelcome, binding.imgLogo, binding.txtRelax,
+            binding.btnLogin, binding.btnRegister, binding.txtRecoverPassword)
+
+        for(element in elementsArray)
+            if(state)
+                element.animate().alpha(1f)
+            else
+                element.animate().alpha(0f)
     }
 }

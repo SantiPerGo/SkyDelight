@@ -90,7 +90,7 @@
         android:backgroundTint="?attr/btn_background_blue"
         android:fontFamily="@font/comfortaa"
         android:state_enabled="true"
-        android:text="@string/test_btn_start"
+        android:text="@string/btn_start"
         android:textColor="?attr/btn_text_color_blue"
         android:textStyle="bold"
         app:cornerRadius="@dimen/corner_radius"

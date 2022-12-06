@@ -1,6 +1,8 @@
 package com.example.skydelight.initial
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +37,9 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Hiding and showing elements
+        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
+
         // Clearing errors when produced
         binding.editTxtEmail.doOnTextChanged { _, _, _, _ -> if(binding.FieldEmail.error != null) binding.FieldEmail.error = null }
         binding.editTxtPassword.doOnTextChanged { _, _, _, _ -> if(binding.FieldPassword.error != null) binding.FieldPassword.error = null }
@@ -50,8 +55,23 @@ class LoginFragment : Fragment() {
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
-            findNavController().navigate(R.id.action_login_to_startScreen)
-            findNavController().popBackStack(R.id.login_fragment, true) }
+            elementsVisibility(false)
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_login_to_startScreen)
+                findNavController().popBackStack(R.id.login_fragment, true)
+            }, 500)
+        }
+    }
+
+    private fun elementsVisibility(state: Boolean){
+        val elementsArray = arrayOf(binding.loginTitle, binding.txtEmail, binding.FieldEmail, binding.txtPassword,
+            binding.FieldPassword, binding.rememberSession, binding.btnLogin, binding.btnReturn)
+
+        for(element in elementsArray)
+            if(state)
+                element.animate().alpha(1f)
+            else
+                element.animate().alpha(0f)
     }
 
     // Function to connect with the api

@@ -67,6 +67,18 @@
         app:layout_constraintStart_toEndOf="@id/guideline_title_right"
         app:layout_constraintTop_toTopOf="@+id/txtTitle" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navbar_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintBottom_toTopOf="@id/navBar"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navbar_graph" />
+
     <ImageView
         android:id="@+id/ImgWaveTop"
         android:layout_width="0dp"
@@ -81,18 +93,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_top" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navbar_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ImgWaveTop"
-        app:layout_constraintBottom_toTopOf="@id/navBar"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/navbar_graph" />
 
     <ImageView
         android:id="@+id/ImgWaveBottom"

@@ -15,6 +15,7 @@ import androidx.room.Room
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
 import com.example.skydelight.databinding.FragmentNavbarTestDataBinding
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -128,6 +129,7 @@ class TestDataFragment : Fragment() {
             binding.txtDescription.setTextColor(textColor)
             binding.txtNumber.setTextColor(textColor)
             binding.btnStart.setTextColor(textColor)
+            (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
             binding.btnStart.backgroundTintList = ColorStateList.valueOf(typedValueBtn.data)
 
             requireContext().theme.resolveAttribute(R.color.black, typedValueBtn, true)
