@@ -8,7 +8,7 @@
 
         <!-- Secondary color -->
         <item name="colorSecondary">@color/lightblue2</item>
-        <item name="colorSecondaryVariant">@color/lightblue3</item>
+        <item name="colorSecondaryVariant">@color/light</item>
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status and navigation bar color -->
@@ -26,7 +26,7 @@
         <item name="fragment_background">@color/ultradark</item>
 
         <!-- Text Colors -->
-        <item name="text_color">@color/light</item>
+        <item name="text_color">@color/darkblue1</item>
         <item name="text_color_hint">@color/ultralight</item>
 
         <!-- Blue Button -->

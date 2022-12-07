@@ -343,24 +343,26 @@ class NavBarFragment : Fragment() {
     private fun backAction(){
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(backEventState)
-                    when (itemId) {
-                        R.id.navbar_test_data_fragment ->{
-                            updateNavBarHost(TestFragment(), R.id.nav_test, false)
-                            updateImgHelp(true)
+                try {
+                    if(backEventState)
+                        when (itemId) {
+                            R.id.navbar_test_data_fragment ->{
+                                updateNavBarHost(TestFragment(), R.id.nav_test, false)
+                                updateImgHelp(true)
+                            }
+                            R.id.navbar_test_answer_fragment ->
+                                binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
+                            R.id.navbar_profile_data_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                            R.id.navbar_profile_password_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                            else -> requireActivity().moveTaskToBack(true)
                         }
-                        R.id.navbar_test_answer_fragment ->
-                            binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
-                        R.id.navbar_profile_data_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
-                        R.id.navbar_profile_password_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
-                        else -> requireActivity().moveTaskToBack(true)
-                    }
-                else
-                    when (itemId) {
-                        R.id.navbar_test_answer_fragment ->
-                            binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
-                        else -> requireActivity().moveTaskToBack(true)
-                    }
+                    else
+                        when (itemId) {
+                            R.id.navbar_test_answer_fragment ->
+                                binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
+                            else -> requireActivity().moveTaskToBack(true)
+                        }
+                } catch (e: IllegalArgumentException) {}
             }
         })
     }

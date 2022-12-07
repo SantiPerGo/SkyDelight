@@ -88,6 +88,8 @@ class RegisterFirstFragment : Fragment() {
             if(ValidationsDialogsRequests().validateName(name.toString(), binding.FieldName)
                 && ValidationsDialogsRequests().validateSex(sexId, requireView(), requireContext(),
                     getString(R.string.snackbar_error_sex))){
+                deactivateButtons()
+
                 // Setting parameters for the next fragment
                 val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
 
@@ -101,12 +103,18 @@ class RegisterFirstFragment : Fragment() {
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
+            deactivateButtons()
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_registerFirst_to_startScreen)
                 findNavController().popBackStack(R.id.register_first_fragment, true)
             }, 500)
         }
+    }
+
+    private fun deactivateButtons() {
+        binding.btnNext.isClickable = false
+        binding.btnReturn.isClickable = false
     }
 
     fun elementsVisibility(state: Boolean){

@@ -79,8 +79,8 @@ dependencies {
     // https://developer.android.com/training/data-storage/room
     def room_version = "2.4.3"
 
-    // Palete Generator
-    implementation 'androidx.palette:palette:1.0.0'
+    // Image and Gif Loader
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
 
     // Kotlin
     implementation("androidx.room:room-runtime:$room_version")

@@ -12,8 +12,10 @@ import android.view.animation.Animation
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.skydelight.BuildConfig
-import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
 import com.example.skydelight.custom.ValidationsDialogsRequests
@@ -127,25 +129,53 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // Getting wallpaper from pexels API
     private fun showBackground(animation: Boolean = false) {
-        val imageArray = arrayOf(R.drawable.wallpaper_beach_3, R.drawable.wallpaper_flowers,
-            R.drawable.wallpaper_leafs, R.drawable.wallpaper_mountain, R.drawable.wallpaper_mountain_2,
-            R.drawable.wallpaper_road, R.drawable.wallpaper_sea, R.drawable.wallpaper_sky,
-            R.drawable.wallpaper_tropical, R.drawable.wallpaper_wheat)
+        val pageNumber = (1..5000).random()
+        val request = Request.Builder()
+            .url("https://api.pexels.com/v1/search?query=nature wallpaper&orientation=portrait&per_page=1&page=$pageNumber")
+            .addHeader("Authorization", BuildConfig.API_KEY_PEXELS).get().build()
 
-        if(animation) {
-            val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
-            val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
+        ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(),
+            requireActivity(),null, null, null, null, null,
+            null, null,null, null) {
 
-            fadeOutAnimation.duration = 500
-            fadeInAnimation.duration = 500
+            // Getting image url
+            val imageUrlData = JSONObject(it).getString("photos")
+            var imageUrl = imageUrlData.substringAfter("https:\\/\\/images.pexels.com\\/photos\\/")
+                .substringBefore(".jpeg").replace("\\", "")
+            imageUrl = "https://images.pexels.com/photos/$imageUrl.jpeg"
 
-            binding.imgBackground.startAnimation(fadeOutAnimation)
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.imgBackground.setImageResource(imageArray[(imageArray.indices).random()])
-                binding.imgBackground.startAnimation(fadeInAnimation)
-            }, 500)
-        } else
-            binding.imgBackground.setImageResource(imageArray[(imageArray.indices).random()])
+            // Loading image
+            MainScope().launch {
+                if(animation) {
+                    val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
+                    val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
+
+                    fadeOutAnimation.duration = 500
+                    fadeInAnimation.duration = 500
+
+                    binding.imgBackground.startAnimation(fadeOutAnimation)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        Glide.with(requireContext())
+                            .load(imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .skipMemoryCache(true)
+                            .dontTransform()
+                            .priority(Priority.IMMEDIATE)
+                            .into(binding.imgBackground)
+                        binding.imgBackground.startAnimation(fadeInAnimation)
+                    }, 500)
+                } else
+                    Glide.with(requireContext())
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .skipMemoryCache(true)
+                        .dontAnimate()
+                        .dontTransform()
+                        .priority(Priority.IMMEDIATE)
+                        .into(binding.imgBackground)
+            }
+        }
     }
 }

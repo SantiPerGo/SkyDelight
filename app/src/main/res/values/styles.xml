@@ -3,6 +3,7 @@
     <style name="numberPickerStyle">
         <item name="android:fontFamily">@font/comfortaa</item>
         <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColorPrimary">?attr/text_color</item>
         <item name="android:colorControlNormal">?attr/text_color_hint</item>
         <item name="android:shadowColor">?attr/text_color</item>
@@ -31,7 +32,7 @@
 
     <!-- Color of Dialog Title -->
     <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
-        <item name="android:textColor">?attr/text_color</item>
+        <item name="android:textColor">?attr/colorSecondaryVariant</item>
         <item name="fontFamily">@font/comfortaa</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_horizontal</item>

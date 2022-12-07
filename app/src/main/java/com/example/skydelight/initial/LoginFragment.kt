@@ -49,18 +49,25 @@ class LoginFragment : Fragment() {
             val password = binding.editTxtPassword.text.toString()
             if(ValidationsDialogsRequests().validateEmail(email, binding.FieldEmail)
                 && ValidationsDialogsRequests().validatePassword(password, binding.FieldPassword)){
+                buttonsClickableState(false)
                 login(email, password)
             }
         }
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
+            buttonsClickableState(false)
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_login_to_startScreen)
                 findNavController().popBackStack(R.id.login_fragment, true)
             }, 500)
         }
+    }
+
+    private fun buttonsClickableState(state: Boolean) {
+        binding.btnLogin.isClickable = state
+        binding.btnReturn.isClickable = state
     }
 
     fun elementsVisibility(state: Boolean){

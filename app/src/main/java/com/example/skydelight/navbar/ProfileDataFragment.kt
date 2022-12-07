@@ -91,10 +91,12 @@ class ProfileDataFragment : Fragment() {
             requireContext().theme.resolveAttribute(R.attr.btn_text_color_red, typedValue, true)
             val textColor = typedValue.data
 
-            if(name == user.name && sex == user.sex && age == user.age)
+            if(name == user.name && sex == user.sex && age == user.age) {
                 ValidationsDialogsRequests().snackBar(requireView(), btnColor, textColor,
                     getString(R.string.snackbar_error_update_data), requireContext())
-            else{
+
+                (parentFragment as NavBarFragment).changeNavBarButtonsClickable(true)
+            } else {
                 // Arguments to Post Request
                 val formBody: RequestBody = FormBody.Builder()
                     .add("name", name)

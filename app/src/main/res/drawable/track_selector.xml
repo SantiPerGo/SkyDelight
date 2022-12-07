@@ -11,7 +11,7 @@
         <shape android:dither="true" android:shape="rectangle" android:useLevel="false" android:visible="true">
             <corners android:radius="25dp" />
             <size android:width="5dp" android:height="25dp" />
-            <solid android:color="?attr/btn_background_blue" />
+            <solid android:color="?attr/text_color" />
         </shape>
     </item>
 </selector>

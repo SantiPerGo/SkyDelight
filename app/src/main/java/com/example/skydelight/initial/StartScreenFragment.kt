@@ -42,6 +42,7 @@ class StartScreenFragment : Fragment() {
 
         // Changing to the login fragment
         binding.btnLogin.setOnClickListener{
+            deactivateButtons()
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_startScreen_to_login)
@@ -50,6 +51,7 @@ class StartScreenFragment : Fragment() {
 
         // Changing to the register first fragment
         binding.btnRegister.setOnClickListener {
+            deactivateButtons()
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_startScreen_to_registerFirst)
@@ -58,11 +60,18 @@ class StartScreenFragment : Fragment() {
 
         // Changing to the recover password fragment
         binding.txtRecoverPassword.setOnClickListener {
+            deactivateButtons()
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_startScreen_to_recoverPassword)
             }, 500)
         }
+    }
+
+    private fun deactivateButtons() {
+        binding.btnLogin.isClickable = false
+        binding.btnRegister.isClickable = false
+        binding.txtRecoverPassword.isClickable = false
     }
 
     private fun elementsVisibility(state: Boolean){
@@ -79,41 +88,43 @@ class StartScreenFragment : Fragment() {
     private fun backAction(){
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                when (findNavController().currentDestination?.id) {
-                    R.id.start_screen_fragment -> { requireActivity().moveTaskToBack(true) }
-                    R.id.login_fragment -> {
-                        (requireParentFragment().childFragmentManager.fragments.first()
-                                as LoginFragment).elementsVisibility(false)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            findNavController().navigate(R.id.action_login_to_startScreen)
-                            findNavController().popBackStack(R.id.login_fragment, true)
-                        }, 500)
+                try {
+                    when (findNavController().currentDestination?.id) {
+                        R.id.start_screen_fragment -> { requireActivity().moveTaskToBack(true) }
+                        R.id.login_fragment -> {
+                            (requireParentFragment().childFragmentManager.fragments.first()
+                                    as LoginFragment).elementsVisibility(false)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                findNavController().navigate(R.id.action_login_to_startScreen)
+                                findNavController().popBackStack(R.id.login_fragment, true)
+                            }, 500)
+                        }
+                        R.id.register_first_fragment -> {
+                            (requireParentFragment().childFragmentManager.fragments.first()
+                                    as RegisterFirstFragment).elementsVisibility(false)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                findNavController().navigate(R.id.action_registerFirst_to_startScreen)
+                                findNavController().popBackStack(R.id.register_first_fragment, true)
+                            }, 500)
+                        }
+                        R.id.register_second_fragment -> {
+                            (requireParentFragment().childFragmentManager.fragments.first()
+                                    as RegisterSecondFragment).elementsVisibility(false)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                findNavController().navigate(R.id.action_registerSecond_to_registerFirst)
+                                findNavController().popBackStack(R.id.register_second_fragment, true)
+                            }, 500)
+                        }
+                        R.id.recover_password_fragment -> {
+                            (requireParentFragment().childFragmentManager.fragments.first()
+                                    as RecoverPasswordFragment).elementsVisibility(false)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
+                                findNavController().popBackStack(R.id.recover_password_fragment, true)
+                            }, 500)
+                        }
                     }
-                    R.id.register_first_fragment -> {
-                        (requireParentFragment().childFragmentManager.fragments.first()
-                                as RegisterFirstFragment).elementsVisibility(false)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            findNavController().navigate(R.id.action_registerFirst_to_startScreen)
-                            findNavController().popBackStack(R.id.register_first_fragment, true)
-                        }, 500)
-                    }
-                    R.id.register_second_fragment -> {
-                        (requireParentFragment().childFragmentManager.fragments.first()
-                                as RegisterSecondFragment).elementsVisibility(false)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            findNavController().navigate(R.id.action_registerSecond_to_registerFirst)
-                            findNavController().popBackStack(R.id.register_second_fragment, true)
-                        }, 500)
-                    }
-                    R.id.recover_password_fragment -> {
-                        (requireParentFragment().childFragmentManager.fragments.first()
-                                as RecoverPasswordFragment).elementsVisibility(false)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
-                            findNavController().popBackStack(R.id.recover_password_fragment, true)
-                        }, 500)
-                    }
-                }
+                } catch (e: IllegalArgumentException) {}
             }
         })
     }

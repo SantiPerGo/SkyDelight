@@ -65,7 +65,7 @@ class TestDataFragment : Fragment() {
         constraintSet.applyTo(binding.constraintLayout)
 
         // Updating text colors
-        updateColors()
+        updateTextAndColors()
 
         // Updating text according of test result
         updateTestResult()
@@ -79,7 +79,7 @@ class TestDataFragment : Fragment() {
         }
     }
 
-    private fun updateColors() {
+    private fun updateTextAndColors() {
         // Updating text
         var maxNum = 0f
         var minNum = 0f
@@ -98,38 +98,42 @@ class TestDataFragment : Fragment() {
                 minNum = 50f }
         }
 
-        // Variable to get color
-        val typedValue = TypedValue()
-        val typedValueBtn = TypedValue()
-
         // Getting color and title according of results
         if(score!! >= maxNum){
-            requireContext().theme.resolveAttribute(R.attr.btn_text_color_red, typedValue, true)
-            requireContext().theme.resolveAttribute(R.attr.btn_background_red, typedValueBtn, true)
+            updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
             binding.txtTitle.text = getString(R.string.test_title_5)
         } else if(score!! >= minNum && score!! < maxNum){
-            requireContext().theme.resolveAttribute(R.attr.btn_text_color_yellow, typedValue, true)
-            requireContext().theme.resolveAttribute(R.attr.btn_background_yellow, typedValueBtn, true)
+            updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
             binding.txtTitle.text = getString(R.string.test_title_6)
         } else {
-            requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
-            requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValueBtn, true)
+            updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
             binding.txtTitle.text = getString(R.string.test_title_3)
         }
+    }
 
-        // Changing text colors
-        val textColor = typedValue.data
+    private fun updateColors(textColorResource: Int, btnColorResource: Int) {
+        // Getting reference to resource color
+        val typedValueText = TypedValue()
+        val typedValueBtn = TypedValue()
+
+        requireContext().theme.resolveAttribute(textColorResource, typedValueText, true)
+        requireContext().theme.resolveAttribute(btnColorResource, typedValueBtn, true)
+
+        val textColor = typedValueText.data
+        val btnColor = typedValueBtn.data
 
         // Changing colors
         val elementsArray = arrayOf(binding.txtTitle, binding.txtTestTitle,
             binding.txtDescription, binding.txtNumber, binding.btnStart)
 
-        for(element in elementsArray)
+        for(element in elementsArray) {
             element.setTextColor(textColor)
+            element.setShadowLayer(5f,0f, 0f, textColor)
+        }
 
         (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
-        binding.btnStart.backgroundTintList = ColorStateList.valueOf(typedValueBtn.data)
         (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
+        binding.btnStart.backgroundTintList = ColorStateList.valueOf(btnColor)
     }
 
     private fun updateTestResult() {

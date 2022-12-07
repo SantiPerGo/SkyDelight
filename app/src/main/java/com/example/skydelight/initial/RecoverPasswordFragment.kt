@@ -42,21 +42,25 @@ class RecoverPasswordFragment : Fragment() {
         binding.btnRecover.setOnClickListener {
             val email = binding.editTxtEmail.text.toString()
             if(ValidationsDialogsRequests().validateEmail(email, binding.FieldEmail)){
-                // Deactivating buttons
-                binding.btnRecover.isClickable = false
-                binding.btnReturn.isClickable = false
+                deactivateButtons()
                 recoverPassword(email)
             }
         }
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
+            deactivateButtons()
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
                 findNavController().popBackStack(R.id.recover_password_fragment, true)
             }, 500)
         }
+    }
+
+    private fun deactivateButtons() {
+        binding.btnRecover.isClickable = false
+        binding.btnReturn.isClickable = false
     }
 
     fun elementsVisibility(state: Boolean){

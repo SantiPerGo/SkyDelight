@@ -33,7 +33,10 @@ class RegisterThirdFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
 
         // Changing to the principal fragment
-        binding.btnUnderstand.setOnClickListener{findNavController().navigate(R.id.action_registerThird_to_navBar)}
+        binding.btnUnderstand.setOnClickListener{
+            binding.btnUnderstand.isClickable = false
+            findNavController().navigate(R.id.action_registerThird_to_navBar)
+        }
     }
 
     private fun elementsVisibility(state: Boolean){

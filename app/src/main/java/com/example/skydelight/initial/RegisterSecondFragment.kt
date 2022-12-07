@@ -77,15 +77,15 @@ class RegisterSecondFragment : Fragment() {
             if(ValidationsDialogsRequests().validateEmail(email, binding.FieldEmail)
                 && ValidationsDialogsRequests().validatePassword(password, binding.FieldPassword)
                 && ValidationsDialogsRequests().validateConfirmedPassword(password, confirmedPassword, binding.FieldConfirmPassword)){
-                // Deactivating buttons
-                binding.btnCreateAccount.isClickable = false
-                binding.btnReturn.isClickable = false
+                deactivateButtons()
                 createUser(email, password, name.toString(), sex.toString(), age.toString())
             }
         }
 
         // Returning to the register first fragment
         binding.btnReturn.setOnClickListener {
+            binding.btnReturn.isClickable = false
+
             // Setting parameters for the next fragment
             val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
 
@@ -96,6 +96,11 @@ class RegisterSecondFragment : Fragment() {
                 findNavController().popBackStack(R.id.register_second_fragment, true)
             }, 500)
         }
+    }
+
+    private fun deactivateButtons() {
+        binding.btnCreateAccount.isClickable = false
+        binding.btnReturn.isClickable = false
     }
 
     fun elementsVisibility(state: Boolean){
