@@ -1,6 +1,5 @@
 package com.example.skydelight.navbar
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.TypedValue

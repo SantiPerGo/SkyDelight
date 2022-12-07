@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun elementsVisibility(state: Boolean){
+    fun elementsVisibility(state: Boolean){
         val elementsArray = arrayOf(binding.loginTitle, binding.txtEmail, binding.FieldEmail, binding.txtPassword,
             binding.FieldPassword, binding.rememberSession, binding.btnLogin, binding.btnReturn)
 

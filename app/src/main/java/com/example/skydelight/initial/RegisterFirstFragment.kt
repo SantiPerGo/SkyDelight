@@ -109,7 +109,7 @@ class RegisterFirstFragment : Fragment() {
         }
     }
 
-    private fun elementsVisibility(state: Boolean){
+    fun elementsVisibility(state: Boolean){
         val elementsArray = arrayOf(binding.txtTitle, binding.txtName, binding.FieldName,
             binding.txtBirthday, binding.numberPickerAge, binding.txtSex, binding.radioGroupSex,
             binding.btnNext, binding.btnReturn)

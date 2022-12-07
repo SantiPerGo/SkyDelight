@@ -59,7 +59,7 @@ class RecoverPasswordFragment : Fragment() {
         }
     }
 
-    private fun elementsVisibility(state: Boolean){
+    fun elementsVisibility(state: Boolean){
         val elementsArray = arrayOf(binding.recoverTitle, binding.recoverSubtitle,
             binding.txtEmail, binding.FieldEmail, binding.btnRecover, binding.btnReturn)
 

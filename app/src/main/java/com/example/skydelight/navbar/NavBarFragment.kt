@@ -143,12 +143,12 @@ class NavBarFragment : Fragment() {
                 fifthDialog, _ -> fifthDialog.dismiss()
 
                 // Setting parameters for the next fragment
-                val fragment = TestDataFragment()
+                val fragment = TestAnswerFragment()
                 fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
 
                 // Changing fragment
-                updateNavBarHost(fragment, R.id.navbar_test_data_fragment, false)
-                itemId = R.id.nav_test
+                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
+                itemId = R.id.navbar_test_answer_fragment
                 binding.navBar.selectedItemId = R.id.nav_test
                 updateDialogButton(sixthDialog.show())
             }
@@ -213,12 +213,12 @@ class NavBarFragment : Fragment() {
             .setPositiveButton("Omitir") {
                 firstDialog, _ -> firstDialog.dismiss()
                 // Setting parameters for the next fragment
-                val fragment = TestDataFragment()
+                val fragment = TestAnswerFragment()
                 fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
 
                 // Changing fragment
-                updateNavBarHost(fragment, R.id.navbar_test_data_fragment, true)
-                itemId = R.id.nav_test
+                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
+                itemId = R.id.navbar_test_answer_fragment
                 binding.navBar.selectedItemId = R.id.nav_test
                 updateDialogButton(sixthDialog.show())
             }

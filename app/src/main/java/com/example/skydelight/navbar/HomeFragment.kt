@@ -2,20 +2,26 @@ package com.example.skydelight.navbar
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.BuildConfig
+import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarHomeBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import okhttp3.*
+import okhttp3.FormBody
+import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -39,18 +45,6 @@ class HomeFragment : Fragment() {
 
         // Showing initial random advice
         showAdvice{}
-
-        // Show random background
-        showBackground()
-    }
-
-    private fun showBackground() {
-        val imageArray = arrayOf(R.drawable.wallpaper_beach_3, R.drawable.wallpaper_flowers,
-            R.drawable.wallpaper_leafs, R.drawable.wallpaper_mountain, R.drawable.wallpaper_mountain_2,
-            R.drawable.wallpaper_road, R.drawable.wallpaper_sea, R.drawable.wallpaper_sky,
-            R.drawable.wallpaper_tropical, R.drawable.wallpaper_wheat)
-
-        binding.imgBackground.setImageResource(imageArray[(imageArray.indices).random()])
     }
 
     // Function to connect with the api
@@ -124,9 +118,34 @@ class HomeFragment : Fragment() {
                                 binding.txtTitle.text = "Recomendación\n${JSONObject(it).getString("id")} de 50"
                                 binding.textView.text = JSONObject(it).getString("consejo")
                                 function()
+
+                                // Show random background
+                                showBackground(true)
                             }
                         }
                 }
         }
+    }
+
+    private fun showBackground(animation: Boolean = false) {
+        val imageArray = arrayOf(R.drawable.wallpaper_beach_3, R.drawable.wallpaper_flowers,
+            R.drawable.wallpaper_leafs, R.drawable.wallpaper_mountain, R.drawable.wallpaper_mountain_2,
+            R.drawable.wallpaper_road, R.drawable.wallpaper_sea, R.drawable.wallpaper_sky,
+            R.drawable.wallpaper_tropical, R.drawable.wallpaper_wheat)
+
+        if(animation) {
+            val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
+            val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
+
+            fadeOutAnimation.duration = 500
+            fadeInAnimation.duration = 500
+
+            binding.imgBackground.startAnimation(fadeOutAnimation)
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.imgBackground.setImageResource(imageArray[(imageArray.indices).random()])
+                binding.imgBackground.startAnimation(fadeInAnimation)
+            }, 500)
+        } else
+            binding.imgBackground.setImageResource(imageArray[(imageArray.indices).random()])
     }
 }

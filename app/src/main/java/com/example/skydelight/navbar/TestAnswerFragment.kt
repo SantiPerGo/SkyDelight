@@ -27,7 +27,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 private const val TEST_PARAM = "test"
-private const val RESULT_PARAM = "test_result"
 private const val SCORE_PARAM = "score"
 private const val STRESS_PARAM = "stress"
 private const val BTNCANCEL_PARAM = "btn_cancel"

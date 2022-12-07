@@ -98,7 +98,7 @@ class RegisterSecondFragment : Fragment() {
         }
     }
 
-    private fun elementsVisibility(state: Boolean){
+    fun elementsVisibility(state: Boolean){
         val elementsArray = arrayOf(binding.txtTitle, binding.txtEmail, binding.FieldEmail,
             binding.txtPassword, binding.FieldPassword, binding.txtConfirmPassword,
             binding.FieldConfirmPassword, binding.btnCreateAccount, binding.btnReturn)
