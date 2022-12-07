@@ -39,6 +39,18 @@ class HomeFragment : Fragment() {
 
         // Showing initial random advice
         showAdvice{}
+
+        // Show random background
+        showBackground()
+    }
+
+    private fun showBackground() {
+        val imageArray = arrayOf(R.drawable.wallpaper_beach_3, R.drawable.wallpaper_flowers,
+            R.drawable.wallpaper_leafs, R.drawable.wallpaper_mountain, R.drawable.wallpaper_mountain_2,
+            R.drawable.wallpaper_road, R.drawable.wallpaper_sea, R.drawable.wallpaper_sky,
+            R.drawable.wallpaper_tropical, R.drawable.wallpaper_wheat)
+
+        binding.imgBackground.setImageResource(imageArray[(imageArray.indices).random()])
     }
 
     // Function to connect with the api

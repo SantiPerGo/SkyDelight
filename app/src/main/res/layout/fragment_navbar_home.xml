@@ -8,6 +8,19 @@
     android:background="?attr/fragment_background"
     tools:context=".navbar.HomeFragment">
 
+    <ImageView
+        android:id="@+id/imgBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:alpha="0.25"
+        android:contentDescription="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
@@ -17,6 +30,10 @@
         android:text="@string/loading"
         android:textColor="?attr/text_color"
         android:textStyle="bold"
+        android:shadowColor="?attr/text_color"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
@@ -37,6 +54,10 @@
         android:gravity="center"
         android:textColor="?attr/text_color"
         android:breakStrategy="simple"
+        android:shadowColor="?attr/text_color"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
