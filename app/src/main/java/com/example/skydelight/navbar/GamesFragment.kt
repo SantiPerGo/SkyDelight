@@ -2,7 +2,6 @@ package com.example.skydelight.navbar
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -40,24 +39,35 @@ class GamesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Error validation
+        val errorDialog = MaterialAlertDialogBuilder(findNavController().context)
+            .setTitle("Error de Incompatibilidad con ARCore")
+            .setMessage("Parece que tu dispositivo no es compatible con realidad aumentada (ARCore)")
+            .setNeutralButton("¡No!"){ dialog, _ -> dialog.dismiss() }
+
         // Loading pictures on view pager and connecting it with dots tab layout
         val imagesArray = arrayOf(R.drawable.wallpaper_beach_2, R.drawable.wallpaper_wingsuit)
         val viewPagerAdapter = ViewPageAdapter(requireContext(), imagesArray)
         binding.viewPagerMain.adapter = viewPagerAdapter
         binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
 
+        // Relax AR Button
+        binding.btnStart.setOnClickListener {
+            if(isCompatibleWithArCore()) {
+                val intent = Intent(requireContext(), UnityActivity::class.java)
+                intent.putExtra("SceneName", "extremeAR")
+                startActivity(intent)
+            } else { updateDialogButton(errorDialog.show()) }
+        }
+
+        // Pictures Actions
         binding.viewPagerMain.addOnPageChangeListener ( object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
-                val errorDialog = MaterialAlertDialogBuilder(findNavController().context)
-                    .setTitle("Error de Incompatibilidad con ARCore")
-                    .setMessage("Parece que tu dispositivo no es compatible con realidad aumentada (ARCore)")
-                    .setNeutralButton("¡No!"){ dialog, _ -> dialog.dismiss() }
-
-                // Relax AR
-                if(binding.txtARTitle.text == getString(R.string.games_relaxAR_title)) {
-                    binding.txtARTitle.text = getString(R.string.games_extremeAR_title)
+                // Extreme AR
+                if(binding.txtSubtitle.text == getString(R.string.games_relaxAR_title)) {
+                    binding.txtSubtitle.text = getString(R.string.games_extremeAR_title)
                     binding.txtDescription.text = getString(R.string.games_extremeAR_description)
                     binding.btnStart.setOnClickListener {
                         if(isCompatibleWithArCore()) {
@@ -68,9 +78,9 @@ class GamesFragment : Fragment() {
                     }
                     updateColors(R.attr.btn_text_color_blue)
                 }
-                // Extreme AR
+                // Relax AR
                 else {
-                    binding.txtARTitle.text = getString(R.string.games_relaxAR_title)
+                    binding.txtSubtitle.text = getString(R.string.games_relaxAR_title)
                     binding.txtDescription.text = getString(R.string.games_relaxAR_description)
                     binding.btnStart.setOnClickListener {
                         if(isCompatibleWithArCore()) {
@@ -89,20 +99,18 @@ class GamesFragment : Fragment() {
         // Getting reference to resource color
         val typedValue = TypedValue()
         requireContext().theme.resolveAttribute(resource, typedValue, true)
-
-        // Getting color and shadow
         val textColor = typedValue.data
-        val shadowRadius = 5f
 
         // Changing colors
-        binding.txtTitle.setTextColor(textColor)
-        binding.txtTitle.setShadowLayer(shadowRadius,0f, 0f, textColor)
-        binding.txtARTitle.setTextColor(textColor)
-        binding.txtARTitle.setShadowLayer(shadowRadius,0f, 0f, textColor)
-        binding.txtDescription.setTextColor(textColor)
-        binding.txtDescription.setShadowLayer(shadowRadius,0f, 0f, textColor)
-        binding.btnStart.setTextColor(textColor)
-        binding.btnStart.setShadowLayer(shadowRadius,0f, 0f, textColor)
+        val elementsArray = arrayOf(binding.txtTitle, binding.txtSubtitle,
+            binding.txtDescription, binding.btnStart)
+
+        for(element in elementsArray){
+            element.setTextColor(textColor)
+            element.setShadowLayer(5f,0f, 0f, textColor)
+        }
+
+        // Changing button design
         (binding.btnStart as MaterialButton).strokeColor = ColorStateList.valueOf(textColor)
         (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
         binding.tabLayout.tabRippleColor = ColorStateList.valueOf(textColor)

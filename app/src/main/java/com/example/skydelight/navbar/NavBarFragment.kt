@@ -64,7 +64,7 @@ class NavBarFragment : Fragment() {
         backAction()
 
         // Setting Img Help buttons
-        ImgAction()
+        imgAction()
 
         // Setting navbar buttons
         navBarActions()
@@ -365,7 +365,7 @@ class NavBarFragment : Fragment() {
         })
     }
 
-    private fun ImgAction(){
+    private fun imgAction(){
         binding.ImgReload.setOnClickListener {
             // Hiding Img Reload
             updateImgReload(false)

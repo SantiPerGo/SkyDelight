@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.res.Resources
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,6 +68,9 @@ class TestAnswerFragment : Fragment() {
     @SuppressLint("SetTextI18n", "DiscouragedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Deactivating help fab
+        (parentFragment as NavBarFragment).updateImgHelp(false)
 
         // Variable to change and save test questions
         lateinit var testAnswer: String
@@ -350,8 +351,7 @@ class TestAnswerFragment : Fragment() {
                 binding.progressBar, null, null, (parentFragment as NavBarFragment))
             {
                 // Setting parameters for the next fragment
-                val bundle = bundleOf(TEST_PARAM to testNumber, RESULT_PARAM to true,
-                    SCORE_PARAM to result, STRESS_PARAM to explanation)
+                val bundle = bundleOf(TEST_PARAM to testNumber, SCORE_PARAM to result, STRESS_PARAM to explanation)
 
                 val fragment = TestDataFragment()
                 fragment.arguments = bundle

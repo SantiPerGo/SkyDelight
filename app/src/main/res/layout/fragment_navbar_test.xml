@@ -9,6 +9,31 @@
     android:orientation="vertical"
     tools:context=".navbar.TestFragment">
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerMain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:clickable="true"
+        app:tabPaddingStart="20dp"
+        app:tabPaddingEnd="20dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_tab_layout_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_tab_layout_top" />
+
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
@@ -16,8 +41,12 @@
         android:text="@string/test_title"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
-        android:textColor="?attr/text_color"
+        android:textColor="?attr/btn_text_color_green"
         android:textStyle="bold"
+        android:shadowColor="?attr/btn_text_color_green"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
@@ -27,204 +56,177 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
-    <Button
-        android:id="@+id/btnSISCO"
-        style="@style/Widget.Material3.Button.TonalButton"
+    <TextView
+        android:id="@+id/txtSubtitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
-        android:backgroundTint="?attr/btn_background_blue"
         android:text="@string/test_sisco"
-        android:textColor="?attr/btn_text_color_blue"
-        android:state_enabled="true"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:rippleColor="?attr/btn_text_color_blue"
-        app:cornerRadius="@dimen/corner_radius"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_button1_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button1_top" />
-
-    <ProgressBar
-        android:id="@+id/progressBarSISCO"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_button1_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button1_top" />
-
-    <!--
-        To use border in buttons
-        app:strokeColor="?attr/btn_text_color_blue"
-        app:strokeWidth="2dp"-->
-
-    <Button
-        android:id="@+id/btnSVQ"
-        style="@style/Widget.Material3.Button.TonalButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         android:fontFamily="@font/comfortaa"
-        android:backgroundTint="?attr/btn_background_green"
-        android:text="@string/test_svq"
+        android:gravity="center"
         android:textColor="?attr/btn_text_color_green"
-        android:state_enabled="true"
+        android:breakStrategy="simple"
+        android:shadowColor="?attr/btn_text_color_green"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
         app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:rippleColor="?attr/btn_text_color_green"
-        app:cornerRadius="@dimen/corner_radius"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_button2_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_ar_title_bottom"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button2_top" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_ar_title_top" />
 
-    <ProgressBar
-        android:id="@+id/progressBarSVQ"
-        style="?android:attr/progressBarStyle"
+    <TextView
+        android:id="@+id/txtNumberOfQuestions"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_button2_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        android:text="@string/test_sisco_number"
+        android:fontFamily="@font/comfortaa"
+        android:gravity="center"
+        android:textColor="?attr/btn_text_color_green"
+        android:breakStrategy="simple"
+        android:shadowColor="?attr/btn_text_color_green"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="@dimen/min_size"
+        app:autoSizeMaxTextSize="@dimen/max_size"
+        app:autoSizeStepGranularity="@dimen/granularity_size"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_description_top"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button2_top" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_ar_title_bottom" />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/test_sisco_description"
+        android:fontFamily="@font/comfortaa"
+        android:gravity="center"
+        android:textColor="?attr/btn_text_color_green"
+        android:breakStrategy="simple"
+        android:shadowColor="?attr/btn_text_color_green"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="@dimen/min_size"
+        app:autoSizeMaxTextSize="@dimen/max_size"
+        app:autoSizeStepGranularity="@dimen/granularity_size"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_description_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline_description_top" />
 
     <Button
-        android:id="@+id/btnPSS"
-        style="@style/Widget.Material3.Button.TonalButton"
+        android:id="@+id/btnStart"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/comfortaa"
-        android:backgroundTint="?attr/btn_background_blue"
-        android:text="@string/test_pss"
-        android:textColor="?attr/btn_text_color_blue"
         android:state_enabled="true"
+        android:text="@string/btn_start"
+        android:textColor="?attr/btn_text_color_green"
+        android:textStyle="bold"
+        android:shadowColor="?attr/btn_text_color_green"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
+        app:cornerRadius="@dimen/corner_radius"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
         app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
-        app:rippleColor="?attr/btn_text_color_blue"
-        app:cornerRadius="@dimen/corner_radius"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_button3_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button3_top" />
-
-    <ProgressBar
-        android:id="@+id/progressBarPSS"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_button3_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_start_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button3_top" />
-
-    <Button
-        android:id="@+id/btnSVS"
-        style="@style/Widget.Material3.Button.TonalButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
-        android:backgroundTint="?attr/btn_background_green"
-        android:text="@string/test_svs"
-        android:textColor="?attr/btn_text_color_green"
-        android:state_enabled="true"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
+        app:layout_constraintTop_toTopOf="@+id/guideline_start_top"
         app:rippleColor="?attr/btn_text_color_green"
-        app:cornerRadius="@dimen/corner_radius"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button4_top" />
+        app:strokeColor="?attr/btn_text_color_green"
+        tools:ignore="TextContrastCheck" />
 
     <ProgressBar
-        android:id="@+id/progressBarSVS"
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
+        android:indeterminate="true"
+        android:indeterminateTint="?attr/btn_text_color_green"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_start_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_button4_top" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_start_top" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="@dimen/guideline_navbar_top" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_title_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.13" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button1_top"
+        android:id="@+id/guideline_ar_title_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.16" />
+        app:layout_constraintGuide_percent="0.17" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button1_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button2_top"
+        android:id="@+id/guideline_ar_title_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.36" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button2_bottom"
+        android:id="@+id/guideline_description_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.53" />
+        app:layout_constraintGuide_percent="0.45" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button3_top"
+        android:id="@+id/guideline_description_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.56" />
+        app:layout_constraintGuide_percent="0.71" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button3_bottom"
+        android:id="@+id/guideline_start_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.73" />
+        app:layout_constraintGuide_percent="0.74" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_button4_top"
+        android:id="@+id/guideline_start_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.76" />
+        app:layout_constraintGuide_percent="0.84" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_bottom"
+        android:id="@+id/guideline_tab_layout_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_tab_layout_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

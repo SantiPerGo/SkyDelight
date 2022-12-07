@@ -1,24 +1,26 @@
 package com.example.skydelight.navbar
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
+import androidx.viewpager.widget.ViewPager
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
-import com.example.skydelight.custom.User
 import com.example.skydelight.custom.ValidationsDialogsRequests
+import com.example.skydelight.custom.ViewPageAdapter
 import com.example.skydelight.databinding.FragmentNavbarTestBinding
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -27,10 +29,8 @@ import okhttp3.Request
 import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.math.min
 
 private const val TEST_PARAM = "test"
-private const val RESULT_PARAM = "test_result"
 
 class TestFragment : Fragment() {
     // Binding variable to use elements in the xml layout
@@ -49,11 +49,79 @@ class TestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Changing to test data fragment
-        binding.btnSISCO.setOnClickListener { updateTestCalendar(1) }
-        binding.btnSVQ.setOnClickListener { updateTestCalendar(2) }
-        binding.btnPSS.setOnClickListener { updateTestCalendar(3) }
-        binding.btnSVS.setOnClickListener { updateTestCalendar(4) }
+        // Loading pictures on view pager and connecting it with dots tab layout
+        val imagesArray = arrayOf(R.drawable.wallpaper_beach, R.drawable.wallpaper_wingsuit,
+            R.drawable.wallpaper_beach, R.drawable.wallpaper_night)
+        val viewPagerAdapter = ViewPageAdapter(requireContext(), imagesArray)
+        binding.viewPagerMain.adapter = viewPagerAdapter
+        binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
+
+        // SISCO
+        binding.btnStart.setOnClickListener { updateTestCalendar(1) }
+
+        // Pictures Actions
+        binding.viewPagerMain.addOnPageChangeListener ( object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    // SISCO
+                    0 -> {
+                        binding.txtSubtitle.text = getString(R.string.test_sisco)
+                        binding.txtDescription.text = getString(R.string.test_sisco_description)
+                        binding.txtNumberOfQuestions.text = getString(R.string.test_sisco_number)
+                        binding.btnStart.setOnClickListener { updateTestCalendar(1) }
+                        updateColors(R.attr.btn_text_color_green)
+                    }
+                    // SVQ
+                    1 -> {
+                        binding.txtSubtitle.text = getString(R.string.test_svq)
+                        binding.txtDescription.text = getString(R.string.test_svq_description)
+                        binding.txtNumberOfQuestions.text = getString(R.string.test_svq_number)
+                        binding.btnStart.setOnClickListener { updateTestCalendar(2) }
+                        updateColors(R.attr.btn_text_color_blue)
+                    }
+                    // PSS
+                    2 -> {
+                        binding.txtSubtitle.text = getString(R.string.test_pss)
+                        binding.txtDescription.text = getString(R.string.test_pss_description)
+                        binding.txtNumberOfQuestions.text = getString(R.string.test_pss_number)
+                        binding.btnStart.setOnClickListener { updateTestCalendar(3) }
+                        updateColors(R.attr.btn_text_color_yellow)
+                    }
+                    // SVS
+                    3 -> {
+                        binding.txtSubtitle.text = getString(R.string.test_svs)
+                        binding.txtDescription.text = getString(R.string.test_svs_description)
+                        binding.txtNumberOfQuestions.text = getString(R.string.test_svs_number)
+                        binding.btnStart.setOnClickListener { updateTestCalendar(4) }
+                        updateColors(R.attr.btn_text_color_red)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun updateColors(resource: Int) {
+        // Getting reference to resource color
+        val typedValue = TypedValue()
+        requireContext().theme.resolveAttribute(resource, typedValue, true)
+        val textColor = typedValue.data
+
+        // Changing colors
+        val elementsArray = arrayOf(binding.txtTitle, binding.txtSubtitle,
+            binding.txtNumberOfQuestions, binding.txtDescription, binding.btnStart)
+
+        for(element in elementsArray){
+            element.setTextColor(textColor)
+            element.setShadowLayer(5f,0f, 0f, textColor)
+        }
+
+        // Changing button design
+        (binding.btnStart as MaterialButton).strokeColor = ColorStateList.valueOf(textColor)
+        (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
+        binding.tabLayout.tabRippleColor = ColorStateList.valueOf(textColor)
+        binding.progressBar.indeterminateTintList = ColorStateList.valueOf(textColor)
     }
 
     private fun updateTestCalendar(testNumber: Int){
@@ -65,42 +133,15 @@ class TestFragment : Fragment() {
             val user = userDao.getUser()[0]
 
             // Choosing api url
-            val apiUrl: String
-            val btnText: String
-            val progressBar: ProgressBar
-            val buttonArray = arrayListOf(binding.btnSISCO, binding.btnSVQ, binding.btnPSS, binding.btnSVS)
-
-            when(testNumber) {
+            val apiUrl = when(testNumber) {
                 // SISCO Test
-                1 -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/"
-                    btnText = binding.btnSISCO.text.toString()
-                    progressBar = binding.progressBarSISCO
-                }
+                1 -> "https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/"
                 // SVQ Test
-                2 -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/lista-testsqv-personal/"
-                    btnText = binding.btnSVQ.text.toString()
-                    progressBar = binding.progressBarSVQ
-                    buttonArray.remove(binding.btnSVQ)
-                    buttonArray.add(0, binding.btnSVQ)
-                }
+                2 -> "https://apiskydelight.herokuapp.com/api/lista-testsqv-personal/"
                 // PSS Test
-                3 -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/lista-testpss-personal/"
-                    btnText = binding.btnPSS.text.toString()
-                    progressBar = binding.progressBarPSS
-                    buttonArray.remove(binding.btnPSS)
-                    buttonArray.add(0, binding.btnPSS)
-                }
+                3 -> "https://apiskydelight.herokuapp.com/api/lista-testpss-personal/"
                 // SVS Test
-                else -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/lista-testsvs-personal/"
-                    btnText = binding.btnSVS.text.toString()
-                    progressBar = binding.progressBarSVS
-                    buttonArray.remove(binding.btnSVS)
-                    buttonArray.add(0, binding.btnSVS)
-                }
+                else -> "https://apiskydelight.herokuapp.com/api/lista-testsvs-personal/"
             }
 
             // Making http request
@@ -112,13 +153,13 @@ class TestFragment : Fragment() {
                 .build()
 
             ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-                btnText, buttonArray[0], buttonArray[1], buttonArray[2], buttonArray[3],
-                progressBar, null,null, (parentFragment as NavBarFragment))
+                getString(R.string.btn_start), binding.btnStart, null, null, null,
+                binding.progressBar, null,null, (parentFragment as NavBarFragment))
             {
                 val testData = JSONObject(it).getString("data")
 
                 if(testData != "[]"){
-                    val lastTest = testData.substring(testData.indexOf("{"), testData.indexOf("}")+1)
+                    val lastTest = testData.substring(testData.lastIndexOf("{"), testData.lastIndexOf("}")+1)
                     var dateOfTest = JSONObject(lastTest).getString("created_at").replace("T", " ")
                     dateOfTest = dateOfTest.substring(0, dateOfTest.indexOf(".")+4)
                     when(testNumber){
@@ -230,11 +271,11 @@ class TestFragment : Fragment() {
 
             if(startTest){
                 // Setting parameters for the next fragment
-                val fragment = TestDataFragment()
-                fragment.arguments = bundleOf(TEST_PARAM to testNumber, RESULT_PARAM to false)
+                val fragment = TestAnswerFragment()
+                fragment.arguments = bundleOf(TEST_PARAM to testNumber)
 
                 // Fragment enters from right
-                (parentFragment as NavBarFragment).updateNavBarHost(fragment, R.id.navbar_test_data_fragment, true)
+                (parentFragment as NavBarFragment).updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
             }
         }
     }
