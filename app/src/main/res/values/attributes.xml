@@ -5,6 +5,7 @@
     <attr name="loading_icon_2" format="reference" />
 
     <!-- Background Pictures -->
+    <attr name="loading_screen_heart" format="reference" />
     <attr name="start_screen_picture" format="reference" />
 
     <!-- Background Color -->

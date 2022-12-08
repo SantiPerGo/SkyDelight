@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/skydelight_heart"
+        android:src="?attr/loading_screen_heart"
         app:layout_constraintBottom_toTopOf="@+id/guideline_heart_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_heart_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_heart_left"

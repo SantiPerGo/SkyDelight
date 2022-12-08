@@ -20,6 +20,7 @@
         <item name="loading_icon_2">@drawable/skydelight_logo_night_2</item>
 
         <!-- Background Pictures -->
+        <item name="loading_screen_heart">@drawable/skydelight_heart_night</item>
         <item name="start_screen_picture">@drawable/wallpaper_night</item>
 
         <!-- Background Color -->

@@ -75,6 +75,7 @@
 
     <!-- Home Navbar Fragment Strings -->
     <string name="home_title">¡Qué Bien que Volviste!</string>
+    <string name="home_credits">Powered by Unsplash</string>
 
     <!-- Games Navbar Fragment Strings -->
     <string name="games_title">¡Hora de Relajarse!</string>

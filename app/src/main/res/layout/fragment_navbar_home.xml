@@ -67,6 +67,30 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_advice_top" />
 
+    <TextView
+        android:id="@+id/txtCredits"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/comfortaa"
+        android:gravity="center"
+        android:text="@string/home_credits"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textStyle="bold"
+        android:shadowColor="?attr/colorSecondaryVariant"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="@dimen/min_size"
+        app:autoSizeMaxTextSize="@dimen/max_size"
+        app:autoSizeStepGranularity="@dimen/granularity_size"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@id/guideline_advice_bottom"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
@@ -83,6 +107,13 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_advice_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.83" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
