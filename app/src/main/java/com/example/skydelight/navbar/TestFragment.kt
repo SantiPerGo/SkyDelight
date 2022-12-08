@@ -1,14 +1,10 @@
 package com.example.skydelight.navbar
 
-import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -17,10 +13,10 @@ import androidx.viewpager.widget.ViewPager
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.custom.ViewPageAdapter
 import com.example.skydelight.databinding.FragmentNavbarTestBinding
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -104,24 +100,20 @@ class TestFragment : Fragment() {
 
     private fun updateColors(resource: Int) {
         // Getting reference to resource color
-        val typedValue = TypedValue()
-        requireContext().theme.resolveAttribute(resource, typedValue, true)
-        val textColor = typedValue.data
-
-        // Changing colors
-        val elementsArray = arrayOf(binding.txtTitle, binding.txtSubtitle,
-            binding.txtNumberOfQuestions, binding.txtDescription, binding.btnStart)
-
-        for(element in elementsArray){
-            element.setTextColor(textColor)
-            element.setShadowLayer(5f,0f, 0f, textColor)
-        }
+        val textColor = ElementsEditor().getColor(requireContext(), resource)
 
         // Changing button design
-        (binding.btnStart as MaterialButton).strokeColor = ColorStateList.valueOf(textColor)
-        (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
         binding.tabLayout.tabRippleColor = ColorStateList.valueOf(textColor)
         binding.progressBar.indeterminateTintList = ColorStateList.valueOf(textColor)
+
+        // Changing colors
+        val textsArray = arrayListOf(binding.txtTitle, binding.txtSubtitle,
+            binding.txtNumberOfQuestions, binding.txtDescription)
+
+        val buttonsArray = arrayListOf(binding.btnStart)
+
+        // Updating colors
+        ElementsEditor().updateColors(resource, requireContext(), textsArray, buttonsArray)
     }
 
     private fun updateTestCalendar(testNumber: Int){
@@ -258,10 +250,7 @@ class TestFragment : Fragment() {
                         .show()
 
                     // Changing neutral button position to center
-                    val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-                    val layoutParams = positiveButton.layoutParams as LinearLayout.LayoutParams
-                    layoutParams.weight = 10f
-                    positiveButton.layoutParams = layoutParams
+                    ElementsEditor().updateDialogButton(dialog)
                 } else{
                     startTest = true
                 }

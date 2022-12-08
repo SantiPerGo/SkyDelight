@@ -5,21 +5,17 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.example.skydelight.R
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ViewPageAdapter
 import com.example.skydelight.databinding.FragmentNavbarGamesBinding
 import com.example.skydelight.unity.UnityActivity
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.ar.core.ArCoreApk
 
@@ -57,7 +53,7 @@ class GamesFragment : Fragment() {
                 val intent = Intent(requireContext(), UnityActivity::class.java)
                 intent.putExtra("SceneName", "extremeAR")
                 startActivity(intent)
-            } else { updateDialogButton(errorDialog.show()) }
+            } else { ElementsEditor().updateDialogButton(errorDialog.show()) }
         }
 
         // Pictures Actions
@@ -74,7 +70,7 @@ class GamesFragment : Fragment() {
                             val intent = Intent(requireContext(), UnityActivity::class.java)
                             intent.putExtra("SceneName", "extremeAR")
                             startActivity(intent)
-                        } else { updateDialogButton(errorDialog.show()) }
+                        } else { ElementsEditor().updateDialogButton(errorDialog.show()) }
                     }
                     updateColors(R.attr.btn_text_color_blue)
                 }
@@ -87,7 +83,7 @@ class GamesFragment : Fragment() {
                             val intent = Intent(requireContext(), UnityActivity::class.java)
                             intent.putExtra("SceneName", "relaxAR")
                             startActivity(intent)
-                        } else { updateDialogButton(errorDialog.show()) }
+                        } else { ElementsEditor().updateDialogButton(errorDialog.show()) }
                     }
                     updateColors(R.attr.btn_text_color_green)
                 }
@@ -96,32 +92,17 @@ class GamesFragment : Fragment() {
     }
 
     private fun updateColors(resource: Int) {
-        // Getting reference to resource color
-        val typedValue = TypedValue()
-        requireContext().theme.resolveAttribute(resource, typedValue, true)
-        val textColor = typedValue.data
-
-        // Changing colors
-        val elementsArray = arrayOf(binding.txtTitle, binding.txtSubtitle,
+        // Creating arrays
+        val textsArray = arrayListOf(binding.txtTitle, binding.txtSubtitle,
             binding.txtDescription, binding.btnStart)
+        val buttonsArray = arrayListOf(binding.btnStart)
 
-        for(element in elementsArray){
-            element.setTextColor(textColor)
-            element.setShadowLayer(5f,0f, 0f, textColor)
-        }
+        // Updating design
+        ElementsEditor().updateColors(resource, requireContext(), textsArray, buttonsArray)
 
         // Changing button design
-        (binding.btnStart as MaterialButton).strokeColor = ColorStateList.valueOf(textColor)
-        (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
-        binding.tabLayout.tabRippleColor = ColorStateList.valueOf(textColor)
-    }
-
-    private fun updateDialogButton(dialog: AlertDialog){
-        // Changing neutral button position to center
-        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-        val layoutParams = positiveButton.layoutParams as LinearLayout.LayoutParams
-        layoutParams.weight = 10f
-        positiveButton.layoutParams = layoutParams
+        binding.tabLayout.tabRippleColor =
+            ColorStateList.valueOf(ElementsEditor().getColor(requireContext(), resource))
     }
 
     private fun isCompatibleWithArCore(): Boolean{

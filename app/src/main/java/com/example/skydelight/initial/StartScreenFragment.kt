@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.skydelight.MainActivity
 import com.example.skydelight.R
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.databinding.FragmentStartScreenBinding
 
 class StartScreenFragment : Fragment() {
@@ -42,7 +43,8 @@ class StartScreenFragment : Fragment() {
 
         // Changing to the login fragment
         binding.btnLogin.setOnClickListener{
-            deactivateButtons()
+            ElementsEditor().elementsClickableState(false, arrayListOf(binding.txtRecoverPassword),
+                arrayListOf(binding.btnLogin, binding.btnRegister))
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_startScreen_to_login)
@@ -51,7 +53,8 @@ class StartScreenFragment : Fragment() {
 
         // Changing to the register first fragment
         binding.btnRegister.setOnClickListener {
-            deactivateButtons()
+            ElementsEditor().elementsClickableState(false, arrayListOf(binding.txtRecoverPassword),
+                arrayListOf(binding.btnLogin, binding.btnRegister))
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_startScreen_to_registerFirst)
@@ -60,18 +63,13 @@ class StartScreenFragment : Fragment() {
 
         // Changing to the recover password fragment
         binding.txtRecoverPassword.setOnClickListener {
-            deactivateButtons()
+            ElementsEditor().elementsClickableState(false, arrayListOf(binding.txtRecoverPassword),
+                arrayListOf(binding.btnLogin, binding.btnRegister))
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_startScreen_to_recoverPassword)
             }, 500)
         }
-    }
-
-    private fun deactivateButtons() {
-        binding.btnLogin.isClickable = false
-        binding.btnRegister.isClickable = false
-        binding.txtRecoverPassword.isClickable = false
     }
 
     private fun elementsVisibility(state: Boolean){

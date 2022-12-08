@@ -1,9 +1,10 @@
 package com.example.skydelight.navbar
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +15,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
+import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarHomeBinding
 import kotlinx.coroutines.MainScope
@@ -47,14 +50,18 @@ class HomeFragment : Fragment() {
 
         // Showing initial random advice
         showAdvice{}
+
+        // Enabling links
+        Linkify.addLinks(binding.txtCredits, Linkify.WEB_URLS)
+        binding.txtCredits.movementMethod = LinkMovementMethod.getInstance()
     }
 
     // Function to connect with the api
-    @SuppressLint("SetTextI18n")
     fun showAdvice(function:() -> Unit) {
         // Changing texts
         binding.txtTitle.text = getString(R.string.loading)
         binding.textView.text = getString(R.string.loading)
+        binding.txtCredits.text = getString(R.string.loading)
 
         // Launching room database connection
         MainScope().launch {
@@ -122,7 +129,7 @@ class HomeFragment : Fragment() {
                                 function()
 
                                 // Show random background
-                                showBackground(true)
+                                showBackground()
                             }
                         }
                 }
@@ -130,57 +137,72 @@ class HomeFragment : Fragment() {
     }
 
     // Getting wallpaper from pexels API
-    private fun showBackground(animation: Boolean = false) {
-        val pageNumber = (1..5000).random()
+    private fun showBackground() {
+        val pageNumber = (1..5000).shuffled().last()
         val request = Request.Builder()
-            .url("https://api.pexels.com/v1/search?query=nature wallpaper&orientation=portrait&per_page=1&page=$pageNumber")
+            .url("https://api.pexels.com/v1/search?query=nature wallpaper&orientation=portrait&per_page=1&size=small&page=$pageNumber")
             .addHeader("Authorization", BuildConfig.API_KEY_PEXELS).get().build()
 
         ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(),
             requireActivity(),null, null, null, null, null,
             null, null,null, null) {
 
-            // Getting image url
+            // Getting data
             val imageUrlData = JSONObject(it).getString("photos")
+
+            // Getting image url
             var imageUrl = imageUrlData.substringAfter("https:\\/\\/images.pexels.com\\/photos\\/")
                 .substringBefore(".jpeg").replace("\\", "")
             imageUrl = "https://images.pexels.com/photos/$imageUrl.jpeg"
 
+            // Getting photographer info
+            val photographerName = imageUrlData.substringAfter("\"photographer\":\"")
+                .substringBefore("\"")
+
+            // Getting photographer profile link
+            var photographerUrl = imageUrlData.substringAfter("https:\\/\\/www.pexels.com\\/@")
+                .substringBefore("\"")
+            photographerUrl = "https://www.pexels.com/@$photographerUrl/"
+            photographerUrl = "<a href=\"$photographerUrl\">$photographerName</a>"
+
+            // Creating photo and pexels links
+            val photoUrl = "<a href=\"$imageUrl\">Photo</a>"
+            val pexelsUrl = "<a href=\"https://www.pexels.com/\">Pexels</a>"
+            
             // Loading image
             MainScope().launch {
-                if(animation) {
-                    val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
-                    val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
+                // Showing photo, photographer and pexels links
+                binding.txtCredits.text = Html.fromHtml("$photoUrl by $photographerUrl\non $pexelsUrl",
+                    Html.FROM_HTML_MODE_COMPACT)
+                binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(requireContext(), R.attr.text_color))
 
-                    fadeOutAnimation.duration = 500
-                    fadeInAnimation.duration = 500
+                Log.e("TEXT", "$photoUrl by $photographerUrl on $pexelsUrl")
 
-                    activity?.let { activity ->
-                        binding.imgBackground.startAnimation(fadeOutAnimation)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            if(!activity.isDestroyed)
-                                Glide.with(activity)
-                                    .load(imageUrl)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .skipMemoryCache(true)
-                                    .dontTransform()
-                                    .priority(Priority.IMMEDIATE)
-                                    .into(binding.imgBackground)
-                            binding.imgBackground.startAnimation(fadeInAnimation)
-                        }, 500)
-                    }
-                } else
-                    activity?.let { activity ->
-                        if(!activity.isDestroyed)
-                            Glide.with(activity)
+                // Creating animation instances
+                val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
+                val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
+
+                // Setting animation duration
+                fadeOutAnimation.duration = 500
+                fadeInAnimation.duration = 500
+
+                activity?.let { activity ->
+                    context?.let { context ->
+                        if(!activity.isDestroyed) {
+                            binding.imgBackground.startAnimation(fadeOutAnimation)
+                            Glide.with(context)
                                 .load(imageUrl)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .skipMemoryCache(true)
                                 .dontAnimate()
                                 .dontTransform()
                                 .priority(Priority.IMMEDIATE)
+                                .format(DecodeFormat.DEFAULT)
                                 .into(binding.imgBackground)
+                            binding.imgBackground.startAnimation(fadeInAnimation)
+                        }
                     }
+                }
             }
         }
     }

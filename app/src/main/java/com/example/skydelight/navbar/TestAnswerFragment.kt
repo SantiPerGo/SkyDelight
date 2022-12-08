@@ -1,14 +1,11 @@
 package com.example.skydelight.navbar
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,6 +13,7 @@ import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarTestAnswerBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -37,12 +35,18 @@ class TestAnswerFragment : Fragment() {
     private lateinit var res: Resources
     private lateinit var questionAnswers: IntArray
     private lateinit var testQuestion: String
+    private lateinit var testAnswer: String
     private var maxQuestionsNumber = 1
     private var questionNumber = 1
 
     // Variable to receive data from other fragments
     private var testNumber: Int? = null
     private var btnCancelState: Boolean? = null
+
+    // Variable to change and save test questions
+    private var min = 0f
+    private var max = 10f
+    private var answer = -1f
 
     // Getting data from other fragments
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,19 +75,49 @@ class TestAnswerFragment : Fragment() {
         // Deactivating help fab
         (parentFragment as NavBarFragment).updateImgHelp(false)
 
-        // Variable to change and save test questions
-        lateinit var testAnswer: String
-        var min = 0f
-        var max = 10f
-
         // Access to resources
         res = requireContext().resources
 
+        // Update text
+        initVariables()
+
+        binding.btnLeftArrow.setOnClickListener {
+            if(answer == min) {
+                answer = -1f
+                updateAnswer(null, "test_initial_option")
+                ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), true)
+            } else if(answer > min) {
+                answer -= 1f
+                updateAnswer(answer, null)
+            }
+        }
+
+        binding.btnRightArrow.setOnClickListener {
+            if(answer == -1f) {
+                answer = min
+                updateAnswer(answer, null)
+                ElementsEditor().updateButtonState(binding.btnNext, true, requireContext(), true)
+            } else if(answer < max) {
+                answer += 1
+                updateAnswer(answer, null)
+            }
+        }
+
+        // Changing to next question or fragment
+        binding.btnNext.setOnClickListener { nextButtonActions() }
+
+        // Changing to previous question or fragment
+        binding.btnReturn.setOnClickListener { returnButtonValidation() }
+
+        // Disable next button
+        ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), true)
+    }
+
+    private fun initVariables() {
         // Updating text
         when(testNumber){
             // SISCO Test
             1 -> { binding.txtQuestion.text = getString(R.string.test_sisco_question_1)
-                binding.txtAnswer.text = getString(R.string.test_sisco_answer_0)
                 testQuestion = "test_sisco_question_"
                 testAnswer = "test_sisco_answer_"
                 maxQuestionsNumber = 21
@@ -92,7 +126,6 @@ class TestAnswerFragment : Fragment() {
             }
             // SVQ Test
             2 -> { binding.txtQuestion.text = getString(R.string.test_svq_question_1)
-                binding.txtAnswer.text = getString(R.string.test_svq_answer_1)
                 testQuestion = "test_svq_question_"
                 testAnswer = "test_svq_answer_"
                 maxQuestionsNumber = 20
@@ -102,7 +135,6 @@ class TestAnswerFragment : Fragment() {
             }
             // PSS Test
             3 -> { binding.txtQuestion.text = getString(R.string.test_pss_question_1)
-                binding.txtAnswer.text = getString(R.string.test_pss_answer_0)
                 testQuestion = "test_pss_question_"
                 testAnswer = "test_pss_answer_"
                 maxQuestionsNumber = 10
@@ -111,7 +143,6 @@ class TestAnswerFragment : Fragment() {
             }
             // SVS Test
             4 -> { binding.txtQuestion.text = getString(R.string.test_svs_question_1)
-                binding.txtAnswer.text = getString(R.string.test_svs_answer_0)
                 testQuestion = "test_svs_question_"
                 testAnswer = "test_svs_answer_"
                 maxQuestionsNumber = 20
@@ -122,118 +153,117 @@ class TestAnswerFragment : Fragment() {
 
         // Changing title
         binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
+    }
 
-        // Set min, max and current values of seekbar
-        binding.slider.valueFrom = min
-        binding.slider.valueTo = max
-        binding.slider.value = min
-
-        // Updating user answer
-        binding.slider.addOnChangeListener{ _, value, _ ->
+    private fun updateAnswer(answer: Float?, stringName: String?) {
+        if(stringName.isNullOrEmpty() && answer != null)
             binding.txtAnswer.text = getString(res.getIdentifier
-                (testAnswer+value.toInt(), "string", requireContext().packageName))
-        }
+                (testAnswer+answer.toInt(), "string", requireContext().packageName))
+        else if(stringName!!.isNotEmpty())
+            binding.txtAnswer.text = getString(res.getIdentifier
+                (stringName, "string", requireContext().packageName))
+    }
 
-        binding.btnNext.setOnClickListener {
-            // Saving answer
-            questionAnswers[questionNumber - 1] = binding.slider.value.toInt()
+    private fun nextButtonActions() {
+        // Saving answer
+        questionAnswers[questionNumber - 1] = answer.toInt()
 
-            if(questionNumber < maxQuestionsNumber){
-                // Clearing answer
-                binding.slider.value = min
+        if(questionNumber < maxQuestionsNumber){
+            // Clearing answer
+            // binding.slider.value = min
+            answer = -1f
+            updateAnswer(null, "test_initial_option")
+            ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), true)
 
-                // Changing text of button if it's first question
-                if(questionNumber == 1)
-                    binding.btnReturn.text = getString(R.string.btn_return)
+            // Changing text of button if it's first question
+            if(questionNumber == 1)
+                binding.btnReturn.text = getString(R.string.btn_return)
 
-                // Increasing number of question
-                questionNumber = questionNumber.plus(1)
+            // Increasing number of question
+            questionNumber = questionNumber.plus(1)
 
-                // Changing text of button if it's last question
-                if(questionNumber == maxQuestionsNumber)
-                    binding.btnNext.text = getString(R.string.test_btn_end)
+            // Changing text of button if it's last question
+            if(questionNumber == maxQuestionsNumber)
+                binding.btnNext.text = getString(R.string.test_btn_end)
 
-                // Changing to next question
-                binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
-                binding.txtQuestion.text = getString(res.getIdentifier(testQuestion+questionNumber, "string", requireContext().packageName))
-            } else {
-                binding.btnReturn.isClickable = false
-                binding.btnNext.isClickable = false
+            // Changing to next question
+            binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
+            binding.txtQuestion.text = getString(res.getIdentifier(testQuestion+questionNumber,
+                "string", requireContext().packageName))
+        } else {
+            binding.btnReturn.isClickable = false
+            binding.btnNext.isClickable = false
 
-                MaterialAlertDialogBuilder(findNavController().context)
-                    .setTitle("¡Espera!")
-                    .setMessage("¿Realmente Quieres dar por Finalizada la Prueba?")
-                    .setCancelable(false)
-                    .setNeutralButton("¡No!"){ dialog, _ ->
-                        dialog.dismiss()
-                        binding.btnReturn.isClickable = true
-                        binding.btnNext.isClickable = true
-                    }
-                    .setPositiveButton("¡Sí!"){ _, _ ->
-                        // Updating text
-                        var explanation = ""
-                        var result = questionAnswers.sum().toFloat()
-                        when(testNumber){
-                            // SISCO Test
-                            1 -> {
-                                result = (questionAnswers.sum().toFloat() * 100) / 105
-                                explanation = when {
-                                    result <= 33f -> getString(R.string.test_result_low)
-                                    result in 34f..66f -> getString(R.string.test_result_medium)
-                                    else -> getString(R.string.test_result_high)
-                                }
-                            }
-                            // SVQ Test
-                            2 -> {
-                                result = ((questionAnswers.sum().toFloat() - 20) * 100) / 80
-                                explanation = when {
-                                    questionAnswers.sum() <= 49 -> getString(R.string.test_result_vulnerable_low)
-                                    questionAnswers.sum() in 50..69 -> getString(R.string.test_result_vulnerable_medium)
-                                    questionAnswers.sum() in 70..95 -> getString(R.string.test_result_vulnerable_high)
-                                    else -> getString(R.string.test_result_vulnerable_extreme)
-                                }
-                            }
-                            // PSS Test
-                            3 -> {
-                                for(i in questionAnswers.indices)
-                                    if(i+1 == 4 || i+1 == 5 || i+1 == 7 || i+1 == 8)
-                                        when {
-                                            questionAnswers[i] == 0 -> questionAnswers[i] = 4
-                                            questionAnswers[i] == 1 -> questionAnswers[i] = 3
-                                            questionAnswers[i] == 2 -> questionAnswers[i] = 2
-                                            questionAnswers[i] == 3 -> questionAnswers[i] = 1
-                                            else -> questionAnswers[i] = 0
-                                        }
-
-                                explanation = when {
-                                    questionAnswers.sum() <= 13 -> getString(R.string.test_result_low)
-                                    questionAnswers.sum() in 14..26 -> getString(R.string.test_result_medium)
-                                    else -> getString(R.string.test_result_high)
-                                }
-
-                                result = (questionAnswers.sum().toFloat() * 100) / 40
-                            }
-                            // SVS Test
-                            4 -> {
-                                result = questionAnswers.sum().toFloat() / 20
-                                explanation = when {
-                                    result < 1f -> getString(R.string.test_result_vulnerable_low)
-                                    result < 2f -> getString(R.string.test_result_vulnerable_medium)
-                                    result < 3f -> getString(R.string.test_result_vulnerable_high)
-                                    else -> getString(R.string.test_result_vulnerable_extreme)
-                                }
-
-                                result = (result * 100) / 4
+            MaterialAlertDialogBuilder(findNavController().context)
+                .setTitle("¡Espera!")
+                .setMessage("¿Realmente Quieres dar por Finalizada la Prueba?")
+                .setCancelable(false)
+                .setNeutralButton("¡No!"){ dialog, _ ->
+                    dialog.dismiss()
+                    binding.btnReturn.isClickable = true
+                    binding.btnNext.isClickable = true
+                }
+                .setPositiveButton("¡Sí!"){ _, _ ->
+                    // Updating text
+                    var explanation = ""
+                    var result = questionAnswers.sum().toFloat()
+                    when(testNumber){
+                        // SISCO Test
+                        1 -> {
+                            result = (questionAnswers.sum().toFloat() * 100) / 105
+                            explanation = when {
+                                result <= 33f -> getString(R.string.test_result_low)
+                                result in 34f..66f -> getString(R.string.test_result_medium)
+                                else -> getString(R.string.test_result_high)
                             }
                         }
+                        // SVQ Test
+                        2 -> {
+                            result = ((questionAnswers.sum().toFloat() - 20) * 100) / 80
+                            explanation = when {
+                                questionAnswers.sum() <= 49 -> getString(R.string.test_result_vulnerable_low)
+                                questionAnswers.sum() in 50..69 -> getString(R.string.test_result_vulnerable_medium)
+                                questionAnswers.sum() in 70..95 -> getString(R.string.test_result_vulnerable_high)
+                                else -> getString(R.string.test_result_vulnerable_extreme)
+                            }
+                        }
+                        // PSS Test
+                        3 -> {
+                            for(i in questionAnswers.indices)
+                                if(i+1 == 4 || i+1 == 5 || i+1 == 7 || i+1 == 8)
+                                    when {
+                                        questionAnswers[i] == 0 -> questionAnswers[i] = 4
+                                        questionAnswers[i] == 1 -> questionAnswers[i] = 3
+                                        questionAnswers[i] == 2 -> questionAnswers[i] = 2
+                                        questionAnswers[i] == 3 -> questionAnswers[i] = 1
+                                        else -> questionAnswers[i] = 0
+                                    }
 
-                        saveTest(explanation, result, questionAnswers)
-                    }.show()
-            }
+                            explanation = when {
+                                questionAnswers.sum() <= 13 -> getString(R.string.test_result_low)
+                                questionAnswers.sum() in 14..26 -> getString(R.string.test_result_medium)
+                                else -> getString(R.string.test_result_high)
+                            }
+
+                            result = (questionAnswers.sum().toFloat() * 100) / 40
+                        }
+                        // SVS Test
+                        4 -> {
+                            result = questionAnswers.sum().toFloat() / 20
+                            explanation = when {
+                                result < 1f -> getString(R.string.test_result_vulnerable_low)
+                                result < 2f -> getString(R.string.test_result_vulnerable_medium)
+                                result < 3f -> getString(R.string.test_result_vulnerable_high)
+                                else -> getString(R.string.test_result_vulnerable_extreme)
+                            }
+
+                            result = (result * 100) / 4
+                        }
+                    }
+
+                    saveTest(explanation, result, questionAnswers)
+                }.show()
         }
-
-        // Changing to test fragment
-        binding.btnReturn.setOnClickListener { returnButtonValidation() }
     }
 
     fun returnButtonValidation(){
@@ -247,10 +277,7 @@ class TestAnswerFragment : Fragment() {
                 .show()
 
             // Changing neutral button position to center
-            val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-            val layoutParams = positiveButton.layoutParams as LinearLayout.LayoutParams
-            layoutParams.weight = 10f
-            positiveButton.layoutParams = layoutParams
+            ElementsEditor().updateDialogButton(dialog)
         } else if(questionNumber == 1 && btnCancelState == false) {
             binding.btnReturn.isClickable = false
             binding.btnNext.isClickable = false
@@ -282,12 +309,14 @@ class TestAnswerFragment : Fragment() {
             if(questionNumber == 1)
                 binding.btnReturn.text = getString(R.string.btn_cancel)
 
-            // Getting answer
-            binding.slider.value = questionAnswers[questionNumber-1].toFloat()
-
             // Changing to previous question
             binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
             binding.txtQuestion.text = getString(res.getIdentifier(testQuestion+questionNumber, "string", requireContext().packageName))
+
+            // Updating answer
+            answer = questionAnswers[questionNumber-1].toFloat()
+            updateAnswer(answer, null)
+            ElementsEditor().updateButtonState(binding.btnNext, true, requireContext(), true)
         }
     }
 

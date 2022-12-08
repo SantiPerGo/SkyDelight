@@ -30,7 +30,7 @@ class RegisterThirdFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Showing elements
-        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
+        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility() }, 500)
 
         // Changing to the principal fragment
         binding.btnUnderstand.setOnClickListener{
@@ -39,14 +39,11 @@ class RegisterThirdFragment : Fragment() {
         }
     }
 
-    private fun elementsVisibility(state: Boolean){
-        val elementsArray = arrayOf(binding.txtTitle, binding.txtExplanation1, binding.txtExplanation2,
+    private fun elementsVisibility(){
+        val elementsArray = arrayListOf(binding.txtTitle, binding.txtExplanation1, binding.txtExplanation2,
             binding.txtExplanation3, binding.txtExplanation4, binding.txtExplanation5, binding.btnUnderstand)
 
         for(element in elementsArray)
-            if(state)
-                element.animate().alpha(1f)
-            else
-                element.animate().alpha(0f)
+            element.animate().alpha(1f)
     }
 }

@@ -19,8 +19,9 @@
     <dimen name="text_size">20sp</dimen>
     <dimen name="text_input_size">17sp</dimen>
 
-    <!-- Text Shadow's -->
+    <!-- Text Shadow and Image Transparency -->
     <dimen name="shadow_radius">5</dimen>
+    <dimen name="image_alpha">0.35</dimen>
 
     <!-- Guidelines -->
     <dimen name="guideline_top">0.05</dimen>

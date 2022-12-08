@@ -3,22 +3,24 @@ package com.example.skydelight.initial
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.User
+import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentLoginBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import okhttp3.*
+import okhttp3.FormBody
+import okhttp3.Request
 import org.json.JSONObject
-import com.example.skydelight.custom.ValidationsDialogsRequests
 
 class LoginFragment : Fragment() {
     // Binding variable to use elements in the xml layout
@@ -41,38 +43,55 @@ class LoginFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
 
         // Clearing errors when produced
-        binding.editTxtEmail.doOnTextChanged { _, _, _, _ -> if(binding.FieldEmail.error != null) binding.FieldEmail.error = null }
-        binding.editTxtPassword.doOnTextChanged { _, _, _, _ -> if(binding.FieldPassword.error != null) binding.FieldPassword.error = null }
+        binding.editTxtEmail.doOnTextChanged { _, _, _, _ ->
+            if(binding.FieldEmail.error != null) binding.FieldEmail.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
+
+        binding.editTxtPassword.doOnTextChanged { _, _, _, _ ->
+            if(binding.FieldPassword.error != null) binding.FieldPassword.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
 
         binding.btnLogin.setOnClickListener {
             val email = binding.editTxtEmail.text.toString()
             val password = binding.editTxtPassword.text.toString()
             if(ValidationsDialogsRequests().validateEmail(email, binding.FieldEmail)
                 && ValidationsDialogsRequests().validatePassword(password, binding.FieldPassword)){
-                buttonsClickableState(false)
+                ElementsEditor().elementsClickableState(false, null, arrayListOf(binding.btnLogin, binding.btnReturn))
                 login(email, password)
             }
         }
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
-            buttonsClickableState(false)
+            ElementsEditor().elementsClickableState(false, null, arrayListOf(binding.btnLogin, binding.btnReturn))
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_login_to_startScreen)
                 findNavController().popBackStack(R.id.login_fragment, true)
             }, 500)
         }
+
+        // Disable login button
+        ElementsEditor().updateButtonState(binding.btnLogin, false, requireContext(), false)
     }
 
-    private fun buttonsClickableState(state: Boolean) {
-        binding.btnLogin.isClickable = state
-        binding.btnReturn.isClickable = state
+    private fun validateInputsNotEmpty() {
+        // Disable or enable login button
+        if(binding.editTxtEmail.text!!.isNotEmpty() && binding.editTxtPassword.text!!.isNotEmpty())
+            ElementsEditor().updateButtonState(binding.btnLogin, true, requireContext(), false)
+        else
+            ElementsEditor().updateButtonState(binding.btnLogin, false, requireContext(), false)
     }
 
     fun elementsVisibility(state: Boolean){
-        val elementsArray = arrayOf(binding.loginTitle, binding.txtEmail, binding.FieldEmail, binding.txtPassword,
-            binding.FieldPassword, binding.rememberSession, binding.btnLogin, binding.btnReturn)
+        val elementsArray = arrayListOf(binding.loginTitle, binding.txtEmail,  binding.txtPassword,
+            binding.btnLogin, binding.btnReturn, binding.FieldEmail, binding.FieldPassword, binding.rememberSession)
 
         for(element in elementsArray)
             if(state)

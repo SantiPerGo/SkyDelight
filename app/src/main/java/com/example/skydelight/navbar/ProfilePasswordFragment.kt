@@ -1,7 +1,6 @@
 package com.example.skydelight.navbar
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarProfilePasswordBinding
 import kotlinx.coroutines.MainScope
@@ -39,9 +39,18 @@ class ProfilePasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Clearing errors when produced
-        binding.editTxtPassword.doOnTextChanged { _, _, _, _ -> if(binding.FieldPassword.error != null) binding.FieldPassword.error = null }
+        binding.editTxtPassword.doOnTextChanged { _, _, _, _ ->
+            if(binding.FieldPassword.error != null) binding.FieldPassword.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
         binding.editTxtConfirmPassword.doOnTextChanged { _, _, _, _ ->
-            if(binding.FieldConfirmPassword.error != null) binding.FieldConfirmPassword.error = null }
+            if(binding.FieldConfirmPassword.error != null) binding.FieldConfirmPassword.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
 
         // Changing to updating password fragment
         binding.btnCancel.setOnClickListener {
@@ -57,6 +66,18 @@ class ProfilePasswordFragment : Fragment() {
                 && ValidationsDialogsRequests().validateConfirmedPassword(password, confirmedPassword, binding.FieldConfirmPassword))
                 updatePassword(password)
         }
+
+        // Disable login button
+        ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
+    }
+
+    private fun validateInputsNotEmpty() {
+        // Disable or enable login button
+        if(binding.editTxtPassword.text!!.isNotEmpty()
+            && binding.editTxtConfirmPassword.text!!.isNotEmpty())
+            ElementsEditor().updateButtonState(binding.btnUpdate, true, requireContext(), true)
+        else
+            ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
     }
 
     // Function to connect with the api
@@ -90,11 +111,8 @@ class ProfilePasswordFragment : Fragment() {
                 binding.progressBar, 404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
             {
                 // Getting color according of theme
-                val typedValue = TypedValue()
-                requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValue, true)
-                val btnColor = typedValue.data
-                requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
-                val textColor = typedValue.data
+                val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
+                val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
 
                 // Showing succesful dialog
                 ValidationsDialogsRequests().snackBarOnUIThread(

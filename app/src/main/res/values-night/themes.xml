@@ -46,6 +46,10 @@
         <item name="btn_text_color_yellow">@color/lightyellow</item>
         <item name="btn_background_yellow">@color/darkyellow</item>
 
+        <!-- Gray Button -->
+        <item name="btn_text_color_gray">@color/mediumgray</item>
+        <item name="btn_background_gray">@color/lightgray</item>
+
         <!-- Material Alert Dialog -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
     </style>

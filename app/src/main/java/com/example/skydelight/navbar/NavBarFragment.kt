@@ -6,10 +6,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
@@ -19,6 +16,7 @@ import com.example.skydelight.BuildConfig
 import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -150,7 +148,7 @@ class NavBarFragment : Fragment() {
                 updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, false)
                 itemId = R.id.navbar_test_answer_fragment
                 binding.navBar.selectedItemId = R.id.nav_test
-                updateDialogButton(sixthDialog.show())
+                ElementsEditor().updateDialogButton(sixthDialog.show())
             }
             .setCancelable(false)
 
@@ -220,7 +218,7 @@ class NavBarFragment : Fragment() {
                 updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
                 itemId = R.id.navbar_test_answer_fragment
                 binding.navBar.selectedItemId = R.id.nav_test
-                updateDialogButton(sixthDialog.show())
+                ElementsEditor().updateDialogButton(sixthDialog.show())
             }
             .setCancelable(false)
 
@@ -300,14 +298,6 @@ class NavBarFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun updateDialogButton(dialog: AlertDialog){
-        // Changing neutral button position to center
-        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-        val layoutParams = positiveButton.layoutParams as LinearLayout.LayoutParams
-        layoutParams.weight = 10f
-        positiveButton.layoutParams = layoutParams
     }
 
     private fun updateToken(){
@@ -401,13 +391,9 @@ class NavBarFragment : Fragment() {
                     dialog.setMessage("\n¡Para divertirte con realidad aumentada! (sólo si tu teléfono es compatible con ARCore)\n")
                 }
             }
-            val showedDialog = dialog.show()
 
             // Changing neutral button position to center
-            val positiveButton: Button = showedDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-            val layoutParams = positiveButton.layoutParams as LinearLayout.LayoutParams
-            layoutParams.weight = 10f
-            positiveButton.layoutParams = layoutParams
+            ElementsEditor().updateDialogButton(dialog.show())
         }
     }
 

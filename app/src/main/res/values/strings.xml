@@ -75,7 +75,6 @@
 
     <!-- Home Navbar Fragment Strings -->
     <string name="home_title">¡Qué Bien que Volviste!</string>
-    <string name="home_credits">Powered by Unsplash</string>
 
     <!-- Games Navbar Fragment Strings -->
     <string name="games_title">¡Hora de Relajarse!</string>
@@ -104,6 +103,7 @@
     <string name="test_title_5">¡Oh No!</string>
     <string name="test_title_6">¡Por Poco!</string>
     <string name="test_btn_end">Finalizar</string>
+    <string name="test_initial_option">Seleccionar</string>
 
     <string name="test_result_low">Presentas un nivel leve o bajo de estrés, se recomienda que apliques los consejos mostrados en la pantalla de inicio para prevenir el estrés</string>
     <string name="test_result_medium">Presentas un nivel moderado de estrés, debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>

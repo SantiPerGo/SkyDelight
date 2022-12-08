@@ -4,17 +4,19 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentRecoverPasswordBinding
-import okhttp3.*
+import okhttp3.FormBody
+import okhttp3.Request
 
 class RecoverPasswordFragment : Fragment() {
     // Binding variable to use elements in the xml layout
@@ -37,30 +39,38 @@ class RecoverPasswordFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
 
         // Clearing errors when produced
-        binding.editTxtEmail.doOnTextChanged { _, _, _, _ -> if(binding.FieldEmail.error != null) binding.FieldEmail.error = null }
+        binding.editTxtEmail.doOnTextChanged { _, _, _, _ ->
+            if(binding.FieldEmail.error != null) binding.FieldEmail.error = null
+
+            // Disable or enable login button
+            if(binding.editTxtEmail.text!!.isEmpty())
+                ElementsEditor().updateButtonState(binding.btnRecover, false, requireContext(), false)
+            else
+                ElementsEditor().updateButtonState(binding.btnRecover, true, requireContext(), false)
+        }
 
         binding.btnRecover.setOnClickListener {
             val email = binding.editTxtEmail.text.toString()
             if(ValidationsDialogsRequests().validateEmail(email, binding.FieldEmail)){
-                deactivateButtons()
+                ElementsEditor().elementsClickableState(false,
+                    null, arrayListOf(binding.btnRecover, binding.btnReturn))
                 recoverPassword(email)
             }
         }
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
-            deactivateButtons()
+            ElementsEditor().elementsClickableState(false,
+                null, arrayListOf(binding.btnRecover, binding.btnReturn))
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
                 findNavController().popBackStack(R.id.recover_password_fragment, true)
             }, 500)
         }
-    }
 
-    private fun deactivateButtons() {
-        binding.btnRecover.isClickable = false
-        binding.btnReturn.isClickable = false
+        // Disable login button
+        ElementsEditor().updateButtonState(binding.btnRecover, false, requireContext(), false)
     }
 
     fun elementsVisibility(state: Boolean){

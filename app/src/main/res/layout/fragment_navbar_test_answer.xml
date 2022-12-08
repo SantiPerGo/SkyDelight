@@ -53,6 +53,82 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_question_top" />
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_answers_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline_answers_top">
+
+        <ImageButton
+            android:id="@+id/btnLeftArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:background="@null"
+            android:padding="@dimen/corner_radius"
+            android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+            app:tint="?attr/colorSecondaryVariant" />
+
+        <TextView
+            android:id="@+id/txtAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:padding="@dimen/switch_padding"
+            android:text="@string/test_initial_option"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="?attr/text_color"
+            android:breakStrategy="simple"
+            android:gravity="center"
+            android:shadowColor="?attr/text_color"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size" />
+
+        <ImageButton
+            android:id="@+id/btnRightArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:background="@null"
+            android:padding="@dimen/corner_radius"
+            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+            app:tint="?attr/colorSecondaryVariant" />
+
+    </LinearLayout>
+
+    <!--<TextView
+        android:id="@+id/txtAnswer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/loading"
+        android:fontFamily="@font/comfortaa"
+        android:textColor="?attr/text_color"
+        android:breakStrategy="simple"
+        android:gravity="center"
+        android:shadowColor="?attr/text_color"
+        android:shadowDx="0.0"
+        android:shadowDy="0.0"
+        android:shadowRadius="@dimen/shadow_radius"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="@dimen/min_size"
+        app:autoSizeMaxTextSize="@dimen/max_size"
+        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_slider"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_answer_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_answer_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline_answers_top" />
+
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -79,29 +155,7 @@
             app:haloColor="?attr/btn_background_blue"
             app:labelStyle="@style/Tooltip" />
 
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/txtAnswer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/loading"
-        android:fontFamily="@font/comfortaa"
-        android:textColor="?attr/text_color"
-        android:breakStrategy="simple"
-        android:gravity="center"
-        android:shadowColor="?attr/text_color"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_slider"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_answer_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_answer_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_answers_top" />
+    </FrameLayout>-->
 
     <Button
         android:id="@+id/btnNext"
@@ -180,42 +234,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_question_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.13" />
+        app:layout_constraintGuide_percent="0.18" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_question_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.42" />
+        app:layout_constraintGuide_percent="0.52" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_answers_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.42" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_slider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.56" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_answers_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69" />
+        app:layout_constraintGuide_percent="0.67" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_next_top"

@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.example.skydelight.R
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentRegisterFirstBinding
 
@@ -74,7 +75,13 @@ class RegisterFirstFragment : Fragment() {
         // Clearing errors when produced
         binding.editTxtName.doOnTextChanged { _, _, _, _ ->
             if(binding.FieldName.error != null) binding.FieldName.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
         }
+
+        // Disable or enable login button
+        binding.radioGroupSex.setOnCheckedChangeListener { _, _ -> validateInputsNotEmpty() }
 
         binding.btnNext.setOnClickListener {
             // Getting sex option selected
@@ -88,7 +95,8 @@ class RegisterFirstFragment : Fragment() {
             if(ValidationsDialogsRequests().validateName(name.toString(), binding.FieldName)
                 && ValidationsDialogsRequests().validateSex(sexId, requireView(), requireContext(),
                     getString(R.string.snackbar_error_sex))){
-                deactivateButtons()
+                ElementsEditor().elementsClickableState(false,
+                    null, arrayListOf(binding.btnNext, binding.btnReturn))
 
                 // Setting parameters for the next fragment
                 val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
@@ -103,18 +111,26 @@ class RegisterFirstFragment : Fragment() {
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
-            deactivateButtons()
+            ElementsEditor().elementsClickableState(false,
+                null, arrayListOf(binding.btnNext, binding.btnReturn))
             elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_registerFirst_to_startScreen)
                 findNavController().popBackStack(R.id.register_first_fragment, true)
             }, 500)
         }
+
+        // Disable login button
+        ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), false)
     }
 
-    private fun deactivateButtons() {
-        binding.btnNext.isClickable = false
-        binding.btnReturn.isClickable = false
+    private fun validateInputsNotEmpty() {
+        // Disable or enable login button
+        if(binding.editTxtName.text!!.isNotEmpty() &&
+                binding.radioGroupSex.checkedRadioButtonId != -1)
+            ElementsEditor().updateButtonState(binding.btnNext, true, requireContext(), false)
+        else
+            ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), false)
     }
 
     fun elementsVisibility(state: Boolean){

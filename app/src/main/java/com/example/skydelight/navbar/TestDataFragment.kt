@@ -1,10 +1,7 @@
 package com.example.skydelight.navbar
 
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +10,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.databinding.FragmentNavbarTestDataBinding
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.MPPointF
-import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -110,9 +105,9 @@ class TestDataFragment : Fragment() {
     }
 
     private fun createPieChart(score: Float, textColorResource: Int, backgroundColorResource: Int) {
-        val textColor = getColor(textColorResource)
-        val backgroundColor = getColor(backgroundColorResource)
-        val centerColor = getColor(R.attr.fragment_background)
+        val textColor = ElementsEditor().getColor(requireContext(), textColorResource)
+        val backgroundColor = ElementsEditor().getColor(requireContext(), backgroundColorResource)
+        val centerColor = ElementsEditor().getColor(requireContext(), R.attr.fragment_background)
 
         // Disable description and legend in chart
         binding.pieChart.legend.isEnabled = false
@@ -162,21 +157,16 @@ class TestDataFragment : Fragment() {
     }
 
     private fun updateColors(textColorResource: Int, btnColorResource: Int) {
-        val textColor = getColor(textColorResource)
-        val btnColor = getColor(btnColorResource)
+        val textColor = ElementsEditor().getColor(requireContext(), textColorResource)
+        val btnColor = ElementsEditor().getColor(requireContext(), btnColorResource)
 
-        // Changing colors
-        val elementsArray = arrayOf(binding.txtTitle, binding.txtDescription,
-            binding.txtNumber, binding.btnFinish, binding.txtChartFirst)
+        // Creating arrays of elements
+        val textsArray = arrayListOf(binding.txtTitle, binding.txtDescription,
+            binding.txtNumber, binding.txtChartFirst)
+        val buttonsArray = arrayListOf(binding.btnFinish)
 
-        for(element in elementsArray) {
-            element.setTextColor(textColor)
-            element.setShadowLayer(5f,0f, 0f, textColor)
-        }
-
-        // Changing finish button background color and when it's tapped
-        (binding.btnFinish as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
-        binding.btnFinish.backgroundTintList = ColorStateList.valueOf(btnColor)
+        // Updating colors
+        ElementsEditor().updateColors(textColorResource, requireContext(), textsArray, buttonsArray)
 
         // Changing circles colors of chart
         binding.txtChartFirst.compoundDrawables[0].setTint(textColor)
@@ -185,13 +175,6 @@ class TestDataFragment : Fragment() {
         // Changing second chart label color
         binding.txtChartSecond.setTextColor(btnColor)
         binding.txtChartSecond.setShadowLayer(5f,0f, 0f, btnColor)
-    }
-
-    // Getting reference to resource color
-    private fun getColor(colorReference: Int): Int {
-        val typedValue = TypedValue()
-        requireContext().theme.resolveAttribute(colorReference, typedValue, true)
-        return typedValue.data
     }
 
     private fun updateTestResult() {
@@ -208,8 +191,8 @@ class TestDataFragment : Fragment() {
             // SISCO Test
             1 -> {
                 binding.txtNumber.text = "Presentas $scoreString% de estrés académico"
-                binding.txtChartFirst.text = "Estrés Académico"
-                binding.txtChartSecond.text = "Tranquilidad"
+                binding.txtChartFirst.text = "Estrés\nAcadémico"
+                binding.txtChartSecond.text = "Calma"
 
                 // Launching room database connection
                 MainScope().launch {
@@ -229,20 +212,20 @@ class TestDataFragment : Fragment() {
             // SVQ Test
             2 -> {
                 binding.txtNumber.text = "Eres $scoreString% vulnerable al estrés"
-                binding.txtChartFirst.text = "Vulnerabilidad al Estrés"
-                binding.txtChartSecond.text = "Resistencia al Estrés"
+                binding.txtChartFirst.text = "Vulnerabilidad\nal Estrés"
+                binding.txtChartSecond.text = "Resistencia\nal Estrés"
             }
             // PSS Test
             3 -> {
                 binding.txtNumber.text = "Presentas $scoreString% de estrés"
                 binding.txtChartFirst.text = "Estrés"
-                binding.txtChartSecond.text = "Tranquilidad"
+                binding.txtChartSecond.text = "Calma"
             }
             // SVS Test
             4 -> {
                 binding.txtNumber.text = "Eres $scoreString% vulnerable al estrés"
-                binding.txtChartFirst.text = "Vulnerabilidad al Estrés"
-                binding.txtChartSecond.text = "Resistencia al Estrés"
+                binding.txtChartFirst.text = "Vulnerabilidad\nal Estrés"
+                binding.txtChartSecond.text = "Resistencia\nal Estrés"
             }
         }
     }

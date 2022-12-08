@@ -30,4 +30,8 @@
     <!-- Yellow Button -->
     <attr name="btn_text_color_yellow" format="reference" />
     <attr name="btn_background_yellow" format="reference" />
+
+    <!-- Gray Button -->
+    <attr name="btn_text_color_gray" format="reference" />
+    <attr name="btn_background_gray" format="reference" />
 </resources>

@@ -1,22 +1,23 @@
 package com.example.skydelight.navbar
 
 import android.os.Bundle
-import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarProfileBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import okhttp3.*
+import okhttp3.FormBody
+import okhttp3.Request
 
 class ProfileFragment : Fragment() {
     // Binding variable to use elements in the xml layout
@@ -108,11 +109,8 @@ class ProfileFragment : Fragment() {
                             // Launching room database connection
                             MainScope().launch {
                                 // Getting color according of theme
-                                val typedValue = TypedValue()
-                                requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValue, true)
-                                val btnColor = typedValue.data
-                                requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
-                                val textColor = typedValue.data
+                                val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
+                                val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
 
                                 ValidationsDialogsRequests().snackBar(requireView(), btnColor, textColor,
                                     getString(R.string.snackbar_success_delete_account), requireContext())

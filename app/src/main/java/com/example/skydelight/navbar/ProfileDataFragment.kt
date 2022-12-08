@@ -1,7 +1,6 @@
 package com.example.skydelight.navbar
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.User
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarProfileDataBinding
@@ -47,7 +47,15 @@ class ProfileDataFragment : Fragment() {
         showUserData()
 
         // Clearing errors when produced
-        binding.editTxtName.doOnTextChanged { _, _, _, _ -> if(binding.FieldName.error != null) binding.FieldName.error = null }
+        binding.editTxtName.doOnTextChanged { _, _, _, _ ->
+            if(binding.FieldName.error != null) binding.FieldName.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
+
+        // Disable or enable login button
+        binding.radioGroupSex.setOnCheckedChangeListener { _, _ -> validateInputsNotEmpty() }
 
         // Changing to updating password fragment
         binding.btnCancel.setOnClickListener {
@@ -70,6 +78,18 @@ class ProfileDataFragment : Fragment() {
                     getString(R.string.snackbar_error_sex)))
                 updateData(name, sex, age)
         }
+
+        // Disable login button
+        ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
+    }
+
+    private fun validateInputsNotEmpty() {
+        // Disable or enable login button
+        if(binding.editTxtName.text!!.isNotEmpty() &&
+            binding.radioGroupSex.checkedRadioButtonId != -1)
+            ElementsEditor().updateButtonState(binding.btnUpdate, true, requireContext(), true)
+        else
+            ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
     }
 
     // Function to connect with the api
@@ -85,11 +105,8 @@ class ProfileDataFragment : Fragment() {
             val user = userDao.getUser()[0]
 
             // Getting color according of theme
-            val typedValue = TypedValue()
-            requireContext().theme.resolveAttribute(R.attr.btn_background_red, typedValue, true)
-            val btnColor = typedValue.data
-            requireContext().theme.resolveAttribute(R.attr.btn_text_color_red, typedValue, true)
-            val textColor = typedValue.data
+            val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_red)
+            val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_red)
 
             if(name == user.name && sex == user.sex && age == user.age) {
                 ValidationsDialogsRequests().snackBar(requireView(), btnColor, textColor,
@@ -122,11 +139,8 @@ class ProfileDataFragment : Fragment() {
                         userDao.updateUser(User(user.email, name, sex, age, user.token, user.refresh))
 
                         // Getting color according of theme
-                        val typdValue = TypedValue()
-                        requireContext().theme.resolveAttribute(R.attr.btn_background_green, typdValue, true)
-                        val buttonColor = typdValue.data
-                        requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typdValue, true)
-                        val txtColor = typdValue.data
+                        val buttonColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
+                        val txtColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
 
                         // Showing succesful dialog
                         ValidationsDialogsRequests().snackBarOnUIThread(

@@ -3,7 +3,6 @@ package com.example.skydelight.initial
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +14,15 @@ import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.User
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentRegisterSecondBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import okhttp3.*
+import okhttp3.FormBody
+import okhttp3.Request
+import okhttp3.RequestBody
 import org.json.JSONObject
 
 private const val NAME_PARAM = "name"
@@ -61,10 +63,26 @@ class RegisterSecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Clearing errors when produced
-        binding.editTxtEmail.doOnTextChanged { _, _, _, _ -> if(binding.FieldEmail.error != null) binding.FieldEmail.error = null }
-        binding.editTxtPassword.doOnTextChanged { _, _, _, _ -> if(binding.FieldPassword.error != null) binding.FieldPassword.error = null }
+        binding.editTxtEmail.doOnTextChanged { _, _, _, _ ->
+            if(binding.FieldEmail.error != null) binding.FieldEmail.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
+
+        binding.editTxtPassword.doOnTextChanged { _, _, _, _ ->
+            if(binding.FieldPassword.error != null) binding.FieldPassword.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
+
         binding.editTxtConfirmPassword.doOnTextChanged { _, _, _, _ ->
-            if(binding.FieldConfirmPassword.error != null) binding.FieldConfirmPassword.error = null }
+            if(binding.FieldConfirmPassword.error != null) binding.FieldConfirmPassword.error = null
+
+            // Disable or enable login button
+            validateInputsNotEmpty()
+        }
 
         // Showing elements
         Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
@@ -77,7 +95,8 @@ class RegisterSecondFragment : Fragment() {
             if(ValidationsDialogsRequests().validateEmail(email, binding.FieldEmail)
                 && ValidationsDialogsRequests().validatePassword(password, binding.FieldPassword)
                 && ValidationsDialogsRequests().validateConfirmedPassword(password, confirmedPassword, binding.FieldConfirmPassword)){
-                deactivateButtons()
+                ElementsEditor().elementsClickableState(false,
+                    null, arrayListOf(binding.btnCreateAccount, binding.btnReturn))
                 createUser(email, password, name.toString(), sex.toString(), age.toString())
             }
         }
@@ -96,11 +115,18 @@ class RegisterSecondFragment : Fragment() {
                 findNavController().popBackStack(R.id.register_second_fragment, true)
             }, 500)
         }
+
+        // Disable login button
+        ElementsEditor().updateButtonState(binding.btnCreateAccount, false, requireContext(), false)
     }
 
-    private fun deactivateButtons() {
-        binding.btnCreateAccount.isClickable = false
-        binding.btnReturn.isClickable = false
+    private fun validateInputsNotEmpty() {
+        // Disable or enable login button
+        if(binding.editTxtEmail.text!!.isNotEmpty() && binding.editTxtPassword.text!!.isNotEmpty()
+            && binding.editTxtConfirmPassword.text!!.isNotEmpty())
+            ElementsEditor().updateButtonState(binding.btnCreateAccount, true, requireContext(), false)
+        else
+            ElementsEditor().updateButtonState(binding.btnCreateAccount, false, requireContext(), false)
     }
 
     fun elementsVisibility(state: Boolean){
@@ -180,11 +206,8 @@ class RegisterSecondFragment : Fragment() {
                         json.getString("refresh")))
 
                     // Getting color according of theme
-                    val typedValue = TypedValue()
-                    requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValue, true)
-                    val btnColor = typedValue.data
-                    requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
-                    val textColor = typedValue.data
+                    val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
+                    val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
 
                     ValidationsDialogsRequests().snackBarOnUIThread(
                         getString(R.string.snackbar_success_register), null, requireView(), btnColor, textColor,

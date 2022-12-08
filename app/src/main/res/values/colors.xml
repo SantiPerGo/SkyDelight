@@ -35,4 +35,9 @@
     <color name="lightyellow">#FFEBA2</color>
     <color name="yellow">#E5CC73</color>
     <color name="darkyellow">#88792D</color>
+
+    <!-- Gray Principal Colors -->
+    <color name="lightgray">#878787</color>
+    <color name="mediumgray">#656565</color>
+    <color name="darkgray">#444444</color>
 </resources>
