@@ -147,7 +147,7 @@ class NavBarFragment : Fragment() {
                 fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
 
                 // Changing fragment
-                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
+                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, false)
                 itemId = R.id.navbar_test_answer_fragment
                 binding.navBar.selectedItemId = R.id.nav_test
                 updateDialogButton(sixthDialog.show())

@@ -14,7 +14,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/loading"
+        android:text="@string/test_title_4"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
         android:textColor="?attr/text_color"
@@ -33,10 +33,10 @@
         app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
     <TextView
-        android:id="@+id/txtTestTitle"
+        android:id="@+id/txtNumber"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/test_title_4"
+        android:text="@string/loading"
         android:fontFamily="@font/comfortaa"
         android:gravity="center"
         android:textColor="?attr/text_color"
@@ -49,10 +49,73 @@
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
         app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_test_title_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_percentage_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_test_title_top" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_percentage_top" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_chart_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_chart_middle"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline_chart_top" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/pieChart"
+        android:orientation="vertical"
+        android:weightSum="2"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_chart_text_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_chart_middle"
+        app:layout_constraintTop_toTopOf="@+id/guideline_chart_text_top">
+
+        <TextView
+            android:id="@+id/txtChartFirst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="?attr/text_color"
+            android:breakStrategy="simple"
+            android:shadowColor="?attr/text_color"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size"
+            android:padding="@dimen/switch_padding"
+            android:drawableLeft="@drawable/ic_baseline_circle_24"
+            android:gravity="center"
+            android:text="@string/loading" />
+
+        <TextView
+            android:id="@+id/txtChartSecond"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/switch_padding"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa"
+            android:textColor="?attr/text_color"
+            android:breakStrategy="simple"
+            android:shadowColor="?attr/text_color"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size"
+            android:drawableLeft="@drawable/ic_baseline_circle_24"
+            android:gravity="center"
+            android:text="@string/loading" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txtDescription"
@@ -76,30 +139,8 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_description_top" />
 
-    <TextView
-        android:id="@+id/txtNumber"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/loading"
-        android:fontFamily="@font/comfortaa"
-        android:gravity="center"
-        android:textColor="?attr/text_color"
-        android:breakStrategy="simple"
-        android:shadowColor="?attr/text_color"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_number_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_number_top" />
-
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/btnFinish"
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -118,38 +159,11 @@
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
         app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_next_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_next_top"
-        app:rippleColor="?attr/btn_text_color_blue"
-        tools:ignore="TextContrastCheck" />
-
-    <Button
-        android:id="@+id/btnCancel"
-        style="@style/Widget.Material3.Button.TonalButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:backgroundTint="?attr/btn_background_green"
-        android:fontFamily="@font/comfortaa"
-        android:state_enabled="true"
-        android:text="@string/loading"
-        android:textColor="?attr/btn_text_color_green"
-        android:textStyle="bold"
-        android:shadowColor="?attr/btn_text_color_green"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:cornerRadius="@dimen/corner_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_return_top"
-        app:rippleColor="?attr/btn_text_color_green"
+        app:layout_constraintTop_toTopOf="@+id/guideline_finish_top"
+        app:rippleColor="?attr/btn_text_color_blue"
         tools:ignore="TextContrastCheck" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -167,63 +181,63 @@
         app:layout_constraintGuide_percent="0.12" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_test_title_top"
+        android:id="@+id/guideline_percentage_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.14" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_test_title_bottom"
+        android:id="@+id/guideline_percentage_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_chart_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_chart_text_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_chart_text_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_chart_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_description_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.26" />
+        app:layout_constraintGuide_percent="0.58" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_description_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.57" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_number_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.59" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_number_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_next_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.71" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_next_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.81" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_return_top"
+        android:id="@+id/guideline_finish_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -242,6 +256,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="@dimen/guideline_navbar_left" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_chart_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_right"

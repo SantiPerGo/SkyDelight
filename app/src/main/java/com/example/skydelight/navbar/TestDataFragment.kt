@@ -1,18 +1,25 @@
 package com.example.skydelight.navbar
 
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
 import com.example.skydelight.databinding.FragmentNavbarTestDataBinding
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.utils.MPPointF
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -55,23 +62,14 @@ class TestDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Hiding cancel button
-        binding.btnCancel.visibility = View.GONE
-
-        // Changing start button location
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(binding.constraintLayout)
-        constraintSet.connect(binding.btnStart.id, ConstraintSet.BOTTOM, binding.guidelineBottom.id, ConstraintSet.BOTTOM)
-        constraintSet.applyTo(binding.constraintLayout)
-
         // Updating text colors
-        updateTextAndColors()
+        updateColorsAndChart()
 
         // Updating text according of test result
         updateTestResult()
 
         // Changing to answer test fragment
-        binding.btnStart.setOnClickListener {
+        binding.btnFinish.setOnClickListener {
             // Fragment enters from right
             (parentFragment as NavBarFragment).updateNavBarHost(HomeFragment(), R.id.nav_home, false)
             (parentFragment as NavBarFragment).updateImgHelp(true)
@@ -79,7 +77,7 @@ class TestDataFragment : Fragment() {
         }
     }
 
-    private fun updateTextAndColors() {
+    private fun updateColorsAndChart() {
         // Updating text
         var maxNum = 0f
         var minNum = 0f
@@ -99,41 +97,101 @@ class TestDataFragment : Fragment() {
         }
 
         // Getting color and title according of results
-        if(score!! >= maxNum){
+        if(score!! >= maxNum) {
+            createPieChart(score!!, R.attr.btn_text_color_red, R.attr.btn_background_red)
             updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
-            binding.txtTitle.text = getString(R.string.test_title_5)
-        } else if(score!! >= minNum && score!! < maxNum){
+        } else if(score!! >= minNum && score!! < maxNum) {
+            createPieChart(score!!, R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
             updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
-            binding.txtTitle.text = getString(R.string.test_title_6)
         } else {
+            createPieChart(score!!, R.attr.btn_text_color_green, R.attr.btn_background_green)
             updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
-            binding.txtTitle.text = getString(R.string.test_title_3)
         }
     }
 
+    private fun createPieChart(score: Float, textColorResource: Int, backgroundColorResource: Int) {
+        val textColor = getColor(textColorResource)
+        val backgroundColor = getColor(backgroundColorResource)
+        val centerColor = getColor(R.attr.fragment_background)
+
+        // Disable description and legend in chart
+        binding.pieChart.legend.isEnabled = false
+        binding.pieChart.description.isEnabled = false
+
+        // Friction when rotating chart
+        binding.pieChart.dragDecelerationFrictionCoef = 0.95f
+
+        // Center of chart
+        binding.pieChart.isDrawHoleEnabled = true
+        binding.pieChart.setHoleColor(centerColor)
+
+        // Ring semi-transparent around center of chart
+        binding.pieChart.setTransparentCircleColor(Color.TRANSPARENT)
+        binding.pieChart.setTransparentCircleAlpha(0)
+
+        // Initial angle for chart
+        binding.pieChart.rotationAngle = 0f
+
+        // Enable the user to rotate the chart
+        binding.pieChart.isRotationEnabled = true
+
+        // Highlight slice when it's tapped
+        binding.pieChart.isHighlightPerTapEnabled = true
+
+        // Animation when loading chart
+        binding.pieChart.animateY(1000, Easing.EaseInOutQuad)
+
+        // Setting dataset for chart
+        val entries = arrayListOf(PieEntry(score), PieEntry(100-score))
+        val dataset = PieDataSet(entries, "Test Result")
+
+        // Setting chart colors
+        val colors = arrayListOf(textColor, backgroundColor)
+        dataset.colors = colors
+
+        // Disable icons and texts
+        dataset.setDrawIcons(false)
+        dataset.setDrawValues(false)
+
+        // Loading data in chart
+        val data = PieData(dataset)
+        binding.pieChart.data = data
+
+        // Loading chart
+        binding.pieChart.invalidate()
+    }
+
     private fun updateColors(textColorResource: Int, btnColorResource: Int) {
-        // Getting reference to resource color
-        val typedValueText = TypedValue()
-        val typedValueBtn = TypedValue()
-
-        requireContext().theme.resolveAttribute(textColorResource, typedValueText, true)
-        requireContext().theme.resolveAttribute(btnColorResource, typedValueBtn, true)
-
-        val textColor = typedValueText.data
-        val btnColor = typedValueBtn.data
+        val textColor = getColor(textColorResource)
+        val btnColor = getColor(btnColorResource)
 
         // Changing colors
-        val elementsArray = arrayOf(binding.txtTitle, binding.txtTestTitle,
-            binding.txtDescription, binding.txtNumber, binding.btnStart)
+        val elementsArray = arrayOf(binding.txtTitle, binding.txtDescription,
+            binding.txtNumber, binding.btnFinish, binding.txtChartFirst)
 
         for(element in elementsArray) {
             element.setTextColor(textColor)
             element.setShadowLayer(5f,0f, 0f, textColor)
         }
 
-        (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
-        (binding.btnStart as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
-        binding.btnStart.backgroundTintList = ColorStateList.valueOf(btnColor)
+        // Changing finish button background color and when it's tapped
+        (binding.btnFinish as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
+        binding.btnFinish.backgroundTintList = ColorStateList.valueOf(btnColor)
+
+        // Changing circles colors of chart
+        binding.txtChartFirst.compoundDrawables[0].setTint(textColor)
+        binding.txtChartSecond.compoundDrawables[0].setTint(btnColor)
+
+        // Changing second chart label color
+        binding.txtChartSecond.setTextColor(btnColor)
+        binding.txtChartSecond.setShadowLayer(5f,0f, 0f, btnColor)
+    }
+
+    // Getting reference to resource color
+    private fun getColor(colorReference: Int): Int {
+        val typedValue = TypedValue()
+        requireContext().theme.resolveAttribute(colorReference, typedValue, true)
+        return typedValue.data
     }
 
     private fun updateTestResult() {
@@ -150,6 +208,8 @@ class TestDataFragment : Fragment() {
             // SISCO Test
             1 -> {
                 binding.txtNumber.text = "Presentas $scoreString% de estrés académico"
+                binding.txtChartFirst.text = "Estrés Académico"
+                binding.txtChartSecond.text = "Tranquilidad"
 
                 // Launching room database connection
                 MainScope().launch {
@@ -167,11 +227,23 @@ class TestDataFragment : Fragment() {
                 }
             }
             // SVQ Test
-            2 -> { binding.txtNumber.text = "Eres $scoreString% vulnerable al estrés" }
+            2 -> {
+                binding.txtNumber.text = "Eres $scoreString% vulnerable al estrés"
+                binding.txtChartFirst.text = "Vulnerabilidad al Estrés"
+                binding.txtChartSecond.text = "Resistencia al Estrés"
+            }
             // PSS Test
-            3 -> { binding.txtNumber.text = "Presentas $scoreString% de estrés" }
+            3 -> {
+                binding.txtNumber.text = "Presentas $scoreString% de estrés"
+                binding.txtChartFirst.text = "Estrés"
+                binding.txtChartSecond.text = "Tranquilidad"
+            }
             // SVS Test
-            4 -> { binding.txtNumber.text = "Eres $scoreString% vulnerable al estrés" }
+            4 -> {
+                binding.txtNumber.text = "Eres $scoreString% vulnerable al estrés"
+                binding.txtChartFirst.text = "Vulnerabilidad al Estrés"
+                binding.txtChartSecond.text = "Resistencia al Estrés"
+            }
         }
     }
 }

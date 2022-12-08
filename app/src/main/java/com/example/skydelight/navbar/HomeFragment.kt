@@ -155,26 +155,32 @@ class HomeFragment : Fragment() {
                     fadeOutAnimation.duration = 500
                     fadeInAnimation.duration = 500
 
-                    binding.imgBackground.startAnimation(fadeOutAnimation)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        Glide.with(requireContext())
-                            .load(imageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .skipMemoryCache(true)
-                            .dontTransform()
-                            .priority(Priority.IMMEDIATE)
-                            .into(binding.imgBackground)
-                        binding.imgBackground.startAnimation(fadeInAnimation)
-                    }, 500)
+                    activity?.let { activity ->
+                        binding.imgBackground.startAnimation(fadeOutAnimation)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            if(!activity.isDestroyed)
+                                Glide.with(activity)
+                                    .load(imageUrl)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .skipMemoryCache(true)
+                                    .dontTransform()
+                                    .priority(Priority.IMMEDIATE)
+                                    .into(binding.imgBackground)
+                            binding.imgBackground.startAnimation(fadeInAnimation)
+                        }, 500)
+                    }
                 } else
-                    Glide.with(requireContext())
-                        .load(imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .skipMemoryCache(true)
-                        .dontAnimate()
-                        .dontTransform()
-                        .priority(Priority.IMMEDIATE)
-                        .into(binding.imgBackground)
+                    activity?.let { activity ->
+                        if(!activity.isDestroyed)
+                            Glide.with(activity)
+                                .load(imageUrl)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .skipMemoryCache(true)
+                                .dontAnimate()
+                                .dontTransform()
+                                .priority(Priority.IMMEDIATE)
+                                .into(binding.imgBackground)
+                    }
             }
         }
     }
