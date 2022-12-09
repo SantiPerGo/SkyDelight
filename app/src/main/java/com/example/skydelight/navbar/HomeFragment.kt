@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -171,24 +170,22 @@ class HomeFragment : Fragment() {
             
             // Loading image
             MainScope().launch {
-                // Showing photo, photographer and pexels links
-                binding.txtCredits.text = Html.fromHtml("$photoUrl by $photographerUrl\non $pexelsUrl",
-                    Html.FROM_HTML_MODE_COMPACT)
-                binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(requireContext(), R.attr.text_color))
-
-                Log.e("TEXT", "$photoUrl by $photographerUrl on $pexelsUrl")
-
-                // Creating animation instances
-                val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
-                val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
-
-                // Setting animation duration
-                fadeOutAnimation.duration = 500
-                fadeInAnimation.duration = 500
-
                 activity?.let { activity ->
                     context?.let { context ->
                         if(!activity.isDestroyed) {
+                            // Showing photo, photographer and pexels links
+                            binding.txtCredits.text = Html.fromHtml("$photoUrl by $photographerUrl\non $pexelsUrl",
+                                Html.FROM_HTML_MODE_COMPACT)
+                            binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(requireContext(), R.attr.text_color))
+
+                            // Creating animation instances
+                            val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
+                            val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
+
+                            // Setting animation duration
+                            fadeOutAnimation.duration = 500
+                            fadeInAnimation.duration = 500
+
                             binding.imgBackground.startAnimation(fadeOutAnimation)
                             Glide.with(context)
                                 .load(imageUrl)

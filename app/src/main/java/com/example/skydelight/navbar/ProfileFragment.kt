@@ -73,9 +73,8 @@ class ProfileFragment : Fragment() {
                         Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
                             .fallbackToDestructiveMigration().build().userDao().deleteUsers()
                         findNavController().navigate(R.id.action_navBar_to_startScreen)
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                     }
-
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }.show()
         }
 
@@ -124,11 +123,10 @@ class ProfileFragment : Fragment() {
                                 // Cleaning database and changing to start screen fragment
                                 userDao.deleteUsers()
                                 findNavController().navigate(R.id.action_navBar_to_startScreen)
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                             }
                         }
                     }
-
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }.show()
         }
 
