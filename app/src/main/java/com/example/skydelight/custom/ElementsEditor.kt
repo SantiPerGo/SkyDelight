@@ -2,11 +2,13 @@ package com.example.skydelight.custom
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.example.skydelight.R
 import com.google.android.material.button.MaterialButton
 
@@ -48,6 +50,12 @@ class ElementsEditor {
         val typedValue = TypedValue()
         context.theme.resolveAttribute(colorReference, typedValue, true)
         return typedValue.data
+    }
+
+    fun getDrawable(context: Context, drawableReference: Int): Drawable {
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(drawableReference, typedValue, true)
+        return ContextCompat.getDrawable(context, typedValue.resourceId)!!
     }
 
     fun updateColors(textResource: Int, context: Context, textsArray: ArrayList<TextView>,

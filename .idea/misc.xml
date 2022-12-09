@@ -37,6 +37,7 @@
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/radio_selected.xml" value="0.131" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/radio_selector.xml" value="0.131" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/radio_text_selector.xml" value="0.131" />
+        <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/round_button.xml" value="0.2275" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/selected_dot.xml" value="0.2685" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/tab_selector.xml" value="0.2685" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/text_input_selector.xml" value="0.1795" />
@@ -50,7 +51,7 @@
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/activity_navbar.xml" value="0.3234375" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/activity_unity.xml" value="0.2994791666666667" />
-        <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/custom_dialog.xml" value="0.3234375" />
+        <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/custom_dialog.xml" value="0.33" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/custom_loading_dialog.xml" value="0.33" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/custom_toast.xml" value="0.3234375" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_loading_screen.xml" value="0.25" />

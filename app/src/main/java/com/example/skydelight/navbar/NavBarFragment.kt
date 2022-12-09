@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
@@ -17,6 +16,7 @@ import com.example.skydelight.BuildConfig
 import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.CustomDialog
 import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarBinding
@@ -126,12 +126,14 @@ class NavBarFragment : Fragment() {
         // Creating tutorial dialogs
 
         // Explaining initial test
-        val sixthDialog = MaterialAlertDialogBuilder(findNavController().context)
+        val sixthDialog = CustomDialog(requireContext()).init(getString(R.string.home_tutorial_test_title),
+            getString(R.string.home_tutorial_test_description), getString(R.string.home_tutorial_test_button),
+            R.attr.loading_screen_heart, R.attr.fragment_background)
+        /*val sixthDialog = MaterialAlertDialogBuilder(findNavController().context)
             .setTitle("¡Casi Terminamos!")
-            .setMessage("\nAntes de empezar es necesario que respondas un pequeño test de 21 preguntas para " +
-                    "conocer tu estrés académico = )\n")
+            .setMessage()
             .setNeutralButton("¡Entendido!") { sixthDialog, _ -> sixthDialog.dismiss() }
-            .setCancelable(false)
+            .setCancelable(false)*/
 
         // Explaining settings or profile screen
         val fifthDialog = MaterialAlertDialogBuilder(findNavController().context)
@@ -149,7 +151,8 @@ class NavBarFragment : Fragment() {
                 updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, false)
                 itemId = R.id.navbar_test_answer_fragment
                 binding.navBar.selectedItemId = R.id.nav_test
-                ElementsEditor().updateDialogButton(sixthDialog.show())
+                sixthDialog.show()
+                //ElementsEditor().updateDialogButton(sixthDialog.show())
             }
             .setCancelable(false)
 
@@ -219,7 +222,8 @@ class NavBarFragment : Fragment() {
                 updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
                 itemId = R.id.navbar_test_answer_fragment
                 binding.navBar.selectedItemId = R.id.nav_test
-                ElementsEditor().updateDialogButton(sixthDialog.show())
+                sixthDialog.show()
+                //ElementsEditor().updateDialogButton(sixthDialog.show())
             }
             .setCancelable(false)
 
@@ -278,6 +282,13 @@ class NavBarFragment : Fragment() {
                 if(arrayString == "[]" && !user.initialTest){
                     // App tutorial
                     activity?.runOnUiThread{ firstDialog.show() }
+
+                    // Changing fragment and actual fragment id
+                    childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
+                    itemId = R.id.nav_home
+
+                    // Activating navbar
+                    activity?.runOnUiThread { binding.navBar.selectedItemId = R.id.nav_home }
                 } else {
                     // Updating result
                     if(!user.initialTest)

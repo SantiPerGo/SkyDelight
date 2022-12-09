@@ -75,6 +75,9 @@
 
     <!-- Home Navbar Fragment Strings -->
     <string name="home_title">¡Qué Bien que Volviste!</string>
+    <string name="home_tutorial_test_title">¡Casi Terminamos!</string>
+    <string name="home_tutorial_test_description">Antes de empezar es necesario que respondas un pequeño test de 21 preguntas para conocer tu estrés académico = )</string>
+    <string name="home_tutorial_test_button">¡Entendido!</string>
 
     <!-- Games Navbar Fragment Strings -->
     <string name="games_title">¡Hora de Relajarse!</string>
