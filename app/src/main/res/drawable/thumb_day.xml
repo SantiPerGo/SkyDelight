@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:dither="true" android:shape="rectangle" android:useLevel="false" android:visible="true">
+            <corners android:radius="100dp" />
+            <size android:width="24dp" android:height="25dp" />
+            <stroke android:width="3dp" android:color="?attr/btn_background_yellow" />
+            <solid android:color="?attr/btn_background_yellow" />
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/ic_baseline_wb_sunny_24"
+        android:bottom="5dp"
+        android:top="5dp"
+        android:left="5dp"
+        android:right="5dp" />
+</layer-list>

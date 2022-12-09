@@ -3,6 +3,7 @@
     <!-- Paddings, Margins and Other in DP's -->
     <dimen name="icon_padding">25dp</dimen>
     <dimen name="corner_radius">20dp</dimen>
+    <dimen name="switch_padding_2">15dp</dimen>
     <dimen name="switch_padding">10dp</dimen>
     <dimen name="icon_padding_2">1dp</dimen>
 

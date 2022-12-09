@@ -344,6 +344,7 @@ class NavBarFragment : Fragment() {
                                 binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
                             R.id.navbar_profile_data_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
                             R.id.navbar_profile_password_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                            R.id.navbar_profile_web_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
                             else -> requireActivity().moveTaskToBack(true)
                         }
                     else
@@ -428,6 +429,7 @@ class NavBarFragment : Fragment() {
                         R.id.nav_profile -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
                         R.id.navbar_profile_data_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
                         R.id.navbar_profile_password_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
+                        R.id.navbar_profile_web_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
                     }
                     true
                 }
@@ -446,6 +448,7 @@ class NavBarFragment : Fragment() {
                         R.id.nav_profile -> updateNavBarHost(GamesFragment(), R.id.nav_games, false)
                         R.id.navbar_profile_data_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
                         R.id.navbar_profile_password_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
+                        R.id.navbar_profile_web_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
                     }
                     true
                 }
@@ -456,7 +459,8 @@ class NavBarFragment : Fragment() {
                     // Changing fragment if actual fragment is not the same
                     if(itemId != R.id.nav_profile)
                     // Fragment enters from left
-                        if(itemId == R.id.navbar_profile_data_fragment || itemId == R.id.navbar_profile_password_fragment)
+                        if(itemId == R.id.navbar_profile_data_fragment || itemId == R.id.navbar_profile_password_fragment
+                            || itemId == R.id.navbar_profile_web_fragment)
                             updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
                         // Fragment enters from right
                         else

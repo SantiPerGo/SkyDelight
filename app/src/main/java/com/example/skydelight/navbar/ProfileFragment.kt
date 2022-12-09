@@ -1,9 +1,14 @@
 package com.example.skydelight.navbar
 
+import android.app.Activity
+import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
@@ -18,6 +23,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import okhttp3.FormBody
 import okhttp3.Request
+
+private const val URL_PARAM = "url"
 
 class ProfileFragment : Fragment() {
     // Binding variable to use elements in the xml layout
@@ -35,9 +42,6 @@ class ProfileFragment : Fragment() {
     // After the view is created we can do things
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Showing user data in profile screen fragment
-        showUserData()
 
         // Changing to updating data fragment
         binding.btnUpdateAccount.setOnClickListener {
@@ -70,6 +74,8 @@ class ProfileFragment : Fragment() {
                             .fallbackToDestructiveMigration().build().userDao().deleteUsers()
                         findNavController().navigate(R.id.action_navBar_to_startScreen)
                     }
+
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }.show()
         }
 
@@ -121,23 +127,62 @@ class ProfileFragment : Fragment() {
                             }
                         }
                     }
+
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }.show()
         }
+
+        binding.btnPrivacy.setOnClickListener {
+            // Setting parameters for the next fragment
+            val fragment = ProfileWebFragment()
+            fragment.arguments = bundleOf(URL_PARAM to
+                    "https://sites.google.com/view/skydelight-poltica/página-principal")
+
+            // Fragment enters from right
+            (parentFragment as NavBarFragment).updateNavBarHost(
+                fragment, R.id.navbar_profile_web_fragment, true)
+        }
+
+        binding.btnAbout.setOnClickListener {
+            // Setting parameters for the next fragment
+            val fragment = ProfileWebFragment()
+            fragment.arguments = bundleOf(URL_PARAM to
+                    "https://sites.google.com/view/skydelight-acerca-de/página-principal")
+
+            // Fragment enters from right
+            (parentFragment as NavBarFragment).updateNavBarHost(
+                fragment, R.id.navbar_profile_web_fragment, true)
+        }
+
+        binding.btnTheme.setOnClickListener {
+            if(!isDarkTheme(requireActivity())) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                updateSwitchTheme(true)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                updateSwitchTheme(false)
+            }
+        }
+
+        updateSwitchTheme(!isDarkTheme(requireActivity()))
     }
 
-    // Function to connect with the database
-    private fun showUserData(){
-        // Launching room database connection
-        MainScope().launch {
-            // Creating connection to database
-            val user = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao().getUser()[0]
+    private fun updateSwitchTheme(state: Boolean) {
+        binding.btnTheme.isChecked = state
 
-            // Setting screen data
-            binding.txtEmailUser.text = user.email
-            binding.txtNameUser.text = user.name
-            binding.txtSexUser.text = user.sex
-            binding.txtAgeUser.text = user.age.toString()
+        val color = when(state) {
+            true -> ElementsEditor().getColor(requireContext(),
+                R.attr.btn_text_color_yellow)
+            false -> ElementsEditor().getColor(requireContext(),
+                com.google.android.material.R.attr.colorSecondaryVariant)
         }
+
+        binding.btnTheme.setTextColor(ColorStateList.valueOf(color))
+        binding.btnTheme.setShadowLayer(5f, 0f, 0f, color)
+    }
+
+    private fun isDarkTheme(activity: Activity): Boolean {
+        return activity.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 }

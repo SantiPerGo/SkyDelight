@@ -89,6 +89,9 @@
     <string name="profile_change_password">Cambiar Contraseña</string>
     <string name="profile_delete_account">Eliminar Cuenta</string>
     <string name="profile_btn_close_session">Cerrar Sesión</string>
+    <string name="profile_privacy">Política de Privacidad</string>
+    <string name="profile_about">Acerca de</string>
+    <string name="profile_theme">Cambiar Tema</string>
     <string name="profile_update_password">Nueva Contraseña</string>
     <string name="profile_update_data">Ingresa tus Datos</string>
     <string name="profile_number">00</string>
@@ -234,5 +237,7 @@
     <string name="test_svs_question_18">Frecuencia con que presenta síntomas como: sudores, taquicardias, sensación de ahogo</string>
     <string name="test_svs_question_19">Frecuencia con que tiende a sentir falta de motivación para emprender las tareas laborales</string>
     <string name="test_svs_question_20">Frecuencia con que presenta trastornos en el área sexual (falta de deseos, impotencia, frigidez, etc.)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
