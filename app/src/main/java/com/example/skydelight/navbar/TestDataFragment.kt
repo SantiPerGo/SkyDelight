@@ -166,7 +166,8 @@ class TestDataFragment : Fragment() {
         val buttonsArray = arrayListOf(binding.btnFinish)
 
         // Updating colors
-        ElementsEditor().updateColors(textColorResource, requireContext(), textsArray, buttonsArray)
+        ElementsEditor().updateColors(textColorResource, requireContext(),
+            textsArray, buttonsArray, btnColorResource)
 
         // Changing circles colors of chart
         binding.txtChartFirst.compoundDrawables[0].setTint(textColor)

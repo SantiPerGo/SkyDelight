@@ -15,6 +15,7 @@ data class User(
     @ColumnInfo(name = "session") var session: Boolean = true,
     @ColumnInfo(name = "initialTest") var initialTest: Boolean = false,
     @ColumnInfo(name = "advice") var advice: Boolean = true,
+    @ColumnInfo(name = "isDarkTheme") var isDarkTheme: Boolean? = null,
     @ColumnInfo(name = "siscoCalendar") var siscoCalendar: String? = null,
     @ColumnInfo(name = "svqCalendar") var svqCalendar: String? = null,
     @ColumnInfo(name = "pssCalendar") var pssCalendar: String? = null,

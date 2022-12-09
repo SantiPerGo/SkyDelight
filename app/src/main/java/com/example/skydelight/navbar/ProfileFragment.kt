@@ -153,26 +153,42 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnTheme.setOnClickListener {
-            if(!isDarkTheme(requireActivity())) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                updateSwitchTheme(true)
-            } else {
+            if(isDarkTheme(requireActivity())) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                updateSwitchTheme(false)
+                saveUserTheme(false)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                saveUserTheme(true)
             }
         }
 
-        updateSwitchTheme(!isDarkTheme(requireActivity()))
+        // Updating switch
+        updateSwitchTheme(isDarkTheme(requireActivity()))
+    }
+
+    private fun saveUserTheme(state: Boolean) {
+        context?.let {
+            // Launching room database connection
+            MainScope().launch {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(it, AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
+
+                user.isDarkTheme = state
+                userDao.updateUser(user)
+            }
+        }
     }
 
     private fun updateSwitchTheme(state: Boolean) {
-        binding.btnTheme.isChecked = state
+        binding.btnTheme.isChecked = !state
 
         val color = when(state) {
             true -> ElementsEditor().getColor(requireContext(),
-                R.attr.btn_text_color_yellow)
-            false -> ElementsEditor().getColor(requireContext(),
                 com.google.android.material.R.attr.colorSecondaryVariant)
+            false -> ElementsEditor().getColor(requireContext(),
+                R.attr.btn_text_color_yellow)
         }
 
         binding.btnTheme.setTextColor(ColorStateList.valueOf(color))

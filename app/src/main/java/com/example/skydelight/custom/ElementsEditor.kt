@@ -50,9 +50,13 @@ class ElementsEditor {
         return typedValue.data
     }
 
-    fun updateColors(resource: Int, context: Context, textsArray: ArrayList<TextView>, buttonsArray: ArrayList<Button>) {
+    fun updateColors(textResource: Int, context: Context, textsArray: ArrayList<TextView>,
+                     buttonsArray: ArrayList<Button>, backgroundResource: Int? = null) {
         // Getting reference to resource color
-        val textColor = getColor(context, resource)
+        val textColor = getColor(context, textResource)
+        var btnColor = textColor
+        if(backgroundResource != null)
+            btnColor = getColor(context, backgroundResource)
 
         // Changing text colors
         for(element in textsArray){
@@ -64,8 +68,12 @@ class ElementsEditor {
         for(element in buttonsArray){
             element.setTextColor(textColor)
             element.setShadowLayer(5f,0f, 0f, textColor)
-            (element as MaterialButton).strokeColor = ColorStateList.valueOf(textColor)
-            element.rippleColor = ColorStateList.valueOf(textColor)
+            (element as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
+
+            if(backgroundResource != null)
+                element.backgroundTintList = ColorStateList.valueOf(btnColor)
+            else
+                element.strokeColor = ColorStateList.valueOf(textColor)
         }
     }
 

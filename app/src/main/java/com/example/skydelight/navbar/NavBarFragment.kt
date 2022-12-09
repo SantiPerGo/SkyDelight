@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
@@ -48,7 +49,7 @@ class NavBarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // CHiding image view after 1 second
+        // Hiding image view after 1 second
         Handler(Looper.getMainLooper()).postDelayed({
             (activity as MainActivity).imgBackgroundVisibility(false) }, 1000)
 

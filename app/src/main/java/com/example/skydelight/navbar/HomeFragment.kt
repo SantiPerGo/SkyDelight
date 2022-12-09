@@ -1,5 +1,7 @@
 package com.example.skydelight.navbar
 
+import android.app.Activity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
@@ -137,7 +140,7 @@ class HomeFragment : Fragment() {
 
     // Getting wallpaper from pexels API
     private fun showBackground() {
-        val pageNumber = (1..5000).shuffled().last()
+        val pageNumber = (1..8000).shuffled().last()
         val request = Request.Builder()
             .url("https://api.pexels.com/v1/search?query=nature wallpaper&orientation=portrait&per_page=1&size=small&page=$pageNumber")
             .addHeader("Authorization", BuildConfig.API_KEY_PEXELS).get().build()
@@ -178,29 +181,55 @@ class HomeFragment : Fragment() {
                                 Html.FROM_HTML_MODE_COMPACT)
                             binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(requireContext(), R.attr.text_color))
 
-                            // Creating animation instances
-                            val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
-                            val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
+                            // Verify if user saved dark theme
+                            updateTheme {
+                                // Creating animation instances
+                                val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
+                                val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
 
-                            // Setting animation duration
-                            fadeOutAnimation.duration = 500
-                            fadeInAnimation.duration = 500
+                                // Setting animation duration
+                                fadeOutAnimation.duration = 500
+                                fadeInAnimation.duration = 500
 
-                            binding.imgBackground.startAnimation(fadeOutAnimation)
-                            Glide.with(context)
-                                .load(imageUrl)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .skipMemoryCache(true)
-                                .dontAnimate()
-                                .dontTransform()
-                                .priority(Priority.IMMEDIATE)
-                                .format(DecodeFormat.DEFAULT)
-                                .into(binding.imgBackground)
-                            binding.imgBackground.startAnimation(fadeInAnimation)
+                                binding.imgBackground.startAnimation(fadeOutAnimation)
+                                Glide.with(context)
+                                    .load(imageUrl)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .skipMemoryCache(true)
+                                    .dontAnimate()
+                                    .dontTransform()
+                                    .priority(Priority.IMMEDIATE)
+                                    .format(DecodeFormat.DEFAULT)
+                                    .into(binding.imgBackground)
+                                binding.imgBackground.startAnimation(fadeInAnimation)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun updateTheme(function:() -> Unit) {
+        // Launching room database connection
+        MainScope().launch {
+            // Creating connection to database
+            val user = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
+                .fallbackToDestructiveMigration().build().userDao().getUser()[0]
+
+            if(user.isDarkTheme != null)
+                if(user.isDarkTheme != isDarkTheme(requireActivity()))
+                    if(user.isDarkTheme == true)
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    else
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                else function()
+            else function()
+        }
+    }
+
+    private fun isDarkTheme(activity: Activity): Boolean {
+        return activity.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 }
