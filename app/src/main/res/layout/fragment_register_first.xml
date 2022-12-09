@@ -173,6 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:padding="@dimen/sex_padding"
             android:gravity="center_horizontal|center_vertical"
             android:buttonTint="?attr/text_color"
             android:fontFamily="@font/comfortaa"
@@ -184,7 +185,7 @@
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="@dimen/min_size"
             app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size"
+            app:autoSizeStepGranularity="@dimen/granularity_mega_size"
             tools:ignore="TextContrastCheck" />
 
         <RadioButton
@@ -196,6 +197,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:padding="@dimen/sex_padding"
             android:gravity="center_horizontal|center_vertical"
             android:checked="false"
             android:buttonTint="?attr/text_color"
@@ -208,7 +210,7 @@
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="@dimen/min_size"
             app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size"
+            app:autoSizeStepGranularity="@dimen/granularity_mega_size"
             tools:ignore="TextContrastCheck" />
 
     </RadioGroup>
@@ -388,14 +390,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.32" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_number_picker_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.58" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_sex_left"

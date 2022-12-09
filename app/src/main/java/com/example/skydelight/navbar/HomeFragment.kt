@@ -1,17 +1,15 @@
 package com.example.skydelight.navbar
 
-import android.app.Activity
-import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
@@ -19,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
@@ -145,91 +144,55 @@ class HomeFragment : Fragment() {
             .url("https://api.pexels.com/v1/search?query=nature wallpaper&orientation=portrait&per_page=1&size=small&page=$pageNumber")
             .addHeader("Authorization", BuildConfig.API_KEY_PEXELS).get().build()
 
-        ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(),
-            requireActivity(),null, null, null, null, null,
-            null, null,null, null) {
+        context?.let { context ->
+            ValidationsDialogsRequests().httpPetition(request, context, requireView(),
+                requireActivity(),null, null, null, null, null,
+                null, null,null, null) {
 
-            // Getting data
-            val imageUrlData = JSONObject(it).getString("photos")
+                // Getting data
+                val imageUrlData = JSONObject(it).getString("photos")
 
-            // Getting image url
-            var imageUrl = imageUrlData.substringAfter("https:\\/\\/images.pexels.com\\/photos\\/")
-                .substringBefore(".jpeg").replace("\\", "")
-            imageUrl = "https://images.pexels.com/photos/$imageUrl.jpeg"
+                // Getting image url
+                val imageUrl = imageUrlData.substringAfter("\"portrait\":\"")
+                    .substringBefore("\"").replace("\\", "")
 
-            // Getting photographer info
-            val photographerName = imageUrlData.substringAfter("\"photographer\":\"")
-                .substringBefore("\"")
+                // Getting photographer name
+                val photographerName = imageUrlData.substringAfter("\"photographer\":\"")
+                    .substringBefore("\"")
 
-            // Getting photographer profile link
-            var photographerUrl = imageUrlData.substringAfter("https:\\/\\/www.pexels.com\\/@")
-                .substringBefore("\"")
-            photographerUrl = "https://www.pexels.com/@$photographerUrl/"
-            photographerUrl = "<a href=\"$photographerUrl\">$photographerName</a>"
+                // Getting photographer profile link
+                val photographerProfile = imageUrlData.substringAfter("\"photographer_url\":\"")
+                    .substringBefore("\"").replace("\\", "")
 
-            // Creating photo and pexels links
-            val photoUrl = "<a href=\"$imageUrl\">Photo</a>"
-            val pexelsUrl = "<a href=\"https://www.pexels.com/\">Pexels</a>"
-            
-            // Loading image
-            MainScope().launch {
-                activity?.let { activity ->
-                    context?.let { context ->
+                // Creating photo, pexels and photographer links
+                val photoUrl = "<a href=\"$imageUrl\">Photo</a>"
+                val pexelsUrl = "<a href=\"https://www.pexels.com/\">Pexels</a>"
+                val photographerUrl = "<a href=\"$photographerProfile\">$photographerName</a>"
+
+                // Loading image
+                MainScope().launch {
+                    activity?.let { activity ->
                         if(!activity.isDestroyed) {
                             // Showing photo, photographer and pexels links
                             binding.txtCredits.text = Html.fromHtml("$photoUrl by $photographerUrl\non $pexelsUrl",
                                 Html.FROM_HTML_MODE_COMPACT)
                             binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(requireContext(), R.attr.text_color))
 
-                            // Verify if user saved dark theme
-                            updateTheme {
-                                // Creating animation instances
-                                val fadeOutAnimation: Animation = AlphaAnimation(1.0f, 0.0f)
-                                val fadeInAnimation: Animation = AlphaAnimation(0.0f, 1.0f)
-
-                                // Setting animation duration
-                                fadeOutAnimation.duration = 500
-                                fadeInAnimation.duration = 500
-
-                                binding.imgBackground.startAnimation(fadeOutAnimation)
-                                Glide.with(context)
-                                    .load(imageUrl)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .skipMemoryCache(true)
-                                    .dontAnimate()
-                                    .dontTransform()
-                                    .priority(Priority.IMMEDIATE)
-                                    .format(DecodeFormat.DEFAULT)
-                                    .into(binding.imgBackground)
-                                binding.imgBackground.startAnimation(fadeInAnimation)
-                            }
+                            // Loading image from api
+                            Glide.with(context)
+                                .load(imageUrl)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .skipMemoryCache(true)
+                                .dontAnimate()
+                                .dontTransform()
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .priority(Priority.IMMEDIATE)
+                                .format(DecodeFormat.DEFAULT)
+                                .into(binding.imgBackground)
                         }
                     }
                 }
             }
         }
-    }
-
-    private fun updateTheme(function:() -> Unit) {
-        // Launching room database connection
-        MainScope().launch {
-            // Creating connection to database
-            val user = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao().getUser()[0]
-
-            if(user.isDarkTheme != null)
-                if(user.isDarkTheme != isDarkTheme(requireActivity()))
-                    if(user.isDarkTheme == true)
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    else
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                else function()
-            else function()
-        }
-    }
-
-    private fun isDarkTheme(activity: Activity): Boolean {
-        return activity.resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 }

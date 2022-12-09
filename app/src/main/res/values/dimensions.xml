@@ -6,6 +6,7 @@
     <dimen name="switch_padding_2">15dp</dimen>
     <dimen name="switch_padding">10dp</dimen>
     <dimen name="icon_padding_2">1dp</dimen>
+    <dimen name="sex_padding">5dp</dimen>
     <dimen name="custom_dialog">5dp</dimen>
     <dimen name="custom_dialog_2">10dp</dimen>
     <dimen name="custom_dialog_3">20dp</dimen>
@@ -29,7 +30,7 @@
 
     <!-- Guidelines -->
     <dimen name="guideline_top">0.05</dimen>
-    <dimen name="guideline_navbar_top">0.02</dimen>
+    <dimen name="guideline_navbar_top">0.05</dimen>
     <dimen name="guideline_bottom">0.95</dimen>
     <dimen name="guideline_navbar_bottom">0.93</dimen>
     <dimen name="guideline_left">0.1</dimen>

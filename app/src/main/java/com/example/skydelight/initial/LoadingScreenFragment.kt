@@ -1,5 +1,7 @@
 package com.example.skydelight.initial
 
+import android.app.Activity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
@@ -39,24 +42,45 @@ class LoadingScreenFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             // Launching room database connection
             MainScope().launch {
-                // Creating connection to database
-                val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                    .fallbackToDestructiveMigration().build().userDao()
+                context?.let {
+                    // Creating connection to database
+                    val userDao = Room.databaseBuilder(it, AppDatabase::class.java, "user")
+                        .fallbackToDestructiveMigration().build().userDao()
 
-                // If user exists, changing to principal fragments
-                if(userDao.getUser().isNotEmpty())
-                    // If session has to be open
-                    if(userDao.getUser()[0].session)
-                        findNavController().navigate(R.id.action_loadingScreen_to_navBar)
-                    // Else deleting user session
-                    else{
-                        userDao.deleteUsers()
+                    // If user exists, changing to principal fragments
+                    if (userDao.getUser().isNotEmpty())
+                        // If session has to be open
+                        if (userDao.getUser()[0].session)
+                            // Verify if user saved dark theme
+                            updateTheme(userDao.getUser()[0].isDarkTheme)
+                        // Else deleting user session
+                        else {
+                            userDao.deleteUsers()
+                            findNavController().navigate(R.id.action_loadingScreen_to_startScreen)
+                        }
+                    // Else changing to initial fragments
+                    else
                         findNavController().navigate(R.id.action_loadingScreen_to_startScreen)
-                    }
-                // Else changing to initial fragments
-                else
-                    findNavController().navigate(R.id.action_loadingScreen_to_startScreen)
+                }
             }
         }, (1000..5000).shuffled().last().toLong())
+    }
+
+    private fun updateTheme(isDarkTheme: Boolean?) {
+        if(isDarkTheme != null)
+            if(isDarkTheme != isDarkTheme(requireActivity()))
+                if(isDarkTheme == true)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                else
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            else
+                findNavController().navigate(R.id.action_loadingScreen_to_navBar)
+        else
+            findNavController().navigate(R.id.action_loadingScreen_to_navBar)
+    }
+
+    private fun isDarkTheme(activity: Activity): Boolean {
+        return activity.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 }

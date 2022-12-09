@@ -93,25 +93,27 @@ class RecoverPasswordFragment : Fragment() {
             .header("KEY-CLIENT", BuildConfig.API_KEY)
             .build()
 
-        ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-            getString(R.string.recoverScreen_btn_recover), binding.btnRecover, binding.btnReturn, null, null,
-            binding.progressBar, 404, getString(R.string.snackbar_error_recover), null)
-        {
-            // Getting color according of theme
-            val typedValue = TypedValue()
-            requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValue, true)
-            val btnColor = typedValue.data
-            requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
-            val textColor = typedValue.data
+        context?.let { context ->
+            ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                getString(R.string.recoverScreen_btn_recover), binding.btnRecover, binding.btnReturn, null, null,
+                binding.progressBar, 404, getString(R.string.snackbar_error_recover), null)
+            {
+                // Getting color according of theme
+                val typedValue = TypedValue()
+                requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValue, true)
+                val btnColor = typedValue.data
+                requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
+                val textColor = typedValue.data
 
-            ValidationsDialogsRequests().snackBarOnUIThread(
-                getString(R.string.snackbar_success_recover), null, requireView(), btnColor, textColor,
-                requireActivity(), requireContext(), null, null, null, null,
-                null, null) {
-                elementsVisibility(false)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
-                }, 500)
+                ValidationsDialogsRequests().snackBarOnUIThread(
+                    getString(R.string.snackbar_success_recover), null, requireView(), btnColor, textColor,
+                    requireActivity(), requireContext(), null, null, null, null,
+                    null, null) {
+                    elementsVisibility(false)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
+                    }, 500)
+                }
             }
         }
     }

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
@@ -85,42 +84,44 @@ class ProfilePasswordFragment : Fragment() {
         // Deactivating clickable
         (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-        // Launching room database connection
-        MainScope().launch {
-            // Creating connection to database
-            val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao()
-            val user = userDao.getUser()[0]
+        context?.let { context ->
+            // Launching room database connection
+            MainScope().launch {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
 
-            // Arguments to Post Request
-            val formBody: RequestBody = FormBody.Builder()
-                .add("email", user.email)
-                .add("password", password)
-                .build()
+                // Arguments to Post Request
+                val formBody: RequestBody = FormBody.Builder()
+                    .add("email", user.email)
+                    .add("password", password)
+                    .build()
 
-            // Making http request
-            val request = Request.Builder()
-                .url("https://apiskydelight.herokuapp.com/usuarios/cambiar-contrasena/")
-                .put(formBody)
-                .addHeader("Authorization", "Bearer " + user.token)
-                .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                .build()
+                // Making http request
+                val request = Request.Builder()
+                    .url("https://apiskydelight.herokuapp.com/usuarios/cambiar-contrasena/")
+                    .put(formBody)
+                    .addHeader("Authorization", "Bearer " + user.token)
+                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                    .build()
 
-            ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-                getString(R.string.btn_update), binding.btnUpdate, binding.btnCancel, null, null,
-                binding.progressBar, 404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
-            {
-                // Getting color according of theme
-                val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
-                val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
+                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                    getString(R.string.btn_update), binding.btnUpdate, binding.btnCancel, null, null,
+                    binding.progressBar, 404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
+                {
+                    // Getting color according of theme
+                    val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
+                    val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
 
-                // Showing succesful dialog
-                ValidationsDialogsRequests().snackBarOnUIThread(
-                    getString(R.string.snackbar_success_update_password), null, requireView(), btnColor, textColor,
-                    requireActivity(), requireContext(), null, null, null, null,
-                    null, null) {
-                    // Fragment enters from right
-                    (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                    // Showing succesful dialog
+                    ValidationsDialogsRequests().snackBarOnUIThread(
+                        getString(R.string.snackbar_success_update_password), null, requireView(), btnColor, textColor,
+                        requireActivity(), requireContext(), null, null, null, null,
+                        null, null) {
+                        // Fragment enters from right
+                        (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                    }
                 }
             }
         }

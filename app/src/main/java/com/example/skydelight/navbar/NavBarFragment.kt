@@ -10,7 +10,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.MainActivity
@@ -51,7 +50,8 @@ class NavBarFragment : Fragment() {
 
         // Hiding image view after 1 second
         Handler(Looper.getMainLooper()).postDelayed({
-            (activity as MainActivity).imgBackgroundVisibility(false) }, 1000)
+            activity?.let { (it as MainActivity).imgBackgroundVisibility(false) }
+        }, 1000)
 
         // Check if user has done the initial test
         initialTest()
@@ -124,232 +124,236 @@ class NavBarFragment : Fragment() {
         updateImgHelp(false)
 
         // Creating tutorial dialogs
+        context?.let { context ->
+            // Explaining initial test
+            val sixthDialog = CustomDialog(context).init(getString(R.string.home_tutorial_test_title),
+                getString(R.string.home_tutorial_test_description), getString(R.string.home_tutorial_test_button),
+                R.attr.loading_screen_heart, R.attr.fragment_background)
+            /*val sixthDialog = MaterialAlertDialogBuilder(findNavController().context)
+                .setTitle("¡Casi Terminamos!")
+                .setMessage()
+                .setNeutralButton("¡Entendido!") { sixthDialog, _ -> sixthDialog.dismiss() }
+                .setCancelable(false)*/
 
-        // Explaining initial test
-        val sixthDialog = CustomDialog(requireContext()).init(getString(R.string.home_tutorial_test_title),
-            getString(R.string.home_tutorial_test_description), getString(R.string.home_tutorial_test_button),
-            R.attr.loading_screen_heart, R.attr.fragment_background)
-        /*val sixthDialog = MaterialAlertDialogBuilder(findNavController().context)
-            .setTitle("¡Casi Terminamos!")
-            .setMessage()
-            .setNeutralButton("¡Entendido!") { sixthDialog, _ -> sixthDialog.dismiss() }
-            .setCancelable(false)*/
+            // Explaining settings or profile screen
+            val fifthDialog = MaterialAlertDialogBuilder(context)
+                .setTitle("Pantalla 4 de 4")
+                .setMessage("\nEn la pantalla de configuración podrás actualizar tus datos personales (con excepción del correo " +
+                        "electrónico), cerrar sesión o eliminar tu cuenta = )\n")
+                .setNeutralButton("Siguiente") {
+                    fifthDialog, _ -> fifthDialog.dismiss()
 
-        // Explaining settings or profile screen
-        val fifthDialog = MaterialAlertDialogBuilder(findNavController().context)
-            .setTitle("Pantalla 4 de 4")
-            .setMessage("\nEn la pantalla de configuración podrás actualizar tus datos personales (con excepción del correo " +
-                    "electrónico), cerrar sesión o eliminar tu cuenta = )\n")
-            .setNeutralButton("Siguiente") {
-                fifthDialog, _ -> fifthDialog.dismiss()
+                    // Setting parameters for the next fragment
+                    val fragment = TestAnswerFragment()
+                    fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
 
-                // Setting parameters for the next fragment
-                val fragment = TestAnswerFragment()
-                fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
+                    // Changing fragment
+                    updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, false)
+                    itemId = R.id.navbar_test_answer_fragment
+                    binding.navBar.selectedItemId = R.id.nav_test
+                    sixthDialog.show()
+                    //ElementsEditor().updateDialogButton(sixthDialog.show())
+                }
+                .setCancelable(false)
 
+            // Explaining games screen
+            val fourthDialog = MaterialAlertDialogBuilder(context)
+                .setTitle("Pantalla 3 de 4")
+                .setMessage("\nEn la pantalla de juegos podrás disfrutar de actividades relajantes o extremas con realidad " +
+                        "aumentada (sólo si tu teléfono es compatible con ARCore) = )\n")
+                .setNeutralButton("Siguiente") {
+                    fourthDialog, _ -> fourthDialog.dismiss()
+
+                    // Changing fragment
+                    updateNavBarHost(ProfileFragment(), R.id.navbar_profile_fragment, true)
+                    itemId = R.id.nav_profile
+                    binding.navBar.selectedItemId = R.id.nav_profile
+                    fifthDialog.show()
+                }
+                .setCancelable(false)
+
+            // Explaining test screen
+            val thirdDialog = MaterialAlertDialogBuilder(context)
+                .setTitle("Pantalla 2 de 4")
+                .setMessage("\nEn la pantalla de test podrás encontrar diversos cuestionarios que puedes responder cada 24 horas " +
+                        "para conocer tu estrés y tu vulnerabilidad a este = )\n")
+                .setNeutralButton("Siguiente") {
+                    thirdDialog, _ -> thirdDialog.dismiss()
+
+                    // Changing fragment
+                    updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, true)
+                    itemId = R.id.nav_games
+                    binding.navBar.selectedItemId = R.id.nav_games
+                    fourthDialog.show()
+                }
+                .setCancelable(false)
+
+            // Explaining home screen
+            val secondDialog = MaterialAlertDialogBuilder(context)
+                .setTitle("Pantalla 1 de 4")
+                .setMessage("\nEn la pantalla de inicio podrás encontrar diversas recomendaciones para prevención " +
+                        "del estrés académico = )\n")
+                .setNeutralButton("Siguiente") {
+                    secondDialog, _ -> secondDialog.dismiss()
+
+                    // Changing fragment
+                    updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, true)
+                    itemId = R.id.nav_test
+                    binding.navBar.selectedItemId = R.id.nav_test
+                    thirdDialog.show()
+                }
+                .setCancelable(false)
+
+            // Showing introduction for the user
+            val firstDialog = MaterialAlertDialogBuilder(context)
+                .setTitle("¡Bienvenido(a)!")
+                .setMessage("\nTe recomendamos completar un pequeño tutorial antes de usar la aplicación = )\n")
+                .setNeutralButton("¡Empecemos!") {
+                    firstDialog, _ -> firstDialog.dismiss()
+                    secondDialog.show()
+                }
+                .setPositiveButton("Omitir") {
+                    firstDialog, _ -> firstDialog.dismiss()
+                    // Setting parameters for the next fragment
+                    val fragment = TestAnswerFragment()
+                    fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
+
+                    // Changing fragment
+                    updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
+                    itemId = R.id.navbar_test_answer_fragment
+                    binding.navBar.selectedItemId = R.id.nav_test
+                    sixthDialog.show()
+                    //ElementsEditor().updateDialogButton(sixthDialog.show())
+                }
+                .setCancelable(false)
+
+            // Setting return buttons for dialogs
+
+            fifthDialog.setPositiveButton("Anterior"){
+                    fifthDialog, _ -> fifthDialog.dismiss()
                 // Changing fragment
-                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, false)
-                itemId = R.id.navbar_test_answer_fragment
-                binding.navBar.selectedItemId = R.id.nav_test
-                sixthDialog.show()
-                //ElementsEditor().updateDialogButton(sixthDialog.show())
-            }
-            .setCancelable(false)
-
-        // Explaining games screen
-        val fourthDialog = MaterialAlertDialogBuilder(findNavController().context)
-            .setTitle("Pantalla 3 de 4")
-            .setMessage("\nEn la pantalla de juegos podrás disfrutar de actividades relajantes o extremas con realidad " +
-                    "aumentada (sólo si tu teléfono es compatible con ARCore) = )\n")
-            .setNeutralButton("Siguiente") {
-                fourthDialog, _ -> fourthDialog.dismiss()
-
-                // Changing fragment
-                updateNavBarHost(ProfileFragment(), R.id.navbar_profile_fragment, true)
-                itemId = R.id.nav_profile
-                binding.navBar.selectedItemId = R.id.nav_profile
-                fifthDialog.show()
-            }
-            .setCancelable(false)
-
-        // Explaining test screen
-        val thirdDialog = MaterialAlertDialogBuilder(findNavController().context)
-            .setTitle("Pantalla 2 de 4")
-            .setMessage("\nEn la pantalla de test podrás encontrar diversos cuestionarios que puedes responder cada 24 horas " +
-                    "para conocer tu estrés y tu vulnerabilidad a este = )\n")
-            .setNeutralButton("Siguiente") {
-                thirdDialog, _ -> thirdDialog.dismiss()
-
-                // Changing fragment
-                updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, true)
+                updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, false)
                 itemId = R.id.nav_games
                 binding.navBar.selectedItemId = R.id.nav_games
                 fourthDialog.show()
             }
-            .setCancelable(false)
-
-        // Explaining home screen
-        val secondDialog = MaterialAlertDialogBuilder(findNavController().context)
-            .setTitle("Pantalla 1 de 4")
-            .setMessage("\nEn la pantalla de inicio podrás encontrar diversas recomendaciones para prevención " +
-                    "del estrés académico = )\n")
-            .setNeutralButton("Siguiente") {
-                secondDialog, _ -> secondDialog.dismiss()
-
+            fourthDialog.setPositiveButton("Anterior"){
+                    fourthDialog, _ -> fourthDialog.dismiss()
+                thirdDialog.show()
                 // Changing fragment
-                updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, true)
+                updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, false)
                 itemId = R.id.nav_test
                 binding.navBar.selectedItemId = R.id.nav_test
-                thirdDialog.show()
             }
-            .setCancelable(false)
-
-        // Showing introduction for the user
-        val firstDialog = MaterialAlertDialogBuilder(findNavController().context)
-            .setTitle("¡Bienvenido(a)!")
-            .setMessage("\nTe recomendamos completar un pequeño tutorial antes de usar la aplicación = )\n")
-            .setNeutralButton("¡Empecemos!") {
-                firstDialog, _ -> firstDialog.dismiss()
+            thirdDialog.setPositiveButton("Anterior"){
+                    thirdDialog, _ -> thirdDialog.dismiss()
+                // Changing fragment
+                updateNavBarHost(HomeFragment(), R.id.navbar_home_fragment, false)
+                itemId = R.id.nav_home
+                binding.navBar.selectedItemId = R.id.nav_home
                 secondDialog.show()
             }
-            .setPositiveButton("Omitir") {
-                firstDialog, _ -> firstDialog.dismiss()
-                // Setting parameters for the next fragment
-                val fragment = TestAnswerFragment()
-                fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
-
-                // Changing fragment
-                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
-                itemId = R.id.navbar_test_answer_fragment
-                binding.navBar.selectedItemId = R.id.nav_test
-                sixthDialog.show()
-                //ElementsEditor().updateDialogButton(sixthDialog.show())
+            secondDialog.setPositiveButton("Regresar"){
+                    secondDialog, _ -> secondDialog.dismiss()
+                firstDialog.show()
             }
-            .setCancelable(false)
 
-        // Setting return buttons for dialogs
+            // Launching room database connection
+            MainScope().launch {
+                // Creating connection to database
+                val user = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao().getUser()[0]
 
-        fifthDialog.setPositiveButton("Anterior"){
-                fifthDialog, _ -> fifthDialog.dismiss()
-            // Changing fragment
-            updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, false)
-            itemId = R.id.nav_games
-            binding.navBar.selectedItemId = R.id.nav_games
-            fourthDialog.show()
-        }
-        fourthDialog.setPositiveButton("Anterior"){
-                fourthDialog, _ -> fourthDialog.dismiss()
-            thirdDialog.show()
-            // Changing fragment
-            updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, false)
-            itemId = R.id.nav_test
-            binding.navBar.selectedItemId = R.id.nav_test
-        }
-        thirdDialog.setPositiveButton("Anterior"){
-                thirdDialog, _ -> thirdDialog.dismiss()
-            // Changing fragment
-            updateNavBarHost(HomeFragment(), R.id.navbar_home_fragment, false)
-            itemId = R.id.nav_home
-            binding.navBar.selectedItemId = R.id.nav_home
-            secondDialog.show()
-        }
-        secondDialog.setPositiveButton("Regresar"){
-                secondDialog, _ -> secondDialog.dismiss()
-            firstDialog.show()
-        }
+                // Making http request
+                val request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/")
+                    .addHeader("Authorization", "Bearer " + user.token)
+                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                    .post(FormBody.Builder().add("email", user.email).build()).build()
 
-        // Launching room database connection
-        MainScope().launch {
-            // Creating connection to database
-            val user = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao().getUser()[0]
+                ValidationsDialogsRequests().httpPetition(request, context, requireView(),
+                    requireActivity(),null, null, null, null, null,
+                    null, 500,null, null) {
+                    // Changing http body to json
+                    val arrayString = JSONObject(it).getString("data")
 
-            // Making http request
-            val request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/")
-                .addHeader("Authorization", "Bearer " + user.token)
-                .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                .post(FormBody.Builder().add("email", user.email).build()).build()
+                    // If user hasn't done the initial test:
+                    // + Showing app tutorial
+                    // + Applying initial test
+                    if(arrayString == "[]" && !user.initialTest){
+                        // App tutorial
+                        activity?.runOnUiThread{ firstDialog.show() }
 
-            ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(),
-                requireActivity(),null, null, null, null, null,
-                null, 500,null, null) {
-                // Changing http body to json
-                val arrayString = JSONObject(it).getString("data")
+                        // Changing fragment and actual fragment id
+                        childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
+                        itemId = R.id.nav_home
 
-                // If user hasn't done the initial test:
-                // + Showing app tutorial
-                // + Applying initial test
-                if(arrayString == "[]" && !user.initialTest){
-                    // App tutorial
-                    activity?.runOnUiThread{ firstDialog.show() }
+                        // Activating navbar
+                        activity?.runOnUiThread { binding.navBar.selectedItemId = R.id.nav_home }
+                    } else {
+                        // Updating result
+                        if(!user.initialTest)
+                            user.initialTest = true
 
-                    // Changing fragment and actual fragment id
-                    childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
-                    itemId = R.id.nav_home
+                        // Changing fragment and actual fragment id
+                        childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
+                        itemId = R.id.nav_home
 
-                    // Activating navbar
-                    activity?.runOnUiThread { binding.navBar.selectedItemId = R.id.nav_home }
-                } else {
-                    // Updating result
-                    if(!user.initialTest)
-                        user.initialTest = true
+                        // Activating navbar
+                        activity?.runOnUiThread {
+                            binding.navBar.selectedItemId = R.id.nav_home
+                            changeNavBarButtonsClickable(true)
+                            updateImgReload(true)
+                            updateImgHelp(true)
+                        }
 
-                    // Changing fragment and actual fragment id
-                    childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
-                    itemId = R.id.nav_home
-
-                    // Activating navbar
-                    activity?.runOnUiThread {
-                        binding.navBar.selectedItemId = R.id.nav_home
-                        changeNavBarButtonsClickable(true)
-                        updateImgReload(true)
-                        updateImgHelp(true)
+                        backEventState = true
                     }
-
-                    backEventState = true
                 }
             }
         }
     }
 
     private fun updateToken(){
-        // Launching room database connection
-        MainScope().launch {
-            // Creating connection to database
-            val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao()
-            val user = userDao.getUser()[0]
+        context?.let { context ->
+            // Launching room database connection
+            MainScope().launch {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
 
-            // Making http request
-            val request = Request.Builder()
-                .url("https://apiskydelight.herokuapp.com/usuarios/token/refrescar/")
-                .post(FormBody.Builder().add("refresh", user.refresh).build())
-                .build()
+                // Making http request
+                val request = Request.Builder()
+                    .url("https://apiskydelight.herokuapp.com/usuarios/token/refrescar/")
+                    .post(FormBody.Builder().add("refresh", user.refresh).build())
+                    .build()
 
-            ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-                null, null, null, null, null,
-                null, null,null, null) {
-                // Changing http body to json
-                val json = JSONObject(it)
+                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                    null, null, null, null, null,
+                    null, null,null, null) {
+                    // Changing http body to json
+                    val json = JSONObject(it)
 
-                // Launching room database connection
-                MainScope().launch {
-                    // Updating user info in local database
-                    user.token = json.getString("access")
-                    userDao.updateUser(user)
+                    // Launching room database connection
+                    MainScope().launch {
+                        // Updating user info in local database
+                        user.token = json.getString("access")
+                        userDao.updateUser(user)
+                    }
                 }
             }
         }
     }
 
     private fun backAction(){
-        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(),
+            object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 try {
                     if(backEventState)
                         when (itemId) {
                             R.id.navbar_test_data_fragment ->{
-                                updateNavBarHost(TestFragment(), R.id.nav_test, false)
+                                updateNavBarHost(HomeFragment(), R.id.nav_home, false)
                                 updateImgHelp(true)
                             }
                             R.id.navbar_test_answer_fragment ->
@@ -382,31 +386,33 @@ class NavBarFragment : Fragment() {
         }
 
         binding.ImgHelp.setOnClickListener {
-            val dialog = MaterialAlertDialogBuilder(findNavController().context)
-                .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
+            context?.let { context ->
+                val dialog = MaterialAlertDialogBuilder(context)
+                    .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
 
-            // Showing introduction for the user
-            when(itemId){
-                R.id.nav_home -> {
-                    dialog.setTitle("¿Para qué es la pantalla de inicio?")
-                    dialog.setMessage("\nEn esta pantalla encontrarás consejos para prevenir el estrés (algunos personalizados " +
-                            "si has respondido al menos una vez el test SVQ), dichos consejos han sido definidos por " +
-                            "personas con conocimiento en el tema = )\n")
+                // Showing introduction for the user
+                when(itemId){
+                    R.id.nav_home -> {
+                        dialog.setTitle("¿Para qué es la pantalla de inicio?")
+                        dialog.setMessage("\nEn esta pantalla encontrarás consejos para prevenir el estrés (algunos personalizados " +
+                                "si has respondido al menos una vez el test SVQ), dichos consejos han sido definidos por " +
+                                "personas con conocimiento en el tema = )\n")
+                    }
+                    R.id.nav_test -> {
+                        dialog.setTitle("¿Para qué son los test?")
+                        dialog.setMessage("\nEn esta pantalla encontrarás cuestionarios que puedes responder cada 24 horas para " +
+                                "conocer diversos aspectos relacionados con tu estrés, pero...\n\n¡No olvides visitar el sitio web " +
+                                "para dar seguimiento a los resultados de las pruebas que respondas!\n")
+                    }
+                    R.id.nav_games -> {
+                        dialog.setTitle("¿Para qué son los juegos?")
+                        dialog.setMessage("\n¡Para divertirte con realidad aumentada! (sólo si tu teléfono es compatible con ARCore)\n")
+                    }
                 }
-                R.id.nav_test -> {
-                    dialog.setTitle("¿Para qué son los test?")
-                    dialog.setMessage("\nEn esta pantalla encontrarás cuestionarios que puedes responder cada 24 horas para " +
-                            "conocer diversos aspectos relacionados con tu estrés, pero...\n\n¡No olvides visitar el sitio web " +
-                            "para dar seguimiento a los resultados de las pruebas que respondas!\n")
-                }
-                R.id.nav_games -> {
-                    dialog.setTitle("¿Para qué son los juegos?")
-                    dialog.setMessage("\n¡Para divertirte con realidad aumentada! (sólo si tu teléfono es compatible con ARCore)\n")
-                }
+
+                // Changing neutral button position to center
+                ElementsEditor().updateDialogButton(dialog.show())
             }
-
-            // Changing neutral button position to center
-            ElementsEditor().updateDialogButton(dialog.show())
         }
     }
 

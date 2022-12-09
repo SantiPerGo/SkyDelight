@@ -94,6 +94,7 @@
     <string name="profile_btn_close_session">Cerrar Sesión</string>
     <string name="profile_privacy">Política de Privacidad</string>
     <string name="profile_about">Acerca de</string>
+    <string name="profile_web">Ir al Sitio Web</string>
     <string name="profile_theme">Cambiar Tema</string>
     <string name="profile_update_password">Nueva Contraseña</string>
     <string name="profile_update_data">Ingresa tus Datos</string>

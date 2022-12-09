@@ -324,68 +324,70 @@ class TestAnswerFragment : Fragment() {
         // Deactivating clickable
         (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-        // Launching room database connection
-        MainScope().launch {
-            // Creating connection to database
-            val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao()
-            val user = userDao.getUser()[0]
+        context?.let { context ->
+            // Launching room database connection
+            MainScope().launch {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
 
-            // Arguments to Post Request
-            val formBody = FormBody.Builder()
-            formBody.add("usuario", user.email)
-            for(i in questionAnswers.indices)
-                formBody.add("pregunta${i+1}", questionAnswers[i].toString())
+                // Arguments to Post Request
+                val formBody = FormBody.Builder()
+                formBody.add("usuario", user.email)
+                for(i in questionAnswers.indices)
+                    formBody.add("pregunta${i+1}", questionAnswers[i].toString())
 
-            // Choosing api url
-            var apiUrl = ""
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-            when(testNumber) {
-                // SISCO Test
-                1 -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testcisco"
-                    user.siscoCalendar = LocalDateTime.now().format(formatter)
+                // Choosing api url
+                var apiUrl = ""
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+                when(testNumber) {
+                    // SISCO Test
+                    1 -> {
+                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testcisco"
+                        user.siscoCalendar = LocalDateTime.now().format(formatter)
+                    }
+                    // SVQ Test
+                    2 -> {
+                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testsqv"
+                        user.svqCalendar = LocalDateTime.now().format(formatter)
+                    }
+                    // PSS Test
+                    3 -> {
+                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testpss"
+                        user.pssCalendar = LocalDateTime.now().format(formatter)
+                    }
+                    // SVS Test
+                    4 -> {
+                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testsvs"
+                        user.svsCalendar = LocalDateTime.now().format(formatter)
+                    }
                 }
-                // SVQ Test
-                2 -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testsqv"
-                    user.svqCalendar = LocalDateTime.now().format(formatter)
+
+                // Updating user date and hour of test in local database
+                userDao.updateUser(user)
+
+                // Making http request
+                val request = Request.Builder()
+                    .url(apiUrl)
+                    .post(formBody.build())
+                    .addHeader("Authorization", "Bearer " + user.token)
+                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                    .build()
+
+                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                    getString(R.string.test_btn_end), binding.btnNext, binding.btnReturn, null, null,
+                    binding.progressBar, null, null, (parentFragment as NavBarFragment))
+                {
+                    // Setting parameters for the next fragment
+                    val bundle = bundleOf(TEST_PARAM to testNumber, SCORE_PARAM to result, STRESS_PARAM to explanation)
+
+                    val fragment = TestDataFragment()
+                    fragment.arguments = bundle
+
+                    // Fragment enters from right
+                    (parentFragment as NavBarFragment).updateNavBarHost(fragment, R.id.navbar_test_data_fragment, true)
                 }
-                // PSS Test
-                3 -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testpss"
-                    user.pssCalendar = LocalDateTime.now().format(formatter)
-                }
-                // SVS Test
-                4 -> {
-                    apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testsvs"
-                    user.svsCalendar = LocalDateTime.now().format(formatter)
-                }
-            }
-
-            // Updating user date and hour of test in local database
-            userDao.updateUser(user)
-
-            // Making http request
-            val request = Request.Builder()
-                .url(apiUrl)
-                .post(formBody.build())
-                .addHeader("Authorization", "Bearer " + user.token)
-                .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                .build()
-
-            ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-                getString(R.string.test_btn_end), binding.btnNext, binding.btnReturn, null, null,
-                binding.progressBar, null, null, (parentFragment as NavBarFragment))
-            {
-                // Setting parameters for the next fragment
-                val bundle = bundleOf(TEST_PARAM to testNumber, SCORE_PARAM to result, STRESS_PARAM to explanation)
-
-                val fragment = TestDataFragment()
-                fragment.arguments = bundle
-
-                // Fragment enters from right
-                (parentFragment as NavBarFragment).updateNavBarHost(fragment, R.id.navbar_test_data_fragment, true)
             }
         }
     }

@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import okhttp3.FormBody
 import okhttp3.Request
 
+private const val TITLE_PARAM = "title"
 private const val URL_PARAM = "url"
 
 class ProfileFragment : Fragment() {
@@ -133,8 +134,8 @@ class ProfileFragment : Fragment() {
         binding.btnPrivacy.setOnClickListener {
             // Setting parameters for the next fragment
             val fragment = ProfileWebFragment()
-            fragment.arguments = bundleOf(URL_PARAM to
-                    "https://sites.google.com/view/skydelight-poltica/página-principal")
+            fragment.arguments = bundleOf(TITLE_PARAM to "Política de Privacidad",
+                URL_PARAM to "https://sites.google.com/view/skydelightpolticadeprivacidad")
 
             // Fragment enters from right
             (parentFragment as NavBarFragment).updateNavBarHost(
@@ -144,8 +145,8 @@ class ProfileFragment : Fragment() {
         binding.btnAbout.setOnClickListener {
             // Setting parameters for the next fragment
             val fragment = ProfileWebFragment()
-            fragment.arguments = bundleOf(URL_PARAM to
-                    "https://sites.google.com/view/skydelight-acerca-de/página-principal")
+            fragment.arguments = bundleOf(TITLE_PARAM to "Acerca De SkyDelight",
+                URL_PARAM to "https://sites.google.com/view/skydelight-acerca-de")
 
             // Fragment enters from right
             (parentFragment as NavBarFragment).updateNavBarHost(

@@ -108,40 +108,38 @@ class LoginFragment : Fragment() {
             .post(FormBody.Builder().add("email", email).add("password", password).build())
             .build()
 
-        ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-            getString(R.string.btn_login), binding.btnLogin, binding.btnReturn, null, null,
-            binding.progressBar, 401, getString(R.string.snackbar_error_login), null)
-        { responseString: String ->
-            // Changing http body to json
-            val json = JSONObject(responseString)
+        context?.let { context ->
+            ValidationsDialogsRequests().httpPetition(
+                request, context, requireView(), requireActivity(),
+                getString(R.string.btn_login), binding.btnLogin, binding.btnReturn, null, null,
+                binding.progressBar, 401, getString(R.string.snackbar_error_login), null)
+            { responseString: String ->
+                // Changing http body to json
+                val json = JSONObject(responseString)
 
-            // Launching room database connection
-            MainScope().launch {
-                // Creating connection to database
-                val userDao =
-                    Room.databaseBuilder(
-                        findNavController().context,
-                        AppDatabase::class.java,
-                        "user"
-                    )
+                // Launching room database connection
+                MainScope().launch {
+                    // Creating connection to database
+                    val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
                         .fallbackToDestructiveMigration().build().userDao()
 
-                // If user exists, we have to delete it
-                val user = userDao.getUser()
-                if (user.isNotEmpty())
-                    userDao.deleteUser(user[0])
+                    // If user exists, we have to delete it
+                    val user = userDao.getUser()
+                    if (user.isNotEmpty())
+                        userDao.deleteUser(user[0])
 
-                // Adding the new user to the database
-                userDao.insertUser(
-                    User(
-                        json.getString("user"), json.getString("name"),
-                        json.getString("sex"), json.getInt("age"), json.getString("access"),
-                        json.getString("refresh"), binding.rememberSession.isChecked
+                    // Adding the new user to the database
+                    userDao.insertUser(
+                        User(
+                            json.getString("user"), json.getString("name"),
+                            json.getString("sex"), json.getInt("age"), json.getString("access"),
+                            json.getString("refresh"), binding.rememberSession.isChecked
+                        )
                     )
-                )
 
-                // Changing to the principal fragment
-                activity?.runOnUiThread { findNavController().navigate(R.id.action_login_to_navBar) }
+                    // Changing to the principal fragment
+                    activity?.runOnUiThread { findNavController().navigate(R.id.action_login_to_navBar) }
+                }
             }
         }
     }

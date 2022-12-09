@@ -181,42 +181,44 @@ class RegisterSecondFragment : Fragment() {
                 .header("KEY-CLIENT", BuildConfig.API_KEY)
                 .build()
 
-            ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-                getString(R.string.registerScreen_btn_create), binding.btnCreateAccount, binding.btnReturn, null,
-                null,  binding.progressBar,null, null,null)
-            { responseString: String ->
-                // Changing http body to json
-                val json = JSONObject(responseString)
+            context?.let { context ->
+                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                    getString(R.string.registerScreen_btn_create), binding.btnCreateAccount, binding.btnReturn, null,
+                    null,  binding.progressBar,null, null,null)
+                { responseString: String ->
+                    // Changing http body to json
+                    val json = JSONObject(responseString)
 
-                // Launching room database connection
-                MainScope().launch {
-                    // Creating connection to database
-                    val userDao = Room.databaseBuilder(findNavController().context,
-                        AppDatabase::class.java,"user").fallbackToDestructiveMigration().build().userDao()
+                    // Launching room database connection
+                    MainScope().launch {
+                        // Creating connection to database
+                        val userDao = Room.databaseBuilder(context, AppDatabase::class.java,"user")
+                            .fallbackToDestructiveMigration().build().userDao()
 
-                    // If user exists, we have to delete it
-                    val user = userDao.getUser()
-                    if (user.isNotEmpty())
-                        userDao.deleteUser(user[0])
+                        // If user exists, we have to delete it
+                        val user = userDao.getUser()
+                        if (user.isNotEmpty())
+                            userDao.deleteUser(user[0])
 
-                    // Adding the new user to the database
-                    userDao.insertUser(User(json.getString("user"),
-                        json.getString("name"), json.getString("sex"),
-                        json.getInt("age"), json.getString("access"),
-                        json.getString("refresh")))
+                        // Adding the new user to the database
+                        userDao.insertUser(User(json.getString("user"),
+                            json.getString("name"), json.getString("sex"),
+                            json.getInt("age"), json.getString("access"),
+                            json.getString("refresh")))
 
-                    // Getting color according of theme
-                    val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
-                    val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
+                        // Getting color according of theme
+                        val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
+                        val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
 
-                    ValidationsDialogsRequests().snackBarOnUIThread(
-                        getString(R.string.snackbar_success_register), null, requireView(), btnColor, textColor,
-                        requireActivity(), requireContext(), null, null, null, null,
-                        null, null) {
-                        elementsVisibility(false)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            findNavController().navigate(R.id.action_registerSecond_to_registerThird)
-                        }, 500)
+                        ValidationsDialogsRequests().snackBarOnUIThread(
+                            getString(R.string.snackbar_success_register), null, requireView(), btnColor, textColor,
+                            requireActivity(), requireContext(), null, null, null, null,
+                            null, null) {
+                            elementsVisibility(false)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                findNavController().navigate(R.id.action_registerSecond_to_registerThird)
+                            }, 500)
+                        }
                     }
                 }
             }

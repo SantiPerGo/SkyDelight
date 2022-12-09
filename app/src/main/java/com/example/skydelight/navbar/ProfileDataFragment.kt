@@ -97,58 +97,60 @@ class ProfileDataFragment : Fragment() {
         // Deactivating clickable
         (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-        // Launching room database connection
-        MainScope().launch {
-            // Creating connection to database
-            val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao()
-            val user = userDao.getUser()[0]
+        context?.let { context ->
+            // Launching room database connection
+            MainScope().launch {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
 
-            // Getting color according of theme
-            val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_red)
-            val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_red)
+                // Getting color according of theme
+                val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_red)
+                val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_red)
 
-            if(name == user.name && sex == user.sex && age == user.age) {
-                ValidationsDialogsRequests().snackBar(requireView(), btnColor, textColor,
-                    getString(R.string.snackbar_error_update_data), requireContext())
+                if(name == user.name && sex == user.sex && age == user.age) {
+                    ValidationsDialogsRequests().snackBar(requireView(), btnColor, textColor,
+                        getString(R.string.snackbar_error_update_data), requireContext())
 
-                (parentFragment as NavBarFragment).changeNavBarButtonsClickable(true)
-            } else {
-                // Arguments to Post Request
-                val formBody: RequestBody = FormBody.Builder()
-                    .add("name", name)
-                    .add("edad", age.toString())
-                    .add("sex", sex)
-                    .build()
+                    (parentFragment as NavBarFragment).changeNavBarButtonsClickable(true)
+                } else {
+                    // Arguments to Post Request
+                    val formBody: RequestBody = FormBody.Builder()
+                        .add("name", name)
+                        .add("edad", age.toString())
+                        .add("sex", sex)
+                        .build()
 
-                // Making http request
-                val request = Request.Builder()
-                    .url("https://apiskydelight.herokuapp.com/usuarios/actualizar-informacion/")
-                    .put(formBody)
-                    .addHeader("Authorization", "Bearer " + user.token)
-                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                    .build()
+                    // Making http request
+                    val request = Request.Builder()
+                        .url("https://apiskydelight.herokuapp.com/usuarios/actualizar-informacion/")
+                        .put(formBody)
+                        .addHeader("Authorization", "Bearer " + user.token)
+                        .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                        .build()
 
-                ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-                    getString(R.string.btn_update), binding.btnUpdate, binding.btnCancel, null, null,
-                    binding.progressBar, 404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
-                {
-                    // Launching room database connection
-                    MainScope().launch {
-                        // Updating user info in local database
-                        userDao.updateUser(User(user.email, name, sex, age, user.token, user.refresh))
+                    ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                        getString(R.string.btn_update), binding.btnUpdate, binding.btnCancel, null, null,
+                        binding.progressBar, 404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
+                    {
+                        // Launching room database connection
+                        MainScope().launch {
+                            // Updating user info in local database
+                            userDao.updateUser(User(user.email, name, sex, age, user.token, user.refresh))
 
-                        // Getting color according of theme
-                        val buttonColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
-                        val txtColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
+                            // Getting color according of theme
+                            val buttonColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
+                            val txtColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
 
-                        // Showing succesful dialog
-                        ValidationsDialogsRequests().snackBarOnUIThread(
-                            getString(R.string.snackbar_success_update_data), null, requireView(), buttonColor, txtColor,
-                            requireActivity(), requireContext(), null, null, null, null,
-                            null, null) {
-                            // Fragment enters from right
-                            (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                            // Showing succesful dialog
+                            ValidationsDialogsRequests().snackBarOnUIThread(
+                                getString(R.string.snackbar_success_update_data), null, requireView(), buttonColor, txtColor,
+                                requireActivity(), requireContext(), null, null, null, null,
+                                null, null) {
+                                // Fragment enters from right
+                                (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                            }
                         }
                     }
                 }
