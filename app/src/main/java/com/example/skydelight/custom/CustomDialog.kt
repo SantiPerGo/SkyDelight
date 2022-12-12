@@ -5,21 +5,24 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.View
 import android.view.Window
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.skydelight.R
 
-class CustomDialog(globalContext: Context?) {
-    private val context = globalContext
+class CustomDialog() {
     private lateinit var dialog: Dialog
+    private var isOneButton = true
 
-    fun init(title: String, message: String, buttonText: String,
-             drawableReference: Int, backgroundReference: Int): Dialog {
+    constructor(title: String, message: String, drawableReference: Int,
+             backgroundReference: Int, context: Context, oneButton: Boolean = true) : this() {
         try {
             // Creating instance of dialog
-            dialog = Dialog(context!!)
+            dialog = Dialog(context)
 
             // Creating dialog with layout
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -30,17 +33,37 @@ class CustomDialog(globalContext: Context?) {
             // Using user texts, image and colors
             dialog.findViewById<TextView>(R.id.txtTitle).text = title
             dialog.findViewById<TextView>(R.id.txtMessage).text = message
-            dialog.findViewById<TextView>(R.id.btnClose).text = buttonText
             dialog.findViewById<ImageView>(R.id.imgIcon)
                 .setImageDrawable(ElementsEditor().getDrawable(context, drawableReference))
             dialog.findViewById<CardView>(R.id.cardView).backgroundTintList =
                     ColorStateList.valueOf(ElementsEditor().getColor(context, backgroundReference))
 
-            // Setting button method
-            dialog.findViewById<TextView>(R.id.btnClose).setOnClickListener { dialog.dismiss() }
+            // Showing two buttons
+            isOneButton = oneButton
+            if(!oneButton)   {
+                dialog.findViewById<TextView>(R.id.btnClose).visibility = View.GONE
+                dialog.findViewById<LinearLayout>(R.id.linearLayoutButtons).visibility = View.VISIBLE
+            }
         } catch (e: IllegalStateException) {}
-
-        // Showing dialog
-        return dialog
     }
+
+    fun firstButton(buttonText: String, function: () -> (Unit)) {
+        val btnId = if(isOneButton) R.id.btnClose else R.id.btnLeft
+
+        dialog.findViewById<Button>(btnId).text = buttonText
+        dialog.findViewById<Button>(btnId).setOnClickListener {
+            dialog.dismiss()
+            function()
+        }
+    }
+
+    fun secondButton(buttonText: String, function: () -> (Unit)) {
+        dialog.findViewById<Button>(R.id.btnRight).text = buttonText
+        dialog.findViewById<Button>(R.id.btnRight).setOnClickListener {
+            dialog.dismiss()
+            function()
+        }
+    }
+
+    fun show(){ dialog.show() }
 }

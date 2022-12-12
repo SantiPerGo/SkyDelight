@@ -30,6 +30,14 @@
         <item name="text_color">@color/dark</item>
         <item name="text_color_hint">@color/lightblue3</item>
 
+        <!-- Heart Pictures -->
+        <item name="heart_confused">@drawable/heart_confused_night</item>
+        <item name="heart_dead">@drawable/heart_dead_night</item>
+        <item name="heart_happy">@drawable/heart_happy_night</item>
+        <item name="heart_laughing">@drawable/heart_laughing_night</item>
+        <item name="heart_relaxed">@drawable/heart_relaxed_night</item>
+        <item name="heart_sad">@drawable/heart_sad_night</item>
+
         <!-- Blue Button -->
         <item name="btn_text_color_blue">@color/dark</item>
         <item name="btn_background_blue">@color/light</item>

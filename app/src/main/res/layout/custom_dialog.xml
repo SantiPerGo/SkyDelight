@@ -81,7 +81,7 @@
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="200dp"
                 android:layout_height="55dp"
-                android:layout_marginTop="@dimen/custom_dialog"
+                android:layout_marginTop="@dimen/custom_dialog_2"
                 android:layout_marginBottom="@dimen/custom_dialog_3"
                 android:backgroundTint="?attr/btn_background_blue"
                 android:fontFamily="@font/comfortaa"
@@ -89,7 +89,7 @@
                 android:text="@string/loading"
                 android:textColor="?attr/btn_text_color_blue"
                 android:textStyle="bold"
-                android:shadowColor="?attr/text_color"
+                android:shadowColor="?attr/btn_text_color_blue"
                 android:shadowDx="0.0"
                 android:shadowDy="0.0"
                 android:shadowRadius="@dimen/shadow_radius"
@@ -101,6 +101,68 @@
                 app:autoSizeStepGranularity="@dimen/granularity_mega_size"
                 app:rippleColor="?attr/btn_text_color_blue"
                 tools:ignore="TextContrastCheck" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutButtons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/custom_dialog_3"
+                android:layout_marginBottom="@dimen/custom_dialog_3"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnLeft"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="150dp"
+                    android:layout_height="55dp"
+                    android:backgroundTint="?attr/btn_background_blue"
+                    android:fontFamily="@font/comfortaa"
+                    android:state_enabled="true"
+                    android:text="@string/loading"
+                    android:textColor="?attr/btn_text_color_blue"
+                    android:textStyle="bold"
+                    android:shadowColor="?attr/btn_text_color_blue"
+                    android:shadowDx="0.0"
+                    android:shadowDy="0.0"
+                    android:shadowRadius="@dimen/shadow_radius"
+                    app:cornerRadius="@dimen/corner_radius"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="@dimen/min_size"
+                    app:autoSizeMaxTextSize="@dimen/max_size"
+                    app:autoSizeStepGranularity="@dimen/granularity_mega_size"
+                    app:rippleColor="?attr/btn_text_color_blue"
+                    tools:ignore="TextContrastCheck" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnRight"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="150dp"
+                    android:layout_height="55dp"
+                    android:backgroundTint="?attr/btn_background_green"
+                    android:fontFamily="@font/comfortaa"
+                    android:state_enabled="true"
+                    android:text="@string/loading"
+                    android:textColor="?attr/btn_text_color_green"
+                    android:textStyle="bold"
+                    android:shadowColor="?attr/btn_text_color_green"
+                    android:shadowDx="0.0"
+                    android:shadowDy="0.0"
+                    android:shadowRadius="@dimen/shadow_radius"
+                    app:cornerRadius="@dimen/corner_radius"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="@dimen/min_size"
+                    app:autoSizeMaxTextSize="@dimen/max_size"
+                    app:autoSizeStepGranularity="@dimen/granularity_mega_size"
+                    app:rippleColor="?attr/btn_text_color_green"
+                    tools:ignore="TextContrastCheck" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

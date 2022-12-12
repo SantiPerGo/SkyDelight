@@ -16,10 +16,8 @@ import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
 import com.example.skydelight.custom.CustomDialog
-import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import okhttp3.FormBody
@@ -126,137 +124,105 @@ class NavBarFragment : Fragment() {
         // Creating tutorial dialogs
         try {
             // Explaining initial test
-            val sixthDialog = CustomDialog(context).init(getString(R.string.home_tutorial_test_title),
-                getString(R.string.home_tutorial_test_description), getString(R.string.home_tutorial_test_button),
-                R.attr.loading_screen_heart, R.attr.fragment_background)
-            /*val sixthDialog = MaterialAlertDialogBuilder(findNavController().context)
-                .setTitle("¡Casi Terminamos!")
-                .setMessage()
-                .setNeutralButton("¡Entendido!") { sixthDialog, _ -> sixthDialog.dismiss() }
-                .setCancelable(false)*/
+            val sixthDialog = CustomDialog(getString(R.string.tutorial_test_title),
+                getString(R.string.tutorial_test_description), R.attr.heart_laughing,
+                R.attr.fragment_background, requireContext())
+            sixthDialog.firstButton(getString(R.string.tutorial_test_button)) {}
 
             // Explaining settings or profile screen
-            val fifthDialog = MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Pantalla 4 de 4")
-                .setMessage("\nEn la pantalla de configuración podrás actualizar tus datos personales (con excepción del correo " +
-                        "electrónico), cerrar sesión o eliminar tu cuenta = )\n")
-                .setNeutralButton("Siguiente") {
-                    fifthDialog, _ -> fifthDialog.dismiss()
+            val fifthDialog = CustomDialog(getString(R.string.tutorial_four_title),
+                getString(R.string.tutorial_four_description), R.attr.heart_happy,
+                R.attr.fragment_background, requireContext(), false)
+            fifthDialog.firstButton(getString(R.string.btn_next)) {
+                // Setting parameters for the next fragment
+                val fragment = TestAnswerFragment()
+                fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
 
-                    // Setting parameters for the next fragment
-                    val fragment = TestAnswerFragment()
-                    fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
-
-                    // Changing fragment
-                    updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, false)
-                    itemId = R.id.navbar_test_answer_fragment
-                    binding.navBar.selectedItemId = R.id.nav_test
-                    sixthDialog.show()
-                    //ElementsEditor().updateDialogButton(sixthDialog.show())
-                }
-                .setCancelable(false)
+                // Changing fragment
+                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, false)
+                itemId = R.id.navbar_test_answer_fragment
+                binding.navBar.selectedItemId = R.id.nav_test
+                sixthDialog.show()
+            }
 
             // Explaining games screen
-            val fourthDialog = MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Pantalla 3 de 4")
-                .setMessage("\nEn la pantalla de juegos podrás disfrutar de actividades relajantes o extremas con realidad " +
-                        "aumentada (sólo si tu teléfono es compatible con ARCore) = )\n")
-                .setNeutralButton("Siguiente") {
-                    fourthDialog, _ -> fourthDialog.dismiss()
-
-                    // Changing fragment
-                    updateNavBarHost(ProfileFragment(), R.id.navbar_profile_fragment, true)
-                    itemId = R.id.nav_profile
-                    binding.navBar.selectedItemId = R.id.nav_profile
-                    fifthDialog.show()
-                }
-                .setCancelable(false)
+            val fourthDialog = CustomDialog(getString(R.string.tutorial_three_title),
+                getString(R.string.tutorial_three_description), R.attr.heart_relaxed,
+                R.attr.fragment_background, requireContext(), false)
+            fourthDialog.firstButton(getString(R.string.btn_next)) {
+                // Changing fragment
+                updateNavBarHost(ProfileFragment(), R.id.navbar_profile_fragment, true)
+                itemId = R.id.nav_profile
+                binding.navBar.selectedItemId = R.id.nav_profile
+                fifthDialog.show()
+            }
 
             // Explaining test screen
-            val thirdDialog = MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Pantalla 2 de 4")
-                .setMessage("\nEn la pantalla de test podrás encontrar diversos cuestionarios que puedes responder cada 24 horas " +
-                        "para conocer tu estrés y tu vulnerabilidad a este = )\n")
-                .setNeutralButton("Siguiente") {
-                    thirdDialog, _ -> thirdDialog.dismiss()
-
-                    // Changing fragment
-                    updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, true)
-                    itemId = R.id.nav_games
-                    binding.navBar.selectedItemId = R.id.nav_games
-                    fourthDialog.show()
-                }
-                .setCancelable(false)
+            val thirdDialog = CustomDialog(getString(R.string.tutorial_second_title),
+                getString(R.string.tutorial_second_description), R.attr.heart_laughing,
+                R.attr.fragment_background, requireContext(), false)
+            thirdDialog.firstButton(getString(R.string.btn_next)) {
+                // Changing fragment
+                updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, true)
+                itemId = R.id.nav_games
+                binding.navBar.selectedItemId = R.id.nav_games
+                fourthDialog.show()
+            }
 
             // Explaining home screen
-            val secondDialog = MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Pantalla 1 de 4")
-                .setMessage("\nEn la pantalla de inicio podrás encontrar diversas recomendaciones para prevención " +
-                        "del estrés académico = )\n")
-                .setNeutralButton("Siguiente") {
-                    secondDialog, _ -> secondDialog.dismiss()
-
-                    // Changing fragment
-                    updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, true)
-                    itemId = R.id.nav_test
-                    binding.navBar.selectedItemId = R.id.nav_test
-                    thirdDialog.show()
-                }
-                .setCancelable(false)
+            val secondDialog = CustomDialog(getString(R.string.tutorial_first_title),
+                getString(R.string.tutorial_first_description), R.attr.heart_happy,
+                R.attr.fragment_background, requireContext(), false)
+            secondDialog.firstButton(getString(R.string.btn_next)) {
+                // Changing fragment
+                updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, true)
+                itemId = R.id.nav_test
+                binding.navBar.selectedItemId = R.id.nav_test
+                thirdDialog.show()
+            }
 
             // Showing introduction for the user
-            val firstDialog = MaterialAlertDialogBuilder(requireContext())
-                .setTitle("¡Bienvenido(a)!")
-                .setMessage("\nTe recomendamos completar un pequeño tutorial antes de usar la aplicación = )\n")
-                .setNeutralButton("¡Empecemos!") {
-                    firstDialog, _ -> firstDialog.dismiss()
-                    secondDialog.show()
-                }
-                .setPositiveButton("Omitir") {
-                    firstDialog, _ -> firstDialog.dismiss()
-                    // Setting parameters for the next fragment
-                    val fragment = TestAnswerFragment()
-                    fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
+            val firstDialog = CustomDialog(getString(R.string.tutorial_title),
+                getString(R.string.tutorial_description), R.attr.heart_relaxed,
+                R.attr.fragment_background, requireContext(), false)
+            firstDialog.firstButton(getString(R.string.tutorial_btn_start)) {
+                secondDialog.show() }
+            firstDialog.secondButton(getString(R.string.tutorial_btn_skip)) {
+                // Setting parameters for the next fragment
+                val fragment = TestAnswerFragment()
+                fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
 
-                    // Changing fragment
-                    updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
-                    itemId = R.id.navbar_test_answer_fragment
-                    binding.navBar.selectedItemId = R.id.nav_test
-                    sixthDialog.show()
-                    //ElementsEditor().updateDialogButton(sixthDialog.show())
-                }
-                .setCancelable(false)
+                // Changing fragment
+                updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
+                itemId = R.id.navbar_test_answer_fragment
+                binding.navBar.selectedItemId = R.id.nav_test
+                sixthDialog.show()
+            }
 
             // Setting return buttons for dialogs
 
-            fifthDialog.setPositiveButton("Anterior"){
-                    fifthDialog, _ -> fifthDialog.dismiss()
+            fifthDialog.secondButton(getString(R.string.btn_previous)) {
                 // Changing fragment
                 updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, false)
                 itemId = R.id.nav_games
                 binding.navBar.selectedItemId = R.id.nav_games
                 fourthDialog.show()
             }
-            fourthDialog.setPositiveButton("Anterior"){
-                    fourthDialog, _ -> fourthDialog.dismiss()
+            fourthDialog.secondButton(getString(R.string.btn_previous)) {
                 thirdDialog.show()
                 // Changing fragment
                 updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, false)
                 itemId = R.id.nav_test
                 binding.navBar.selectedItemId = R.id.nav_test
             }
-            thirdDialog.setPositiveButton("Anterior"){
-                    thirdDialog, _ -> thirdDialog.dismiss()
+            thirdDialog.secondButton(getString(R.string.btn_previous)) {
                 // Changing fragment
                 updateNavBarHost(HomeFragment(), R.id.navbar_home_fragment, false)
                 itemId = R.id.nav_home
                 binding.navBar.selectedItemId = R.id.nav_home
                 secondDialog.show()
             }
-            secondDialog.setPositiveButton("Regresar"){
-                    secondDialog, _ -> secondDialog.dismiss()
-                firstDialog.show()
-            }
+            secondDialog.secondButton(getString(R.string.btn_return)) { firstDialog.show() }
 
             // Launching room database connection
             MainScope().launch {
@@ -393,31 +359,28 @@ class NavBarFragment : Fragment() {
 
         binding.ImgHelp.setOnClickListener {
             try {
-                val dialog = MaterialAlertDialogBuilder(requireContext())
-                    .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
-
+                var title = ""
+                var description = ""
                 // Showing introduction for the user
                 when(itemId){
                     R.id.nav_home -> {
-                        dialog.setTitle("¿Para qué es la pantalla de inicio?")
-                        dialog.setMessage("\nEn esta pantalla encontrarás consejos para prevenir el estrés (algunos personalizados " +
-                                "si has respondido al menos una vez el test SVQ), dichos consejos han sido definidos por " +
-                                "personas con conocimiento en el tema = )\n")
+                        title = getString(R.string.navBar_help_home_title)
+                        description = getString(R.string.navBar_help_home_description)
                     }
                     R.id.nav_test -> {
-                        dialog.setTitle("¿Para qué son los test?")
-                        dialog.setMessage("\nEn esta pantalla encontrarás cuestionarios que puedes responder cada 24 horas para " +
-                                "conocer diversos aspectos relacionados con tu estrés, pero...\n\n¡No olvides visitar el sitio web " +
-                                "para dar seguimiento a los resultados de las pruebas que respondas!\n")
+                        title = getString(R.string.navBar_help_test_title)
+                        description = getString(R.string.navBar_help_test_description)
                     }
                     R.id.nav_games -> {
-                        dialog.setTitle("¿Para qué son los juegos?")
-                        dialog.setMessage("\n¡Para divertirte con realidad aumentada! (sólo si tu teléfono es compatible con ARCore)\n")
+                        title = getString(R.string.navBar_help_games_title)
+                        description = getString(R.string.navBar_help_games_description)
                     }
                 }
 
-                // Changing neutral button position to center
-                ElementsEditor().updateDialogButton(dialog.show())
+                val firstDialog = CustomDialog(title, description, R.attr.heart_confused,
+                    R.attr.fragment_background, requireContext())
+                firstDialog.firstButton(getString(R.string.tutorial_test_button)) {}
+                firstDialog.show()
             } catch(e: java.lang.IllegalStateException) {}
         }
     }

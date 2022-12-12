@@ -15,6 +15,14 @@
     <attr name="text_color" format="reference" />
     <attr name="text_color_hint" format="reference" />
 
+    <!-- Heart Pictures -->
+    <attr name="heart_confused" format="reference" />
+    <attr name="heart_dead" format="reference" />
+    <attr name="heart_happy" format="reference" />
+    <attr name="heart_laughing" format="reference" />
+    <attr name="heart_relaxed" format="reference" />
+    <attr name="heart_sad" format="reference" />
+
     <!-- Blue Button -->
     <attr name="btn_text_color_blue" format="reference" />
     <attr name="btn_background_blue" format="reference" />
