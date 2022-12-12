@@ -76,31 +76,31 @@
                 app:autoSizeMaxTextSize="@dimen/max_size"
                 app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
 
-            <TextView
-                android:id="@+id/txtClose"
+            <Button
+                android:id="@+id/btnClose"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="200dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="@dimen/custom_dialog"
                 android:layout_marginBottom="@dimen/custom_dialog_3"
-                android:paddingTop="@dimen/custom_dialog_2"
-                android:paddingBottom="@dimen/custom_dialog_2"
-                android:paddingLeft="@dimen/custom_dialog_2"
-                android:paddingRight="@dimen/custom_dialog_2"
-                android:layout_gravity="center"
-                android:background="@drawable/round_button"
+                android:backgroundTint="?attr/btn_background_blue"
+                android:fontFamily="@font/comfortaa"
+                android:state_enabled="true"
                 android:text="@string/loading"
                 android:textColor="?attr/btn_text_color_blue"
-                android:fontFamily="@font/comfortaa"
-                android:gravity="center"
-                android:shadowColor="?attr/btn_text_color_blue"
+                android:textStyle="bold"
+                android:shadowColor="?attr/text_color"
                 android:shadowDx="0.0"
                 android:shadowDy="0.0"
                 android:shadowRadius="@dimen/shadow_radius"
+                android:layout_gravity="center"
+                app:cornerRadius="@dimen/corner_radius"
                 app:autoSizeTextType="uniform"
                 app:autoSizeMinTextSize="@dimen/min_size"
                 app:autoSizeMaxTextSize="@dimen/max_size"
                 app:autoSizeStepGranularity="@dimen/granularity_mega_size"
-                app:rippleColor="?attr/btn_text_color_blue" />
+                app:rippleColor="?attr/btn_text_color_blue"
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
 

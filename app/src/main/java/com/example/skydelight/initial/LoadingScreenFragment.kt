@@ -42,9 +42,9 @@ class LoadingScreenFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             // Launching room database connection
             MainScope().launch {
-                context?.let {
+                try {
                     // Creating connection to database
-                    val userDao = Room.databaseBuilder(it, AppDatabase::class.java, "user")
+                    val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
                         .fallbackToDestructiveMigration().build().userDao()
 
                     // If user exists, changing to principal fragments
@@ -61,22 +61,24 @@ class LoadingScreenFragment : Fragment() {
                     // Else changing to initial fragments
                     else
                         findNavController().navigate(R.id.action_loadingScreen_to_startScreen)
-                }
+                } catch(e: java.lang.IllegalStateException) {}
             }
         }, (1000..5000).shuffled().last().toLong())
     }
 
     private fun updateTheme(isDarkTheme: Boolean?) {
-        if(isDarkTheme != null)
-            if(isDarkTheme != isDarkTheme(requireActivity()))
-                if(isDarkTheme == true)
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        try {
+            if(isDarkTheme != null)
+                if(isDarkTheme != isDarkTheme(requireActivity()))
+                    if(isDarkTheme == true)
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    else
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 else
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    findNavController().navigate(R.id.action_loadingScreen_to_navBar)
             else
                 findNavController().navigate(R.id.action_loadingScreen_to_navBar)
-        else
-            findNavController().navigate(R.id.action_loadingScreen_to_navBar)
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun isDarkTheme(activity: Activity): Boolean {

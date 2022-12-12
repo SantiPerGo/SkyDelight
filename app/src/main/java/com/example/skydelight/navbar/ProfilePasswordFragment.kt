@@ -67,16 +67,19 @@ class ProfilePasswordFragment : Fragment() {
         }
 
         // Disable login button
-        ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
+        try { ElementsEditor().updateButtonState(binding.btnUpdate,
+            false, context, true) } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun validateInputsNotEmpty() {
-        // Disable or enable login button
-        if(binding.editTxtPassword.text!!.isNotEmpty()
-            && binding.editTxtConfirmPassword.text!!.isNotEmpty())
-            ElementsEditor().updateButtonState(binding.btnUpdate, true, requireContext(), true)
-        else
-            ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
+        try {
+            // Disable or enable login button
+            if(binding.editTxtPassword.text!!.isNotEmpty()
+                && binding.editTxtConfirmPassword.text!!.isNotEmpty())
+                ElementsEditor().updateButtonState(binding.btnUpdate, true, context, true)
+            else
+                ElementsEditor().updateButtonState(binding.btnUpdate, false, context, true)
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     // Function to connect with the api
@@ -84,11 +87,11 @@ class ProfilePasswordFragment : Fragment() {
         // Deactivating clickable
         (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-        context?.let { context ->
-            // Launching room database connection
-            MainScope().launch {
+        // Launching room database connection
+        MainScope().launch {
+            try {
                 // Creating connection to database
-                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
                     .fallbackToDestructiveMigration().build().userDao()
                 val user = userDao.getUser()[0]
 
@@ -106,24 +109,26 @@ class ProfilePasswordFragment : Fragment() {
                     .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
                     .build()
 
-                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
                     getString(R.string.btn_update), binding.btnUpdate, binding.btnCancel, null, null,
                     binding.progressBar, 404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
                 {
-                    // Getting color according of theme
-                    val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
-                    val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
-
                     // Showing succesful dialog
-                    ValidationsDialogsRequests().snackBarOnUIThread(
-                        getString(R.string.snackbar_success_update_password), null, requireView(), btnColor, textColor,
-                        requireActivity(), requireContext(), null, null, null, null,
-                        null, null) {
-                        // Fragment enters from right
-                        (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
-                    }
+                    try {
+                        // Getting color according of theme
+                        val btnColor = ElementsEditor().getColor(context, R.attr.btn_background_green)
+                        val textColor = ElementsEditor().getColor(context, R.attr.btn_text_color_green)
+
+                        ValidationsDialogsRequests().snackBarOnUIThread(
+                            getString(R.string.snackbar_success_update_password), null, requireView(), btnColor,
+                            textColor, requireActivity(), requireContext(), null, null, null, null,
+                            null, null) {
+                            // Fragment enters from right
+                            (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                        }
+                    } catch(e: java.lang.IllegalStateException) {}
                 }
-            }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 }

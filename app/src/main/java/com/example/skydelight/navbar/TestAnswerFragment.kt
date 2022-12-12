@@ -1,14 +1,11 @@
 package com.example.skydelight.navbar
 
-import android.annotation.SuppressLint
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
@@ -32,7 +29,6 @@ private const val BTNCANCEL_PARAM = "btn_cancel"
 class TestAnswerFragment : Fragment() {
     // Binding variable to use elements in the xml layout
     private lateinit var binding : FragmentNavbarTestAnswerBinding
-    private lateinit var res: Resources
     private lateinit var questionAnswers: IntArray
     private lateinit var testQuestion: String
     private lateinit var testAnswer: String
@@ -68,39 +64,47 @@ class TestAnswerFragment : Fragment() {
     }
 
     // After the view is created we can do things
-    @SuppressLint("SetTextI18n", "DiscouragedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Deactivating help fab
         (parentFragment as NavBarFragment).updateImgHelp(false)
 
-        // Access to resources
-        res = requireContext().resources
-
         // Update text
         initVariables()
 
         binding.btnLeftArrow.setOnClickListener {
-            if(answer == min) {
-                answer = -1f
-                updateAnswer(null, "test_initial_option")
-                ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), true)
-            } else if(answer > min) {
-                answer -= 1f
-                updateAnswer(answer, null)
-            }
+            try {
+                when {
+                    answer == min -> {
+                        answer = -1f
+                        updateAnswer(null, "test_initial_option")
+                        ElementsEditor().updateButtonState(binding.btnNext, false, context, true)
+                    }
+                    answer > min -> {
+                        answer -= 1f
+                        updateAnswer(answer, null)
+                    }
+                }
+                updateArrows()
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         binding.btnRightArrow.setOnClickListener {
-            if(answer == -1f) {
-                answer = min
-                updateAnswer(answer, null)
-                ElementsEditor().updateButtonState(binding.btnNext, true, requireContext(), true)
-            } else if(answer < max) {
-                answer += 1
-                updateAnswer(answer, null)
-            }
+            try {
+                when {
+                    answer == -1f -> {
+                        answer = min
+                        updateAnswer(answer, null)
+                        ElementsEditor().updateButtonState(binding.btnNext, true, context, true)
+                    }
+                    answer < max -> {
+                        answer += 1
+                        updateAnswer(answer, null)
+                    }
+                }
+                updateArrows()
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         // Changing to next question or fragment
@@ -110,7 +114,29 @@ class TestAnswerFragment : Fragment() {
         binding.btnReturn.setOnClickListener { returnButtonValidation() }
 
         // Disable next button
-        ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), true)
+        try { ElementsEditor().updateButtonState(binding.btnNext, false, context, true)
+        } catch(e: java.lang.IllegalStateException) {}
+
+        // Disable left arrow button
+        updateArrows()
+    }
+
+    private fun updateArrows(){
+        if(answer == -1f) {
+            binding.btnLeftArrow.isClickable = false
+            binding.btnLeftArrow.animate().alpha(0f)
+        } else {
+            binding.btnLeftArrow.isClickable = true
+            binding.btnLeftArrow.animate().alpha(1f)
+        }
+
+        if(answer == max) {
+            binding.btnRightArrow.isClickable = false
+            binding.btnRightArrow.animate().alpha(0f)
+        } else {
+            binding.btnRightArrow.isClickable = true
+            binding.btnRightArrow.animate().alpha(1f)
+        }
     }
 
     private fun initVariables() {
@@ -156,179 +182,190 @@ class TestAnswerFragment : Fragment() {
     }
 
     private fun updateAnswer(answer: Float?, stringName: String?) {
-        if(stringName.isNullOrEmpty() && answer != null)
-            binding.txtAnswer.text = getString(res.getIdentifier
-                (testAnswer+answer.toInt(), "string", requireContext().packageName))
-        else if(stringName!!.isNotEmpty())
-            binding.txtAnswer.text = getString(res.getIdentifier
-                (stringName, "string", requireContext().packageName))
+        try {
+            if(!requireActivity().isDestroyed) {
+                if(stringName.isNullOrEmpty() && answer != null)
+                    binding.txtAnswer.text = getString(requireActivity().resources.getIdentifier
+                        (testAnswer+answer.toInt(), "string", requireContext().packageName))
+                else if(stringName!!.isNotEmpty())
+                    binding.txtAnswer.text = getString(requireActivity().resources.getIdentifier
+                        (stringName, "string", requireContext().packageName))
+            }
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun nextButtonActions() {
-        // Saving answer
-        questionAnswers[questionNumber - 1] = answer.toInt()
+        try {
+            // Saving answer
+            questionAnswers[questionNumber - 1] = answer.toInt()
 
-        if(questionNumber < maxQuestionsNumber){
-            // Clearing answer
-            // binding.slider.value = min
-            answer = -1f
-            updateAnswer(null, "test_initial_option")
-            ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), true)
+            if(questionNumber < maxQuestionsNumber){
+                // Clearing answer
+                // binding.slider.value = min
+                answer = -1f
+                updateArrows()
+                updateAnswer(null, "test_initial_option")
+                ElementsEditor().updateButtonState(binding.btnNext, false, context, true)
 
-            // Changing text of button if it's first question
-            if(questionNumber == 1)
-                binding.btnReturn.text = getString(R.string.btn_return)
+                // Changing text of button if it's first question
+                if(questionNumber == 1)
+                    binding.btnReturn.text = getString(R.string.btn_return)
 
-            // Increasing number of question
-            questionNumber = questionNumber.plus(1)
+                // Increasing number of question
+                questionNumber = questionNumber.plus(1)
 
-            // Changing text of button if it's last question
-            if(questionNumber == maxQuestionsNumber)
-                binding.btnNext.text = getString(R.string.test_btn_end)
+                // Changing text of button if it's last question
+                if(questionNumber == maxQuestionsNumber)
+                    binding.btnNext.text = getString(R.string.test_btn_end)
 
-            // Changing to next question
-            binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
-            binding.txtQuestion.text = getString(res.getIdentifier(testQuestion+questionNumber,
-                "string", requireContext().packageName))
-        } else {
-            binding.btnReturn.isClickable = false
-            binding.btnNext.isClickable = false
+                // Changing to next question
+                binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
+                binding.txtQuestion.text = getString(requireActivity().resources.getIdentifier
+                    (testQuestion+questionNumber,"string", requireContext().packageName))
+            } else {
+                binding.btnReturn.isClickable = false
+                binding.btnNext.isClickable = false
 
-            MaterialAlertDialogBuilder(findNavController().context)
-                .setTitle("¡Espera!")
-                .setMessage("¿Realmente Quieres dar por Finalizada la Prueba?")
-                .setCancelable(false)
-                .setNeutralButton("¡No!"){ dialog, _ ->
-                    dialog.dismiss()
-                    binding.btnReturn.isClickable = true
-                    binding.btnNext.isClickable = true
-                }
-                .setPositiveButton("¡Sí!"){ _, _ ->
-                    // Updating text
-                    var explanation = ""
-                    var result = questionAnswers.sum().toFloat()
-                    when(testNumber){
-                        // SISCO Test
-                        1 -> {
-                            result = (questionAnswers.sum().toFloat() * 100) / 105
-                            explanation = when {
-                                result <= 33f -> getString(R.string.test_result_low)
-                                result in 34f..66f -> getString(R.string.test_result_medium)
-                                else -> getString(R.string.test_result_high)
-                            }
-                        }
-                        // SVQ Test
-                        2 -> {
-                            result = ((questionAnswers.sum().toFloat() - 20) * 100) / 80
-                            explanation = when {
-                                questionAnswers.sum() <= 49 -> getString(R.string.test_result_vulnerable_low)
-                                questionAnswers.sum() in 50..69 -> getString(R.string.test_result_vulnerable_medium)
-                                questionAnswers.sum() in 70..95 -> getString(R.string.test_result_vulnerable_high)
-                                else -> getString(R.string.test_result_vulnerable_extreme)
-                            }
-                        }
-                        // PSS Test
-                        3 -> {
-                            for(i in questionAnswers.indices)
-                                if(i+1 == 4 || i+1 == 5 || i+1 == 7 || i+1 == 8)
-                                    when {
-                                        questionAnswers[i] == 0 -> questionAnswers[i] = 4
-                                        questionAnswers[i] == 1 -> questionAnswers[i] = 3
-                                        questionAnswers[i] == 2 -> questionAnswers[i] = 2
-                                        questionAnswers[i] == 3 -> questionAnswers[i] = 1
-                                        else -> questionAnswers[i] = 0
-                                    }
-
-                            explanation = when {
-                                questionAnswers.sum() <= 13 -> getString(R.string.test_result_low)
-                                questionAnswers.sum() in 14..26 -> getString(R.string.test_result_medium)
-                                else -> getString(R.string.test_result_high)
-                            }
-
-                            result = (questionAnswers.sum().toFloat() * 100) / 40
-                        }
-                        // SVS Test
-                        4 -> {
-                            result = questionAnswers.sum().toFloat() / 20
-                            explanation = when {
-                                result < 1f -> getString(R.string.test_result_vulnerable_low)
-                                result < 2f -> getString(R.string.test_result_vulnerable_medium)
-                                result < 3f -> getString(R.string.test_result_vulnerable_high)
-                                else -> getString(R.string.test_result_vulnerable_extreme)
-                            }
-
-                            result = (result * 100) / 4
-                        }
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("¡Espera!")
+                    .setMessage("¿Realmente Quieres dar por Finalizada la Prueba?")
+                    .setCancelable(false)
+                    .setNeutralButton("¡No!"){ dialog, _ ->
+                        dialog.dismiss()
+                        binding.btnReturn.isClickable = true
+                        binding.btnNext.isClickable = true
                     }
+                    .setPositiveButton("¡Sí!"){ _, _ ->
+                        // Updating text
+                        var explanation = ""
+                        var result = questionAnswers.sum().toFloat()
+                        when(testNumber){
+                            // SISCO Test
+                            1 -> {
+                                result = (questionAnswers.sum().toFloat() * 100) / 105
+                                explanation = when {
+                                    result <= 33f -> getString(R.string.test_result_low)
+                                    result in 34f..66f -> getString(R.string.test_result_medium)
+                                    else -> getString(R.string.test_result_high)
+                                }
+                            }
+                            // SVQ Test
+                            2 -> {
+                                result = ((questionAnswers.sum().toFloat() - 20) * 100) / 80
+                                explanation = when {
+                                    questionAnswers.sum() <= 49 -> getString(R.string.test_result_vulnerable_low)
+                                    questionAnswers.sum() in 50..69 -> getString(R.string.test_result_vulnerable_medium)
+                                    questionAnswers.sum() in 70..95 -> getString(R.string.test_result_vulnerable_high)
+                                    else -> getString(R.string.test_result_vulnerable_extreme)
+                                }
+                            }
+                            // PSS Test
+                            3 -> {
+                                for(i in questionAnswers.indices)
+                                    if(i+1 == 4 || i+1 == 5 || i+1 == 7 || i+1 == 8)
+                                        when {
+                                            questionAnswers[i] == 0 -> questionAnswers[i] = 4
+                                            questionAnswers[i] == 1 -> questionAnswers[i] = 3
+                                            questionAnswers[i] == 2 -> questionAnswers[i] = 2
+                                            questionAnswers[i] == 3 -> questionAnswers[i] = 1
+                                            else -> questionAnswers[i] = 0
+                                        }
 
-                    saveTest(explanation, result, questionAnswers)
-                }.show()
-        }
+                                explanation = when {
+                                    questionAnswers.sum() <= 13 -> getString(R.string.test_result_low)
+                                    questionAnswers.sum() in 14..26 -> getString(R.string.test_result_medium)
+                                    else -> getString(R.string.test_result_high)
+                                }
+
+                                result = (questionAnswers.sum().toFloat() * 100) / 40
+                            }
+                            // SVS Test
+                            4 -> {
+                                result = questionAnswers.sum().toFloat() / 20
+                                explanation = when {
+                                    result < 1f -> getString(R.string.test_result_vulnerable_low)
+                                    result < 2f -> getString(R.string.test_result_vulnerable_medium)
+                                    result < 3f -> getString(R.string.test_result_vulnerable_high)
+                                    else -> getString(R.string.test_result_vulnerable_extreme)
+                                }
+
+                                result = (result * 100) / 4
+                            }
+                        }
+
+                        saveTest(explanation, result, questionAnswers)
+                    }.show()
+            }
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     fun returnButtonValidation(){
-        if(questionNumber == 1 && btnCancelState == true) {
-            // Showing introduction for the user
-            val dialog = MaterialAlertDialogBuilder(findNavController().context)
-                .setTitle("¡Opción Inválida!")
-                .setMessage("\nRecuerda que debes completar este primer test para acceder a las demás " +
-                        "funcionalidades de la aplicación = )\n")
-                .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
-                .show()
+        try {
+            if(questionNumber == 1 && btnCancelState == true) {
+                // Showing introduction for the user
+                val dialog = MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("¡Opción Inválida!")
+                    .setMessage("\nRecuerda que debes completar este primer test para acceder a las demás " +
+                            "funcionalidades de la aplicación = )\n")
+                    .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
+                    .show()
 
-            // Changing neutral button position to center
-            ElementsEditor().updateDialogButton(dialog)
-        } else if(questionNumber == 1 && btnCancelState == false) {
-            binding.btnReturn.isClickable = false
-            binding.btnNext.isClickable = false
+                // Changing neutral button position to center
+                ElementsEditor().updateDialogButton(dialog)
+            } else if(questionNumber == 1 && btnCancelState == false) {
+                binding.btnReturn.isClickable = false
+                binding.btnNext.isClickable = false
 
-            MaterialAlertDialogBuilder(findNavController().context)
-                .setTitle("¡No te Vayas!")
-                .setMessage("¿Realmente Quieres Cancelar la Prueba?")
-                .setCancelable(false)
-                .setNeutralButton("¡No!"){ dialog, _ ->
-                    dialog.dismiss()
-                    binding.btnReturn.isClickable = true
-                    binding.btnNext.isClickable = true
-                }
-                .setPositiveButton("¡Sí!"){ _, _ ->
-                    // Fragment enters from right
-                    (parentFragment as NavBarFragment).updateNavBarHost(
-                        TestFragment(), R.id.nav_test, false)
-                    (parentFragment as NavBarFragment).updateImgHelp(true)
-                }.show()
-        } else {
-            // Changing text of button if it's not last question
-            if(questionNumber == maxQuestionsNumber)
-                binding.btnNext.text = getString(R.string.btn_next)
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("¡No te Vayas!")
+                    .setMessage("¿Realmente Quieres Cancelar la Prueba?")
+                    .setCancelable(false)
+                    .setNeutralButton("¡No!"){ dialog, _ ->
+                        dialog.dismiss()
+                        binding.btnReturn.isClickable = true
+                        binding.btnNext.isClickable = true
+                    }
+                    .setPositiveButton("¡Sí!"){ _, _ ->
+                        // Fragment enters from right
+                        (parentFragment as NavBarFragment).updateNavBarHost(
+                            TestFragment(), R.id.nav_test, false)
+                        (parentFragment as NavBarFragment).updateImgHelp(true)
+                    }.show()
+            } else {
+                // Changing text of button if it's not last question
+                if(questionNumber == maxQuestionsNumber)
+                    binding.btnNext.text = getString(R.string.btn_next)
 
-            // Decreasing number of question
-            questionNumber = questionNumber.minus(1)
+                // Decreasing number of question
+                questionNumber = questionNumber.minus(1)
 
-            // Changing text of button if it's first question
-            if(questionNumber == 1)
-                binding.btnReturn.text = getString(R.string.btn_cancel)
+                // Changing text of button if it's first question
+                if(questionNumber == 1)
+                    binding.btnReturn.text = getString(R.string.btn_cancel)
 
-            // Changing to previous question
-            binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
-            binding.txtQuestion.text = getString(res.getIdentifier(testQuestion+questionNumber, "string", requireContext().packageName))
+                // Changing to previous question
+                binding.txtTitle.text = "Pregunta $questionNumber de $maxQuestionsNumber"
+                binding.txtQuestion.text = getString(requireActivity().resources.getIdentifier
+                    (testQuestion+questionNumber, "string", requireContext().packageName))
 
-            // Updating answer
-            answer = questionAnswers[questionNumber-1].toFloat()
-            updateAnswer(answer, null)
-            ElementsEditor().updateButtonState(binding.btnNext, true, requireContext(), true)
-        }
+                // Updating answer
+                answer = questionAnswers[questionNumber-1].toFloat()
+                updateArrows()
+                updateAnswer(answer, null)
+                ElementsEditor().updateButtonState(binding.btnNext, true, context, true)
+            }
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun saveTest(explanation: String, result: Float, questionAnswers: IntArray){
         // Deactivating clickable
         (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-        context?.let { context ->
-            // Launching room database connection
-            MainScope().launch {
+        // Launching room database connection
+        MainScope().launch {
+            try {
                 // Creating connection to database
-                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
                     .fallbackToDestructiveMigration().build().userDao()
                 val user = userDao.getUser()[0]
 
@@ -375,20 +412,23 @@ class TestAnswerFragment : Fragment() {
                     .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
                     .build()
 
-                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+
+                ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
                     getString(R.string.test_btn_end), binding.btnNext, binding.btnReturn, null, null,
                     binding.progressBar, null, null, (parentFragment as NavBarFragment))
                 {
                     // Setting parameters for the next fragment
-                    val bundle = bundleOf(TEST_PARAM to testNumber, SCORE_PARAM to result, STRESS_PARAM to explanation)
+                    val bundle = bundleOf(TEST_PARAM to testNumber,
+                        SCORE_PARAM to result, STRESS_PARAM to explanation)
 
                     val fragment = TestDataFragment()
                     fragment.arguments = bundle
 
                     // Fragment enters from right
-                    (parentFragment as NavBarFragment).updateNavBarHost(fragment, R.id.navbar_test_data_fragment, true)
+                    (parentFragment as NavBarFragment).updateNavBarHost(fragment,
+                        R.id.navbar_test_data_fragment, true)
                 }
-            }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 }

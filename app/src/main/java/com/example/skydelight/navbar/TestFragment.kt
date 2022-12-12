@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import androidx.viewpager.widget.ViewPager
 import com.example.skydelight.BuildConfig
@@ -46,11 +45,13 @@ class TestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Loading pictures on view pager and connecting it with dots tab layout
-        val imagesArray = arrayOf(R.drawable.wallpaper_study, R.drawable.wallpaper_woman,
-            R.drawable.wallpaper_coast, R.drawable.wallpaper_heart)
-        val viewPagerAdapter = ViewPageAdapter(requireContext(), imagesArray)
-        binding.viewPagerMain.adapter = viewPagerAdapter
-        binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
+        try {
+            val imagesArray = arrayOf(R.drawable.wallpaper_study, R.drawable.wallpaper_woman,
+                R.drawable.wallpaper_coast, R.drawable.wallpaper_heart)
+            val viewPagerAdapter = ViewPageAdapter(requireContext(), imagesArray)
+            binding.viewPagerMain.adapter = viewPagerAdapter
+            binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
+        } catch(e: java.lang.IllegalStateException) {}
 
         // SISCO
         binding.btnStart.setOnClickListener { updateTestCalendar(1) }
@@ -100,7 +101,7 @@ class TestFragment : Fragment() {
 
     private fun updateColors(resource: Int) {
         // Getting reference to resource color
-        val textColor = ElementsEditor().getColor(requireContext(), resource)
+        val textColor = ElementsEditor().getColor(context, resource)
 
         // Changing button design
         binding.tabLayout.tabRippleColor = ColorStateList.valueOf(textColor)
@@ -113,60 +114,62 @@ class TestFragment : Fragment() {
         val buttonsArray = arrayListOf(binding.btnStart)
 
         // Updating colors
-        ElementsEditor().updateColors(resource, requireContext(), textsArray, buttonsArray)
+        ElementsEditor().updateColors(resource, context, textsArray, buttonsArray)
     }
 
     private fun updateTestCalendar(testNumber: Int){
         // Launching room database connection
         MainScope().launch {
-            // Creating connection to database
-            val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao()
-            val user = userDao.getUser()[0]
+            try {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
 
-            // Choosing api url
-            val apiUrl = when(testNumber) {
-                // SISCO Test
-                1 -> "https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/"
-                // SVQ Test
-                2 -> "https://apiskydelight.herokuapp.com/api/lista-testsqv-personal/"
-                // PSS Test
-                3 -> "https://apiskydelight.herokuapp.com/api/lista-testpss-personal/"
-                // SVS Test
-                else -> "https://apiskydelight.herokuapp.com/api/lista-testsvs-personal/"
-            }
-
-            // Making http request
-            val request = Request.Builder()
-                .url(apiUrl)
-                .post(FormBody.Builder().add("email", user.email).build())
-                .addHeader("Authorization", "Bearer " + user.token)
-                .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                .build()
-
-            ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-                getString(R.string.btn_start), binding.btnStart, null, null, null,
-                binding.progressBar, null,null, (parentFragment as NavBarFragment))
-            {
-                val testData = JSONObject(it).getString("data")
-
-                if(testData != "[]"){
-                    val lastTest = testData.substring(testData.lastIndexOf("{"), testData.lastIndexOf("}")+1)
-                    var dateOfTest = JSONObject(lastTest).getString("created_at").replace("T", " ")
-                    dateOfTest = dateOfTest.substring(0, dateOfTest.indexOf(".")+4)
-                    when(testNumber){
-                        1 -> user.siscoCalendar = dateOfTest
-                        2 -> user.svqCalendar = dateOfTest
-                        3 -> user.pssCalendar = dateOfTest
-                        4 -> user.svsCalendar = dateOfTest
-                    }
-
-                    // Updating user info in local database
-                    MainScope().launch { userDao.updateUser(user) }
+                // Choosing api url
+                val apiUrl = when(testNumber) {
+                    // SISCO Test
+                    1 -> "https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/"
+                    // SVQ Test
+                    2 -> "https://apiskydelight.herokuapp.com/api/lista-testsqv-personal/"
+                    // PSS Test
+                    3 -> "https://apiskydelight.herokuapp.com/api/lista-testpss-personal/"
+                    // SVS Test
+                    else -> "https://apiskydelight.herokuapp.com/api/lista-testsvs-personal/"
                 }
 
-                changeToTestDataFragment(testNumber)
-            }
+                // Making http request
+                val request = Request.Builder()
+                    .url(apiUrl)
+                    .post(FormBody.Builder().add("email", user.email).build())
+                    .addHeader("Authorization", "Bearer " + user.token)
+                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                    .build()
+
+                ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
+                    getString(R.string.btn_start), binding.btnStart, null, null, null,
+                    binding.progressBar, null,null, (parentFragment as NavBarFragment))
+                {
+                    val testData = JSONObject(it).getString("data")
+
+                    if(testData != "[]"){
+                        val lastTest = testData.substring(testData.lastIndexOf("{"), testData.lastIndexOf("}")+1)
+                        var dateOfTest = JSONObject(lastTest).getString("created_at").replace("T", " ")
+                        dateOfTest = dateOfTest.substring(0, dateOfTest.indexOf(".")+4)
+                        when(testNumber){
+                            1 -> user.siscoCalendar = dateOfTest
+                            2 -> user.svqCalendar = dateOfTest
+                            3 -> user.pssCalendar = dateOfTest
+                            4 -> user.svsCalendar = dateOfTest
+                        }
+
+                        // Updating user info in local database
+                        MainScope().launch { userDao.updateUser(user) }
+                    }
+
+                    changeToTestDataFragment(testNumber)
+                }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 
@@ -181,91 +184,98 @@ class TestFragment : Fragment() {
 
         // Launching room database connection
         MainScope().launch {
-            // Creating connection to database
-            val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao()
-            val user = userDao.getUser()[0]
+            try {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
 
-            // Getting last date of test answered
-            val date = when (testNumber) {
-                1 -> user.siscoCalendar
-                2 -> user.svqCalendar
-                3 -> user.pssCalendar
-                4 -> user.svsCalendar
-                else -> null
-            }
-
-            // If user hasn't answered the test for 24 hours he/she can answer again
-            var startTest = false
-            if(date != null){
-                val testCalendar = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))
-
-                // Validating if is the same day
-                var isSameDay = false
-                var isLessThanOneDay = false
-                if(testCalendar.year == LocalDateTime.now().year &&
-                    testCalendar.month == LocalDateTime.now().month){
-                    if(testCalendar.dayOfMonth == LocalDateTime.now().dayOfMonth) {
-                        isSameDay = true
-                    } else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
-                        && LocalDateTime.now().hour - testCalendar.hour < 0){
-                        isLessThanOneDay = true
-                    }
-                    else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
-                        && LocalDateTime.now().hour - testCalendar.hour == 0
-                        && LocalDateTime.now().minute - testCalendar.minute < 0){
-                        isLessThanOneDay = true
-                    }
-                    else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
-                        && LocalDateTime.now().hour - testCalendar.hour == 0
-                        && LocalDateTime.now().minute - testCalendar.minute == 0
-                        && LocalDateTime.now().second - testCalendar.second < 0){
-                        isLessThanOneDay = true
-                    }
+                // Getting last date of test answered
+                val date = when (testNumber) {
+                    1 -> user.siscoCalendar
+                    2 -> user.svqCalendar
+                    3 -> user.pssCalendar
+                    4 -> user.svsCalendar
+                    else -> null
                 }
 
-                if(isSameDay || isLessThanOneDay){
-                    // Calculating time left to answer the test again
-                    var hour = if (testCalendar.hour > LocalDateTime.now().hour)
-                            (testCalendar.hour - LocalDateTime.now().hour) else (LocalDateTime.now().hour - testCalendar.hour)
+                // If user hasn't answered the test for 24 hours he/she can answer again
+                var startTest = false
+                if(date != null){
+                    val testCalendar = LocalDateTime.parse(date,
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))
 
-                    var minute = if (testCalendar.minute > LocalDateTime.now().minute)
-                        (testCalendar.minute - LocalDateTime.now().minute) else (LocalDateTime.now().minute - testCalendar.minute)
-
-                    var second = if (testCalendar.second > LocalDateTime.now().second)
-                        (testCalendar.second - LocalDateTime.now().second) else (LocalDateTime.now().second - testCalendar.second)
-
-                    if(isSameDay) {
-                        hour = 23 - hour
-                        minute = 59 - minute
-                        second = 59 - second
+                    // Validating if is the same day
+                    var isSameDay = false
+                    var isLessThanOneDay = false
+                    if(testCalendar.year == LocalDateTime.now().year &&
+                        testCalendar.month == LocalDateTime.now().month){
+                        if(testCalendar.dayOfMonth == LocalDateTime.now().dayOfMonth) {
+                            isSameDay = true
+                        } else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
+                            && LocalDateTime.now().hour - testCalendar.hour < 0){
+                            isLessThanOneDay = true
+                        }
+                        else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
+                            && LocalDateTime.now().hour - testCalendar.hour == 0
+                            && LocalDateTime.now().minute - testCalendar.minute < 0){
+                            isLessThanOneDay = true
+                        }
+                        else if(LocalDateTime.now().dayOfMonth - testCalendar.dayOfMonth == 1
+                            && LocalDateTime.now().hour - testCalendar.hour == 0
+                            && LocalDateTime.now().minute - testCalendar.minute == 0
+                            && LocalDateTime.now().second - testCalendar.second < 0){
+                            isLessThanOneDay = true
+                        }
                     }
 
-                    // Showing introduction for the user
-                    val dialog = MaterialAlertDialogBuilder(findNavController().context)
-                        .setTitle("¡Espera!")
-                        .setMessage("\nNo puedes responder más de una vez la prueba de estrés $testName en un lapso de 24 horas\n\n" +
-                                "Debes esperar $hour hora(s) con $minute minuto(s) y $second segundo(s) para responder de nuevo\n")
-                        .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
-                        .show()
+                    if(isSameDay || isLessThanOneDay){
+                        // Calculating time left to answer the test again
+                        var hour = if (testCalendar.hour > LocalDateTime.now().hour)
+                                (testCalendar.hour - LocalDateTime.now().hour) else
+                                        (LocalDateTime.now().hour - testCalendar.hour)
 
-                    // Changing neutral button position to center
-                    ElementsEditor().updateDialogButton(dialog)
+                        var minute = if (testCalendar.minute > LocalDateTime.now().minute)
+                            (testCalendar.minute - LocalDateTime.now().minute) else
+                                    (LocalDateTime.now().minute - testCalendar.minute)
+
+                        var second = if (testCalendar.second > LocalDateTime.now().second)
+                            (testCalendar.second - LocalDateTime.now().second) else
+                                    (LocalDateTime.now().second - testCalendar.second)
+
+                        if(isSameDay) {
+                            hour = 23 - hour
+                            minute = 59 - minute
+                            second = 59 - second
+                        }
+
+                        // Showing introduction for the user
+                        val dialog = MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("¡Espera!")
+                            .setMessage("\nNo puedes responder más de una vez la prueba de estrés $testName en un lapso de 24 horas\n\n" +
+                                    "Debes esperar $hour hora(s) con $minute minuto(s) y $second segundo(s) para responder de nuevo\n")
+                            .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
+                            .show()
+
+                        // Changing neutral button position to center
+                        ElementsEditor().updateDialogButton(dialog)
+                    } else{
+                        startTest = true
+                    }
                 } else{
                     startTest = true
                 }
-            } else{
-                startTest = true
-            }
 
-            if(startTest){
-                // Setting parameters for the next fragment
-                val fragment = TestAnswerFragment()
-                fragment.arguments = bundleOf(TEST_PARAM to testNumber)
+                if(startTest){
+                    // Setting parameters for the next fragment
+                    val fragment = TestAnswerFragment()
+                    fragment.arguments = bundleOf(TEST_PARAM to testNumber)
 
-                // Fragment enters from right
-                (parentFragment as NavBarFragment).updateNavBarHost(fragment, R.id.navbar_test_answer_fragment, true)
-            }
+                    // Fragment enters from right
+                    (parentFragment as NavBarFragment).updateNavBarHost(fragment,
+                        R.id.navbar_test_answer_fragment, true)
+                }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 }

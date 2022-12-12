@@ -22,7 +22,8 @@ import java.io.IOException
 import java.util.regex.Pattern
 
 class ValidationsDialogsRequests {
-    fun snackBar(view: View, BackgroundColor: Int, fontColor: Int, text: String, context: Context){
+    fun snackBar(view: View, BackgroundColor: Int, fontColor: Int,
+                 text: String, context: Context){
         // Creating snackbar
         val mySnackbar = Snackbar.make(view, text, Snackbar.LENGTH_SHORT)
 
@@ -51,69 +52,74 @@ class ValidationsDialogsRequests {
                            activity: Activity, context: Context, button1: Button?, button2: Button?, button3: Button?,
                            button4: Button?, progressBar: ProgressBar?, parentFragment: NavBarFragment?,
                               function: () -> (Unit)){
-        activationOfButtons(true, btnText, activity, button1, button2, button3, button4, progressBar, parentFragment)
+        try {
+            activationOfButtons(true, btnText, activity, button1,
+                button2, button3, button4, progressBar, parentFragment)
 
-        activity.runOnUiThread {
-            snackBar(view, backgroungColor, fontColor, message, context)
+            activity.runOnUiThread {
+                snackBar(view, backgroungColor, fontColor, message, context)
 
-            //dialog.dismiss()
-            function()
-        }
+                //dialog.dismiss()
+                function()
+            }
+        } catch (e: java.lang.IllegalStateException) {}
     }
 
     fun httpPetition(request: Request, context: Context, view: View, activity: Activity, btnText: String?, button1: Button?,
                      button2: Button?, button3: Button?, button4: Button?, progressBar: ProgressBar?, codeError: Int?,
                      errorMessage: String?, parentFragment: NavBarFragment?, function: (String) -> (Unit)){
-        // Getting color according of theme
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(R.attr.btn_background_red, typedValue, true)
-        val btnColor = typedValue.data
-        context.theme.resolveAttribute(R.attr.btn_text_color_red, typedValue, true)
-        val textColor = typedValue.data
+        try {
+            // Getting color according of theme
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(R.attr.btn_background_red, typedValue, true)
+            val btnColor = typedValue.data
+            context.theme.resolveAttribute(R.attr.btn_text_color_red, typedValue, true)
+            val textColor = typedValue.data
 
-        // Deactivating navbar and buttons when necessary
-        activationOfButtons(false, btnText, activity, button1, button2, button3, button4, progressBar, parentFragment)
+            // Deactivating navbar and buttons when necessary
+            activationOfButtons(false, btnText, activity, button1, button2, button3, button4, progressBar, parentFragment)
 
-        // Making HTTP request and getting response
-        OkHttpClient().newCall(request).enqueue(object : Callback {
-            // Changing to principal fragment if it's successful
-            override fun onResponse(call: Call, response: Response){
-                // Printing api answer
-                val responseString = response.body()?.string().toString()
-                Log.d("OKHTTP3-CODE", response.code().toString())
-                Log.d("OKHTTP3-BODY", responseString)
+            // Making HTTP request and getting response
+            OkHttpClient().newCall(request).enqueue(object : Callback {
+                // Changing to principal fragment if it's successful
+                override fun onResponse(call: Call, response: Response){
+                    // Printing api answer
+                    val responseString = response.body()?.string().toString()
+                    Log.d("OKHTTP3-CODE", response.code().toString())
+                    Log.d("OKHTTP3-BODY", responseString)
 
-                // Code 200 = account verified
-                if(response.code() in 200..202) {
-                    // Activating navbar when necessary
-                    activationOfButtons(true, btnText, activity, button1,
-                        button2, button3, button4, progressBar, parentFragment)
-                    function(responseString)
+                    // Code 200 = account verified
+                    if(response.code() in 200..202) {
+                        // Activating navbar when necessary
+                        activationOfButtons(true, btnText, activity, button1,
+                            button2, button3, button4, progressBar, parentFragment)
+                        function(responseString)
+                    }
+                    // Custom error code
+                    else if(response.code() == (codeError ?: 400..405))
+                        snackBarOnUIThread(errorMessage ?:
+                        "¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!", btnText,
+                            view, btnColor, textColor, activity, context, button1, button2, button3, button4,
+                            progressBar, parentFragment) {}
+                    // Connection or server errors
+                    else if(response.code() in 400..405 || response.code() == 500)
+                        snackBarOnUIThread("¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!",
+                            btnText, view, btnColor, textColor, activity, context, button1, button2, button3, button4,
+                            progressBar, parentFragment) {}
                 }
-                // Custom error code
-                else if(response.code() == (codeError ?: 400..405))
-                    snackBarOnUIThread(errorMessage ?:
-                    "¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!", btnText,
-                        view, btnColor, textColor, activity, context, button1, button2, button3, button4,
-                        progressBar, parentFragment) {}
-                // Connection or server errors
-                else if(response.code() in 400..405 || response.code() == 500)
+
+                // Print dialog if it's error
+                override fun onFailure(call: Call, e: IOException){
+                    // Printing api answer
+                    Log.d("OKHTTP3-ERROR", e.toString())
+
+                    // Showing message to the user
                     snackBarOnUIThread("¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!",
                         btnText, view, btnColor, textColor, activity, context, button1, button2, button3, button4,
                         progressBar, parentFragment) {}
-            }
-
-            // Print dialog if it's error
-            override fun onFailure(call: Call, e: IOException){
-                // Printing api answer
-                Log.d("OKHTTP3-ERROR", e.toString())
-
-                // Showing message to the user
-                snackBarOnUIThread("¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!",
-                    btnText, view, btnColor, textColor, activity, context, button1, button2, button3, button4,
-                    progressBar, parentFragment) {}
-            }
-        })
+                }
+            })
+        } catch (e: java.lang.IllegalStateException) {}
     }
 
     fun activationOfButtons(state: Boolean, btnText: String?, activity: Activity, button1: Button?, button2: Button?,
@@ -189,7 +195,7 @@ class ValidationsDialogsRequests {
         return false
     }
 
-    fun validateSex(sexId: Int, view: View, context: Context, message: String): Boolean{
+    fun validateSex(sexId: Int, view: View, context: Context, message: String): Boolean {
         // Getting color according of theme
         val typedValue = TypedValue()
         context.theme.resolveAttribute(R.attr.btn_background_red, typedValue, true)

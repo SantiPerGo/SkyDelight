@@ -124,7 +124,7 @@ class NavBarFragment : Fragment() {
         updateImgHelp(false)
 
         // Creating tutorial dialogs
-        context?.let { context ->
+        try {
             // Explaining initial test
             val sixthDialog = CustomDialog(context).init(getString(R.string.home_tutorial_test_title),
                 getString(R.string.home_tutorial_test_description), getString(R.string.home_tutorial_test_button),
@@ -136,7 +136,7 @@ class NavBarFragment : Fragment() {
                 .setCancelable(false)*/
 
             // Explaining settings or profile screen
-            val fifthDialog = MaterialAlertDialogBuilder(context)
+            val fifthDialog = MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Pantalla 4 de 4")
                 .setMessage("\nEn la pantalla de configuración podrás actualizar tus datos personales (con excepción del correo " +
                         "electrónico), cerrar sesión o eliminar tu cuenta = )\n")
@@ -157,7 +157,7 @@ class NavBarFragment : Fragment() {
                 .setCancelable(false)
 
             // Explaining games screen
-            val fourthDialog = MaterialAlertDialogBuilder(context)
+            val fourthDialog = MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Pantalla 3 de 4")
                 .setMessage("\nEn la pantalla de juegos podrás disfrutar de actividades relajantes o extremas con realidad " +
                         "aumentada (sólo si tu teléfono es compatible con ARCore) = )\n")
@@ -173,7 +173,7 @@ class NavBarFragment : Fragment() {
                 .setCancelable(false)
 
             // Explaining test screen
-            val thirdDialog = MaterialAlertDialogBuilder(context)
+            val thirdDialog = MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Pantalla 2 de 4")
                 .setMessage("\nEn la pantalla de test podrás encontrar diversos cuestionarios que puedes responder cada 24 horas " +
                         "para conocer tu estrés y tu vulnerabilidad a este = )\n")
@@ -189,7 +189,7 @@ class NavBarFragment : Fragment() {
                 .setCancelable(false)
 
             // Explaining home screen
-            val secondDialog = MaterialAlertDialogBuilder(context)
+            val secondDialog = MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Pantalla 1 de 4")
                 .setMessage("\nEn la pantalla de inicio podrás encontrar diversas recomendaciones para prevención " +
                         "del estrés académico = )\n")
@@ -205,7 +205,7 @@ class NavBarFragment : Fragment() {
                 .setCancelable(false)
 
             // Showing introduction for the user
-            val firstDialog = MaterialAlertDialogBuilder(context)
+            val firstDialog = MaterialAlertDialogBuilder(requireContext())
                 .setTitle("¡Bienvenido(a)!")
                 .setMessage("\nTe recomendamos completar un pequeño tutorial antes de usar la aplicación = )\n")
                 .setNeutralButton("¡Empecemos!") {
@@ -260,65 +260,69 @@ class NavBarFragment : Fragment() {
 
             // Launching room database connection
             MainScope().launch {
-                // Creating connection to database
-                val user = Room.databaseBuilder(context, AppDatabase::class.java, "user")
-                    .fallbackToDestructiveMigration().build().userDao().getUser()[0]
+                try {
+                    // Creating connection to database
+                    val user = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                        .fallbackToDestructiveMigration().build().userDao().getUser()[0]
 
-                // Making http request
-                val request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/")
-                    .addHeader("Authorization", "Bearer " + user.token)
-                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                    .post(FormBody.Builder().add("email", user.email).build()).build()
+                    // Making http request
+                    val request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/lista-testcisco-personal/")
+                        .addHeader("Authorization", "Bearer " + user.token)
+                        .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                        .post(FormBody.Builder().add("email", user.email).build()).build()
 
-                ValidationsDialogsRequests().httpPetition(request, context, requireView(),
-                    requireActivity(),null, null, null, null, null,
-                    null, 500,null, null) {
-                    // Changing http body to json
-                    val arrayString = JSONObject(it).getString("data")
+                    ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(),
+                        requireActivity(),null, null, null, null, null,
+                        null, 500,null, null) {
+                        // Changing http body to json
+                        val arrayString = JSONObject(it).getString("data")
 
-                    // If user hasn't done the initial test:
-                    // + Showing app tutorial
-                    // + Applying initial test
-                    if(arrayString == "[]" && !user.initialTest){
-                        // App tutorial
-                        activity?.runOnUiThread{ firstDialog.show() }
+                        // If user hasn't done the initial test:
+                        // + Showing app tutorial
+                        // + Applying initial test
+                        try {
+                            if(arrayString == "[]" && !user.initialTest){
+                                // App tutorial
+                                requireActivity().runOnUiThread{ firstDialog.show() }
 
-                        // Changing fragment and actual fragment id
-                        childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
-                        itemId = R.id.nav_home
+                                // Changing fragment and actual fragment id
+                                childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
+                                itemId = R.id.nav_home
 
-                        // Activating navbar
-                        activity?.runOnUiThread { binding.navBar.selectedItemId = R.id.nav_home }
-                    } else {
-                        // Updating result
-                        if(!user.initialTest)
-                            user.initialTest = true
+                                // Activating navbar
+                                requireActivity().runOnUiThread { binding.navBar.selectedItemId = R.id.nav_home }
+                            } else {
+                                // Updating result
+                                if(!user.initialTest)
+                                    user.initialTest = true
 
-                        // Changing fragment and actual fragment id
-                        childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
-                        itemId = R.id.nav_home
+                                // Changing fragment and actual fragment id
+                                childFragmentManager.beginTransaction().add(binding.navbarHostFragment.id, HomeFragment()).commit()
+                                itemId = R.id.nav_home
 
-                        // Activating navbar
-                        activity?.runOnUiThread {
-                            binding.navBar.selectedItemId = R.id.nav_home
-                            changeNavBarButtonsClickable(true)
-                            updateImgReload(true)
-                            updateImgHelp(true)
-                        }
+                                // Activating navbar
+                                activity?.runOnUiThread {
+                                    binding.navBar.selectedItemId = R.id.nav_home
+                                    changeNavBarButtonsClickable(true)
+                                    updateImgReload(true)
+                                    updateImgHelp(true)
+                                }
 
-                        backEventState = true
+                                backEventState = true
+                            }
+                        } catch(e: java.lang.IllegalStateException) {}
                     }
-                }
+                } catch(e: java.lang.IllegalStateException) {}
             }
-        }
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun updateToken(){
-        context?.let { context ->
-            // Launching room database connection
-            MainScope().launch {
+        // Launching room database connection
+        MainScope().launch {
+            try {
                 // Creating connection to database
-                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
                     .fallbackToDestructiveMigration().build().userDao()
                 val user = userDao.getUser()[0]
 
@@ -328,7 +332,7 @@ class NavBarFragment : Fragment() {
                     .post(FormBody.Builder().add("refresh", user.refresh).build())
                     .build()
 
-                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
                     null, null, null, null, null,
                     null, null,null, null) {
                     // Changing http body to json
@@ -341,37 +345,39 @@ class NavBarFragment : Fragment() {
                         userDao.updateUser(user)
                     }
                 }
-            }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 
     private fun backAction(){
-        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(),
-            object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                try {
-                    if(backEventState)
-                        when (itemId) {
-                            R.id.navbar_test_data_fragment ->{
-                                updateNavBarHost(HomeFragment(), R.id.nav_home, false)
-                                updateImgHelp(true)
+        try {
+            requireActivity().onBackPressedDispatcher.addCallback(requireActivity(),
+                object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    try {
+                        if(backEventState)
+                            when (itemId) {
+                                R.id.navbar_test_data_fragment ->{
+                                    updateNavBarHost(HomeFragment(), R.id.nav_home, false)
+                                    updateImgHelp(true)
+                                }
+                                R.id.navbar_test_answer_fragment ->
+                                    binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
+                                R.id.navbar_profile_data_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                                R.id.navbar_profile_password_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                                R.id.navbar_profile_web_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                                else -> requireActivity().moveTaskToBack(true)
                             }
-                            R.id.navbar_test_answer_fragment ->
-                                binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
-                            R.id.navbar_profile_data_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
-                            R.id.navbar_profile_password_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
-                            R.id.navbar_profile_web_fragment -> updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
-                            else -> requireActivity().moveTaskToBack(true)
-                        }
-                    else
-                        when (itemId) {
-                            R.id.navbar_test_answer_fragment ->
-                                binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
-                            else -> requireActivity().moveTaskToBack(true)
-                        }
-                } catch (e: IllegalArgumentException) {}
-            }
-        })
+                        else
+                            when (itemId) {
+                                R.id.navbar_test_answer_fragment ->
+                                    binding.navbarHostFragment.getFragment<TestAnswerFragment>().returnButtonValidation()
+                                else -> requireActivity().moveTaskToBack(true)
+                            }
+                    } catch (e: java.lang.IllegalStateException) {}
+                }
+            })
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun imgAction(){
@@ -386,8 +392,8 @@ class NavBarFragment : Fragment() {
         }
 
         binding.ImgHelp.setOnClickListener {
-            context?.let { context ->
-                val dialog = MaterialAlertDialogBuilder(context)
+            try {
+                val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
 
                 // Showing introduction for the user
@@ -412,7 +418,7 @@ class NavBarFragment : Fragment() {
 
                 // Changing neutral button position to center
                 ElementsEditor().updateDialogButton(dialog.show())
-            }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 

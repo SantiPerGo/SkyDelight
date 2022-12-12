@@ -55,7 +55,8 @@ class ProfileWebFragment : Fragment() {
         // Showing link in title
         val txtTitle = "<a href=\"$originalUrl\">$title</a>"
         binding.txtTitle.text = Html.fromHtml(txtTitle, Html.FROM_HTML_MODE_COMPACT)
-        binding.txtTitle.setLinkTextColor(ElementsEditor().getColor(requireContext(), R.attr.text_color))
+        try { binding.txtTitle.setLinkTextColor(ElementsEditor().getColor(context, R.attr.text_color))
+        } catch(e: java.lang.IllegalStateException) {}
 
         // Instance of webview and settings
         // Blocking url redirecting to another website

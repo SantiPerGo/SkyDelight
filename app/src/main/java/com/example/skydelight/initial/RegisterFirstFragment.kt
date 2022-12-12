@@ -92,21 +92,23 @@ class RegisterFirstFragment : Fragment() {
             age = binding.numberPickerAge.value.toString()
             sex = binding.radioGroupSex.findViewById<RadioButton>(sexId)?.text.toString()
 
-            if(ValidationsDialogsRequests().validateName(name.toString(), binding.FieldName)
-                && ValidationsDialogsRequests().validateSex(sexId, requireView(), requireContext(),
-                    getString(R.string.snackbar_error_sex))){
-                ElementsEditor().elementsClickableState(false,
-                    null, arrayListOf(binding.btnNext, binding.btnReturn))
+            try {
+                if(ValidationsDialogsRequests().validateName(name.toString(), binding.FieldName)
+                    && ValidationsDialogsRequests().validateSex(sexId, view, requireContext(),
+                        getString(R.string.snackbar_error_sex))){
+                    ElementsEditor().elementsClickableState(false,
+                        null, arrayListOf(binding.btnNext, binding.btnReturn))
 
-                // Setting parameters for the next fragment
-                val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
+                    // Setting parameters for the next fragment
+                    val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
 
-                // Starting next fragment
-                elementsVisibility(false)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    findNavController().navigate(R.id.action_registerFirst_to_registerSecond, bundle)
-                }, 500)
-            }
+                    // Starting next fragment
+                    elementsVisibility(false)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(R.id.action_registerFirst_to_registerSecond, bundle)
+                    }, 500)
+                }
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         // Returning to the start screen fragment
@@ -121,16 +123,19 @@ class RegisterFirstFragment : Fragment() {
         }
 
         // Disable login button
-        ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), false)
+        try { ElementsEditor().updateButtonState(binding.btnNext,
+            false, context, false) } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun validateInputsNotEmpty() {
         // Disable or enable login button
-        if(binding.editTxtName.text!!.isNotEmpty() &&
-                binding.radioGroupSex.checkedRadioButtonId != -1)
-            ElementsEditor().updateButtonState(binding.btnNext, true, requireContext(), false)
-        else
-            ElementsEditor().updateButtonState(binding.btnNext, false, requireContext(), false)
+        try {
+            if(binding.editTxtName.text!!.isNotEmpty() &&
+                    binding.radioGroupSex.checkedRadioButtonId != -1)
+                ElementsEditor().updateButtonState(binding.btnNext, true, context, false)
+            else
+                ElementsEditor().updateButtonState(binding.btnNext, false, context, false)
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     fun elementsVisibility(state: Boolean){

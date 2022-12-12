@@ -117,16 +117,19 @@ class RegisterSecondFragment : Fragment() {
         }
 
         // Disable login button
-        ElementsEditor().updateButtonState(binding.btnCreateAccount, false, requireContext(), false)
+        try { ElementsEditor().updateButtonState(binding.btnCreateAccount,
+            false, context, false) } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun validateInputsNotEmpty() {
         // Disable or enable login button
-        if(binding.editTxtEmail.text!!.isNotEmpty() && binding.editTxtPassword.text!!.isNotEmpty()
-            && binding.editTxtConfirmPassword.text!!.isNotEmpty())
-            ElementsEditor().updateButtonState(binding.btnCreateAccount, true, requireContext(), false)
-        else
-            ElementsEditor().updateButtonState(binding.btnCreateAccount, false, requireContext(), false)
+        try {
+            if(binding.editTxtEmail.text!!.isNotEmpty() && binding.editTxtPassword.text!!.isNotEmpty()
+                && binding.editTxtConfirmPassword.text!!.isNotEmpty())
+                ElementsEditor().updateButtonState(binding.btnCreateAccount, true, context, false)
+            else
+                ElementsEditor().updateButtonState(binding.btnCreateAccount, false, context, false)
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     fun elementsVisibility(state: Boolean){
@@ -164,64 +167,68 @@ class RegisterSecondFragment : Fragment() {
             .header("KEY-CLIENT", BuildConfig.API_KEY)
             .build()
 
-        ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(), requireActivity(),
-            getString(R.string.registerScreen_btn_create), binding.btnCreateAccount, binding.btnReturn, null,
-            null,  binding.progressBar,400, getString(R.string.snackbar_error_register),null)
-        {
-            // Arguments to Post Request
-            formBody = FormBody.Builder()
-                .add("email", email)
-                .add("password", password)
-                .build()
+        try {
+            ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
+                getString(R.string.registerScreen_btn_create), binding.btnCreateAccount, binding.btnReturn, null,
+                null,  binding.progressBar,400, getString(R.string.snackbar_error_register),null)
+            {
+                // Arguments to Post Request
+                formBody = FormBody.Builder()
+                    .add("email", email)
+                    .add("password", password)
+                    .build()
 
-            // Making http request
-            request = Request.Builder()
-                .url("https://apiskydelight.herokuapp.com/usuarios/token/obtener/")
-                .post(formBody)
-                .header("KEY-CLIENT", BuildConfig.API_KEY)
-                .build()
+                // Making http request
+                request = Request.Builder()
+                    .url("https://apiskydelight.herokuapp.com/usuarios/token/obtener/")
+                    .post(formBody)
+                    .header("KEY-CLIENT", BuildConfig.API_KEY)
+                    .build()
 
-            context?.let { context ->
-                ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
-                    getString(R.string.registerScreen_btn_create), binding.btnCreateAccount, binding.btnReturn, null,
-                    null,  binding.progressBar,null, null,null)
-                { responseString: String ->
-                    // Changing http body to json
-                    val json = JSONObject(responseString)
+                try {
+                    ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
+                        getString(R.string.registerScreen_btn_create), binding.btnCreateAccount, binding.btnReturn, null,
+                        null,  binding.progressBar,null, null,null)
+                    { responseString: String ->
+                        // Changing http body to json
+                        val json = JSONObject(responseString)
 
-                    // Launching room database connection
-                    MainScope().launch {
-                        // Creating connection to database
-                        val userDao = Room.databaseBuilder(context, AppDatabase::class.java,"user")
-                            .fallbackToDestructiveMigration().build().userDao()
+                        // Launching room database connection
+                        MainScope().launch {
+                            try {
+                                // Creating connection to database
+                                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java,"user")
+                                    .fallbackToDestructiveMigration().build().userDao()
 
-                        // If user exists, we have to delete it
-                        val user = userDao.getUser()
-                        if (user.isNotEmpty())
-                            userDao.deleteUser(user[0])
+                                // If user exists, we have to delete it
+                                val user = userDao.getUser()
+                                if (user.isNotEmpty())
+                                    userDao.deleteUser(user[0])
 
-                        // Adding the new user to the database
-                        userDao.insertUser(User(json.getString("user"),
-                            json.getString("name"), json.getString("sex"),
-                            json.getInt("age"), json.getString("access"),
-                            json.getString("refresh")))
+                                // Adding the new user to the database
+                                userDao.insertUser(User(json.getString("user"),
+                                    json.getString("name"), json.getString("sex"),
+                                    json.getInt("age"), json.getString("access"),
+                                    json.getString("refresh")))
 
-                        // Getting color according of theme
-                        val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
-                        val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
+                                // Getting color according of theme
+                                val btnColor = ElementsEditor().getColor(context, R.attr.btn_background_green)
+                                val textColor = ElementsEditor().getColor(context, R.attr.btn_text_color_green)
 
-                        ValidationsDialogsRequests().snackBarOnUIThread(
-                            getString(R.string.snackbar_success_register), null, requireView(), btnColor, textColor,
-                            requireActivity(), requireContext(), null, null, null, null,
-                            null, null) {
-                            elementsVisibility(false)
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                findNavController().navigate(R.id.action_registerSecond_to_registerThird)
-                            }, 500)
+                                ValidationsDialogsRequests().snackBarOnUIThread(
+                                    getString(R.string.snackbar_success_register), null, requireView(), btnColor, textColor,
+                                    requireActivity(), requireContext(), null, null, null, null,
+                                    null, null) {
+                                    elementsVisibility(false)
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        findNavController().navigate(R.id.action_registerSecond_to_registerThird)
+                                    }, 500)
+                                }
+                            } catch (e: IllegalStateException) {}
                         }
                     }
-                }
+                } catch(e: IllegalStateException) {}
             }
-        }
+        } catch(e: java.lang.IllegalStateException) {}
     }
 }

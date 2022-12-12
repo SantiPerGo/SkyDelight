@@ -70,65 +70,73 @@ class ProfileFragment : Fragment() {
 
                     // Launching room database connection
                     MainScope().launch {
-                        // Cleaning database and changing to start screen fragment
-                        Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                            .fallbackToDestructiveMigration().build().userDao().deleteUsers()
-                        findNavController().navigate(R.id.action_navBar_to_startScreen)
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                        try {
+                            // Cleaning database and changing to start screen fragment
+                            Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                                .fallbackToDestructiveMigration().build().userDao().deleteUsers()
+                            findNavController().navigate(R.id.action_navBar_to_startScreen)
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                        } catch(e: java.lang.IllegalStateException) {}
                     }
                 }.show()
         }
 
         // Returning to the start screen fragment
         binding.btnDeleteAccount.setOnClickListener {
-            MaterialAlertDialogBuilder(findNavController().context)
-                .setTitle("¡Cuidado!")
-                .setMessage("¿Realmente Quieres Eliminar tu Cuenta?")
-                .setCancelable(false)
-                .setNeutralButton("¡No!"){ dialog, _ -> dialog.dismiss() }
-                .setPositiveButton("¡Sí!"){ dialog, _ ->
-                    dialog.dismiss()
+            try {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("¡Cuidado!")
+                    .setMessage("¿Realmente Quieres Eliminar tu Cuenta?")
+                    .setCancelable(false)
+                    .setNeutralButton("¡No!"){ dialog, _ -> dialog.dismiss() }
+                    .setPositiveButton("¡Sí!"){ dialog, _ ->
+                        dialog.dismiss()
 
-                    // Deactivating clickable
-                    (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
+                        // Deactivating clickable
+                        (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-                    // Launching room database connection
-                    MainScope().launch {
-                        // Creating connection to database
-                        val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                            .fallbackToDestructiveMigration().build().userDao()
-                        val user = userDao.getUser()[0]
+                        // Launching room database connection
+                        MainScope().launch {
+                            try {
+                                // Creating connection to database
+                                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                                    .fallbackToDestructiveMigration().build().userDao()
+                                val user = userDao.getUser()[0]
 
-                        // Making http request
-                        val request = Request.Builder()
-                            .url("https://apiskydelight.herokuapp.com/usuarios/eliminar-usuario/")
-                            .put(FormBody.Builder().add("email", user.email).build())
-                            .addHeader("Authorization", "Bearer " + user.token)
-                            .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                            .build()
+                                // Making http request
+                                val request = Request.Builder()
+                                    .url("https://apiskydelight.herokuapp.com/usuarios/eliminar-usuario/")
+                                    .put(FormBody.Builder().add("email", user.email).build())
+                                    .addHeader("Authorization", "Bearer " + user.token)
+                                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                                    .build()
 
-                        ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(),
-                            requireActivity(), getString(R.string.profile_delete_account), binding.btnDeleteAccount,
-                            binding.btnChangePassword, binding.btnCloseSession, binding.btnUpdateAccount, binding.progressBar,
-                            404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
-                        {
-                            // Launching room database connection
-                            MainScope().launch {
-                                // Getting color according of theme
-                                val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
-                                val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
+                                ValidationsDialogsRequests().httpPetition(request, requireContext(), view,
+                                    requireActivity(), getString(R.string.profile_delete_account), binding.btnDeleteAccount,
+                                    binding.btnChangePassword, binding.btnCloseSession, binding.btnUpdateAccount, binding.progressBar,
+                                    404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
+                                {
+                                    try {
+                                        // Launching room database connection
+                                        MainScope().launch {
+                                            // Getting color according of theme
+                                            val btnColor = ElementsEditor().getColor(context, R.attr.btn_background_green)
+                                            val textColor = ElementsEditor().getColor(context, R.attr.btn_text_color_green)
 
-                                ValidationsDialogsRequests().snackBar(requireView(), btnColor, textColor,
-                                    getString(R.string.snackbar_success_delete_account), requireContext())
+                                            ValidationsDialogsRequests().snackBar(view, btnColor, textColor,
+                                                getString(R.string.snackbar_success_delete_account), requireContext())
 
-                                // Cleaning database and changing to start screen fragment
-                                userDao.deleteUsers()
-                                findNavController().navigate(R.id.action_navBar_to_startScreen)
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                            }
+                                            // Cleaning database and changing to start screen fragment
+                                            userDao.deleteUsers()
+                                            findNavController().navigate(R.id.action_navBar_to_startScreen)
+                                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                                        }
+                                    } catch(e: java.lang.IllegalStateException) {}
+                                }
+                            } catch(e: java.lang.IllegalStateException) {}
                         }
-                    }
-                }.show()
+                    }.show()
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         binding.btnPrivacy.setOnClickListener {
@@ -154,46 +162,50 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnTheme.setOnClickListener {
-            if(isDarkTheme(requireActivity())) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                saveUserTheme(false)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                saveUserTheme(true)
-            }
+            try {
+                if(isDarkTheme(requireActivity())) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    saveUserTheme(false)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    saveUserTheme(true)
+                }
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         // Updating switch
-        updateSwitchTheme(isDarkTheme(requireActivity()))
+        try { updateSwitchTheme(isDarkTheme(requireActivity())) } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun saveUserTheme(state: Boolean) {
-        context?.let {
-            // Launching room database connection
-            MainScope().launch {
+        // Launching room database connection
+        MainScope().launch {
+            try {
                 // Creating connection to database
-                val userDao = Room.databaseBuilder(it, AppDatabase::class.java, "user")
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
                     .fallbackToDestructiveMigration().build().userDao()
                 val user = userDao.getUser()[0]
 
                 user.isDarkTheme = state
                 userDao.updateUser(user)
-            }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 
     private fun updateSwitchTheme(state: Boolean) {
-        binding.btnTheme.isChecked = !state
+        try {
+            binding.btnTheme.isChecked = !state
 
-        val color = when(state) {
-            true -> ElementsEditor().getColor(requireContext(),
-                com.google.android.material.R.attr.colorSecondaryVariant)
-            false -> ElementsEditor().getColor(requireContext(),
-                R.attr.btn_text_color_yellow)
-        }
+            val color = when(state) {
+                true -> ElementsEditor().getColor(context,
+                    com.google.android.material.R.attr.colorSecondaryVariant)
+                false -> ElementsEditor().getColor(context,
+                    R.attr.btn_text_color_yellow)
+            }
 
-        binding.btnTheme.setTextColor(ColorStateList.valueOf(color))
-        binding.btnTheme.setShadowLayer(5f, 0f, 0f, color)
+            binding.btnTheme.setTextColor(ColorStateList.valueOf(color))
+            binding.btnTheme.setShadowLayer(5f, 0f, 0f, color)
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun isDarkTheme(activity: Activity): Boolean {

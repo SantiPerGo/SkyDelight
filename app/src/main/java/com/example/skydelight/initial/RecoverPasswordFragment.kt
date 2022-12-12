@@ -43,10 +43,12 @@ class RecoverPasswordFragment : Fragment() {
             if(binding.FieldEmail.error != null) binding.FieldEmail.error = null
 
             // Disable or enable login button
-            if(binding.editTxtEmail.text!!.isEmpty())
-                ElementsEditor().updateButtonState(binding.btnRecover, false, requireContext(), false)
-            else
-                ElementsEditor().updateButtonState(binding.btnRecover, true, requireContext(), false)
+            try {
+                if(binding.editTxtEmail.text!!.isEmpty())
+                    ElementsEditor().updateButtonState(binding.btnRecover, false, context, false)
+                else
+                    ElementsEditor().updateButtonState(binding.btnRecover, true, context, false)
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         binding.btnRecover.setOnClickListener {
@@ -70,7 +72,8 @@ class RecoverPasswordFragment : Fragment() {
         }
 
         // Disable login button
-        ElementsEditor().updateButtonState(binding.btnRecover, false, requireContext(), false)
+        try { ElementsEditor().updateButtonState(binding.btnRecover,
+            false, context, false) } catch(e: java.lang.IllegalStateException) {}
     }
 
     fun elementsVisibility(state: Boolean){
@@ -93,28 +96,30 @@ class RecoverPasswordFragment : Fragment() {
             .header("KEY-CLIENT", BuildConfig.API_KEY)
             .build()
 
-        context?.let { context ->
-            ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+        try {
+            ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
                 getString(R.string.recoverScreen_btn_recover), binding.btnRecover, binding.btnReturn, null, null,
                 binding.progressBar, 404, getString(R.string.snackbar_error_recover), null)
             {
-                // Getting color according of theme
-                val typedValue = TypedValue()
-                requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValue, true)
-                val btnColor = typedValue.data
-                requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
-                val textColor = typedValue.data
+                try {
+                    // Getting color according of theme
+                    val typedValue = TypedValue()
+                    requireContext().theme.resolveAttribute(R.attr.btn_background_green, typedValue, true)
+                    val btnColor = typedValue.data
+                    requireContext().theme.resolveAttribute(R.attr.btn_text_color_green, typedValue, true)
+                    val textColor = typedValue.data
 
-                ValidationsDialogsRequests().snackBarOnUIThread(
-                    getString(R.string.snackbar_success_recover), null, requireView(), btnColor, textColor,
-                    requireActivity(), requireContext(), null, null, null, null,
-                    null, null) {
-                    elementsVisibility(false)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
-                    }, 500)
-                }
+                    ValidationsDialogsRequests().snackBarOnUIThread(
+                        getString(R.string.snackbar_success_recover), null, requireView(), btnColor, textColor,
+                        requireActivity(), requireContext(), null, null, null, null,
+                        null, null) {
+                        elementsVisibility(false)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
+                        }, 500)
+                    }
+                } catch (e: IllegalStateException) {}
             }
-        }
+        } catch(e: java.lang.IllegalStateException) {}
     }
 }

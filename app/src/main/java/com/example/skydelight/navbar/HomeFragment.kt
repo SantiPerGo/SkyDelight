@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -66,74 +62,80 @@ class HomeFragment : Fragment() {
 
         // Launching room database connection
         MainScope().launch {
-            // Creating connection to database
-            val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao()
-            val user = userDao.getUser()[0]
+            try {
+                // Creating connection to database
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao()
+                val user = userDao.getUser()[0]
 
-            // Making http request
-            var request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/lista-testsqv-personal/")
-                .addHeader("Authorization", "Bearer " + user.token)
-                .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                .post(FormBody.Builder().add("email", user.email).build()).build()
+                // Making http request
+                var request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/lista-testsqv-personal/")
+                    .addHeader("Authorization", "Bearer " + user.token)
+                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                    .post(FormBody.Builder().add("email", user.email).build()).build()
 
-            if(isAdded)
-                ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(),
-                    requireActivity(),null, null, null, null, null,
-                    null, 500,null, null) {
-                    // Changing http body to json
-                    val arrayString = JSONObject(it).getString("data")
+                if(isAdded) {
+                    ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(),
+                        requireActivity(),null, null, null, null, null,
+                        null, 500,null, null) {
+                        // Changing http body to json
+                        val arrayString = JSONObject(it).getString("data")
 
-                    // Arguments to Post Request
-                    val formBody = FormBody.Builder()
+                        // Arguments to Post Request
+                        val formBody = FormBody.Builder()
 
-                    // If user has answered at least 1 SVQ test
-                    if(arrayString != "[]" && user.advice) {
-                        // Getting last SVQ test answered
-                        val arrayObject = JSONArray(arrayString).getJSONObject(JSONArray(arrayString).length()-1)
-                        val questionsList = ArrayList<Int>()
+                        // If user has answered at least 1 SVQ test
+                        if(arrayString != "[]" && user.advice) {
+                            // Getting last SVQ test answered
+                            val arrayObject = JSONArray(arrayString).getJSONObject(JSONArray(arrayString).length()-1)
+                            val questionsList = ArrayList<Int>()
 
-                        // Saving bad answers from user
-                        for(i in 1..20)
-                            if(arrayObject.getInt("pregunta$i") < 4)
-                                questionsList.add(i)
+                            // Saving bad answers from user
+                            for(i in 1..20)
+                                if(arrayObject.getInt("pregunta$i") < 4)
+                                    questionsList.add(i)
 
-                        // Preparing selected answers to http petition
-                        if(questionsList.size < 20)
-                            formBody.add("type_advice", "especifico")
-                                    .add("list_excluded", questionsList.toString())
-                        else
+                            // Preparing selected answers to http petition
+                            if(questionsList.size < 20)
+                                formBody.add("type_advice", "especifico")
+                                        .add("list_excluded", questionsList.toString())
+                            else
+                                formBody.add("type_advice", "general")
+                                        .add("list_excluded", "[]")
+                        } else
                             formBody.add("type_advice", "general")
                                     .add("list_excluded", "[]")
-                    } else
-                        formBody.add("type_advice", "general")
-                                .add("list_excluded", "[]")
 
-                    // Making http request
-                    request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/consejo")
-                        .post(formBody.build()).build()
+                        // Making http request
+                        request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/consejo")
+                            .post(formBody.build()).build()
 
-                    // Toggle advice boolean
-                    user.advice = !user.advice
+                        // Toggle advice boolean
+                        user.advice = !user.advice
 
-                    // Launching room database connection
-                    MainScope().launch { userDao.updateUser(user) }
+                        // Launching room database connection
+                        MainScope().launch { userDao.updateUser(user) }
 
-                    if(isAdded)
-                        ValidationsDialogsRequests().httpPetition(request, findNavController().context, requireView(),
-                            requireActivity(),null, null, null, null, null,
-                            null, 500,null, null) {
-                            // Changing http body to json and changing advice text
-                            MainScope().launch {
-                                binding.txtTitle.text = "Recomendación\n${JSONObject(it).getString("id")} de 50"
-                                binding.textView.text = JSONObject(it).getString("consejo")
-                                function()
+                        if(isAdded) {
+                            try {
+                                ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(),
+                                    requireActivity(),null, null, null, null, null,
+                                    null, 500,null, null) {
+                                    // Changing http body to json and changing advice text
+                                    MainScope().launch {
+                                        binding.txtTitle.text = "Recomendación\n${JSONObject(it).getString("id")} de 50"
+                                        binding.textView.text = JSONObject(it).getString("consejo")
+                                        function()
 
-                                // Show random background
-                                showBackground()
-                            }
+                                        // Show random background
+                                        showBackground()
+                                    }
+                                }
+                            } catch(e: IllegalStateException) {}
                         }
+                    }
                 }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 
@@ -144,8 +146,8 @@ class HomeFragment : Fragment() {
             .url("https://api.pexels.com/v1/search?query=nature wallpaper&orientation=portrait&per_page=1&size=small&page=$pageNumber")
             .addHeader("Authorization", BuildConfig.API_KEY_PEXELS).get().build()
 
-        context?.let { context ->
-            ValidationsDialogsRequests().httpPetition(request, context, requireView(),
+        try {
+            ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(),
                 requireActivity(),null, null, null, null, null,
                 null, null,null, null) {
 
@@ -171,28 +173,26 @@ class HomeFragment : Fragment() {
 
                 // Loading image
                 MainScope().launch {
-                    activity?.let { activity ->
-                        if(!activity.isDestroyed) {
-                            // Showing photo, photographer and pexels links
-                            binding.txtCredits.text = Html.fromHtml("$photoUrl by $photographerUrl\non $pexelsUrl",
-                                Html.FROM_HTML_MODE_COMPACT)
-                            binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(requireContext(), R.attr.text_color))
+                    try {
+                        // Showing photo, photographer and pexels links
+                        binding.txtCredits.text = Html.fromHtml("$photoUrl by $photographerUrl\non $pexelsUrl",
+                            Html.FROM_HTML_MODE_COMPACT)
+                        binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(context, R.attr.text_color))
 
-                            // Loading image from api
-                            Glide.with(context)
-                                .load(imageUrl)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .skipMemoryCache(true)
-                                .dontAnimate()
-                                .dontTransform()
-                                .transition(DrawableTransitionOptions.withCrossFade())
-                                .priority(Priority.IMMEDIATE)
-                                .format(DecodeFormat.DEFAULT)
-                                .into(binding.imgBackground)
-                        }
-                    }
+                        // Loading image from api
+                        Glide.with(requireContext())
+                            .load(imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .skipMemoryCache(true)
+                            .dontAnimate()
+                            .dontTransform()
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .priority(Priority.IMMEDIATE)
+                            .format(DecodeFormat.DEFAULT)
+                            .into(binding.imgBackground)
+                    } catch(e: java.lang.IllegalStateException) {}
                 }
             }
-        }
+        } catch(e: java.lang.IllegalStateException) {}
     }
 }

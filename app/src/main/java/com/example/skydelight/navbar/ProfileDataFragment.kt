@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
@@ -73,23 +72,28 @@ class ProfileDataFragment : Fragment() {
             val sex = binding.radioGroupSex.findViewById<RadioButton>(sexId)?.text.toString()
 
             // Connection to the api and sending the password to the email
-            if(ValidationsDialogsRequests().validateName(name, binding.FieldName) &&
-                ValidationsDialogsRequests().validateSex(sexId, requireView(), requireContext(),
-                    getString(R.string.snackbar_error_sex)))
-                updateData(name, sex, age)
+            try {
+                if(ValidationsDialogsRequests().validateName(name, binding.FieldName) &&
+                    ValidationsDialogsRequests().validateSex(sexId, view, requireContext(),
+                        getString(R.string.snackbar_error_sex)))
+                    updateData(name, sex, age)
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         // Disable login button
-        ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
+        try { ElementsEditor().updateButtonState(binding.btnUpdate,
+            false, context, true) } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun validateInputsNotEmpty() {
         // Disable or enable login button
-        if(binding.editTxtName.text!!.isNotEmpty() &&
-            binding.radioGroupSex.checkedRadioButtonId != -1)
-            ElementsEditor().updateButtonState(binding.btnUpdate, true, requireContext(), true)
-        else
-            ElementsEditor().updateButtonState(binding.btnUpdate, false, requireContext(), true)
+        try {
+            if(binding.editTxtName.text!!.isNotEmpty() &&
+                binding.radioGroupSex.checkedRadioButtonId != -1)
+                ElementsEditor().updateButtonState(binding.btnUpdate, true, context, true)
+            else
+                ElementsEditor().updateButtonState(binding.btnUpdate, false, context, true)
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     // Function to connect with the api
@@ -97,17 +101,17 @@ class ProfileDataFragment : Fragment() {
         // Deactivating clickable
         (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-        context?.let { context ->
-            // Launching room database connection
-            MainScope().launch {
+        // Launching room database connection
+        MainScope().launch {
+            try {
                 // Creating connection to database
-                val userDao = Room.databaseBuilder(context, AppDatabase::class.java, "user")
+                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
                     .fallbackToDestructiveMigration().build().userDao()
                 val user = userDao.getUser()[0]
 
                 // Getting color according of theme
-                val btnColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_red)
-                val textColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_red)
+                val btnColor = ElementsEditor().getColor(context, R.attr.btn_background_red)
+                val textColor = ElementsEditor().getColor(context, R.attr.btn_text_color_red)
 
                 if(name == user.name && sex == user.sex && age == user.age) {
                     ValidationsDialogsRequests().snackBar(requireView(), btnColor, textColor,
@@ -130,31 +134,33 @@ class ProfileDataFragment : Fragment() {
                         .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
                         .build()
 
-                    ValidationsDialogsRequests().httpPetition(request, context, requireView(), requireActivity(),
+                    ValidationsDialogsRequests().httpPetition(request, requireContext(), requireView(), requireActivity(),
                         getString(R.string.btn_update), binding.btnUpdate, binding.btnCancel, null, null,
                         binding.progressBar, 404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
                     {
                         // Launching room database connection
                         MainScope().launch {
-                            // Updating user info in local database
-                            userDao.updateUser(User(user.email, name, sex, age, user.token, user.refresh))
+                            try {
+                                // Updating user info in local database
+                                userDao.updateUser(User(user.email, name, sex, age, user.token, user.refresh))
 
-                            // Getting color according of theme
-                            val buttonColor = ElementsEditor().getColor(requireContext(), R.attr.btn_background_green)
-                            val txtColor = ElementsEditor().getColor(requireContext(), R.attr.btn_text_color_green)
+                                // Getting color according of theme
+                                val buttonColor = ElementsEditor().getColor(context, R.attr.btn_background_green)
+                                val txtColor = ElementsEditor().getColor(context, R.attr.btn_text_color_green)
 
-                            // Showing succesful dialog
-                            ValidationsDialogsRequests().snackBarOnUIThread(
-                                getString(R.string.snackbar_success_update_data), null, requireView(), buttonColor, txtColor,
-                                requireActivity(), requireContext(), null, null, null, null,
-                                null, null) {
-                                // Fragment enters from right
-                                (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
-                            }
+                                // Showing succesful dialog
+                                ValidationsDialogsRequests().snackBarOnUIThread(
+                                    getString(R.string.snackbar_success_update_data), null, requireView(), buttonColor,
+                                    txtColor, requireActivity(), requireContext(), null, null, null, null,
+                                    null, null) {
+                                    // Fragment enters from right
+                                    (parentFragment as NavBarFragment).updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
+                                }
+                            } catch(e: java.lang.IllegalStateException) {}
                         }
                     }
                 }
-            }
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 
@@ -162,18 +168,20 @@ class ProfileDataFragment : Fragment() {
     private fun showUserData(){
         // Launching room database connection
         MainScope().launch {
-            // Creating connection to database
-            val user = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                .fallbackToDestructiveMigration().build().userDao().getUser()[0]
+            try {
+                // Creating connection to database
+                val user = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                    .fallbackToDestructiveMigration().build().userDao().getUser()[0]
 
-            // Setting screen data
-            binding.editTxtName.setText(user.name)
-            binding.numberPickerAge.value = user.age
+                // Setting screen data
+                binding.editTxtName.setText(user.name)
+                binding.numberPickerAge.value = user.age
 
-            if (binding.btnMale.text.toString() == user.sex)
-                binding.btnMale.isChecked = true
-            else
-                binding.btnFemale.isChecked = true
+                if (binding.btnMale.text.toString() == user.sex)
+                    binding.btnMale.isChecked = true
+                else
+                    binding.btnFemale.isChecked = true
+            } catch(e: java.lang.IllegalStateException) {}
         }
     }
 }

@@ -84,9 +84,9 @@ class StartScreenFragment : Fragment() {
     }
 
     private fun backAction(){
-        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                try {
+        try {
+            requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
                     when (findNavController().currentDestination?.id) {
                         R.id.start_screen_fragment -> { requireActivity().moveTaskToBack(true) }
                         R.id.login_fragment -> {
@@ -122,8 +122,8 @@ class StartScreenFragment : Fragment() {
                             }, 500)
                         }
                     }
-                } catch (e: IllegalArgumentException) {}
-            }
-        })
+                }
+            })
+        } catch(e: java.lang.IllegalStateException) {}
     }
 }

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
@@ -105,77 +104,81 @@ class TestDataFragment : Fragment() {
     }
 
     private fun createPieChart(score: Float, textColorResource: Int, backgroundColorResource: Int) {
-        val textColor = ElementsEditor().getColor(requireContext(), textColorResource)
-        val backgroundColor = ElementsEditor().getColor(requireContext(), backgroundColorResource)
-        val centerColor = ElementsEditor().getColor(requireContext(), R.attr.fragment_background)
+        try {
+            val textColor = ElementsEditor().getColor(context, textColorResource)
+            val backgroundColor = ElementsEditor().getColor(context, backgroundColorResource)
+            val centerColor = ElementsEditor().getColor(context, R.attr.fragment_background)
 
-        // Disable description and legend in chart
-        binding.pieChart.legend.isEnabled = false
-        binding.pieChart.description.isEnabled = false
+            // Disable description and legend in chart
+            binding.pieChart.legend.isEnabled = false
+            binding.pieChart.description.isEnabled = false
 
-        // Friction when rotating chart
-        binding.pieChart.dragDecelerationFrictionCoef = 0.95f
+            // Friction when rotating chart
+            binding.pieChart.dragDecelerationFrictionCoef = 0.95f
 
-        // Center of chart
-        binding.pieChart.isDrawHoleEnabled = true
-        binding.pieChart.setHoleColor(centerColor)
+            // Center of chart
+            binding.pieChart.isDrawHoleEnabled = true
+            binding.pieChart.setHoleColor(centerColor)
 
-        // Ring semi-transparent around center of chart
-        binding.pieChart.setTransparentCircleColor(Color.TRANSPARENT)
-        binding.pieChart.setTransparentCircleAlpha(0)
+            // Ring semi-transparent around center of chart
+            binding.pieChart.setTransparentCircleColor(Color.TRANSPARENT)
+            binding.pieChart.setTransparentCircleAlpha(0)
 
-        // Initial angle for chart
-        binding.pieChart.rotationAngle = 0f
+            // Initial angle for chart
+            binding.pieChart.rotationAngle = 0f
 
-        // Enable the user to rotate the chart
-        binding.pieChart.isRotationEnabled = true
+            // Enable the user to rotate the chart
+            binding.pieChart.isRotationEnabled = true
 
-        // Highlight slice when it's tapped
-        binding.pieChart.isHighlightPerTapEnabled = true
+            // Highlight slice when it's tapped
+            binding.pieChart.isHighlightPerTapEnabled = true
 
-        // Animation when loading chart
-        binding.pieChart.animateY(1000, Easing.EaseInOutQuad)
+            // Animation when loading chart
+            binding.pieChart.animateY(1000, Easing.EaseInOutQuad)
 
-        // Setting dataset for chart
-        val entries = arrayListOf(PieEntry(score), PieEntry(100-score))
-        val dataset = PieDataSet(entries, "Test Result")
+            // Setting dataset for chart
+            val entries = arrayListOf(PieEntry(score), PieEntry(100 - score))
+            val dataset = PieDataSet(entries, "Test Result")
 
-        // Setting chart colors
-        val colors = arrayListOf(textColor, backgroundColor)
-        dataset.colors = colors
+            // Setting chart colors
+            val colors = arrayListOf(textColor, backgroundColor)
+            dataset.colors = colors
 
-        // Disable icons and texts
-        dataset.setDrawIcons(false)
-        dataset.setDrawValues(false)
+            // Disable icons and texts
+            dataset.setDrawIcons(false)
+            dataset.setDrawValues(false)
 
-        // Loading data in chart
-        val data = PieData(dataset)
-        binding.pieChart.data = data
+            // Loading data in chart
+            val data = PieData(dataset)
+            binding.pieChart.data = data
 
-        // Loading chart
-        binding.pieChart.invalidate()
+            // Loading chart
+            binding.pieChart.invalidate()
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun updateColors(textColorResource: Int, btnColorResource: Int) {
-        val textColor = ElementsEditor().getColor(requireContext(), textColorResource)
-        val btnColor = ElementsEditor().getColor(requireContext(), btnColorResource)
+        try {
+            val textColor = ElementsEditor().getColor(context, textColorResource)
+            val btnColor = ElementsEditor().getColor(context, btnColorResource)
 
-        // Creating arrays of elements
-        val textsArray = arrayListOf(binding.txtTitle, binding.txtDescription,
-            binding.txtNumber, binding.txtChartFirst)
-        val buttonsArray = arrayListOf(binding.btnFinish)
+            // Creating arrays of elements
+            val textsArray = arrayListOf(binding.txtTitle, binding.txtDescription,
+                binding.txtNumber, binding.txtChartFirst)
+            val buttonsArray = arrayListOf(binding.btnFinish)
 
-        // Updating colors
-        ElementsEditor().updateColors(textColorResource, requireContext(),
-            textsArray, buttonsArray, btnColorResource)
+            // Updating colors
+            ElementsEditor().updateColors(textColorResource, context,
+                textsArray, buttonsArray, btnColorResource)
 
-        // Changing circles colors of chart
-        binding.txtChartFirst.compoundDrawables[0].setTint(textColor)
-        binding.txtChartSecond.compoundDrawables[0].setTint(btnColor)
+            // Changing circles colors of chart
+            binding.txtChartFirst.compoundDrawables[0].setTint(textColor)
+            binding.txtChartSecond.compoundDrawables[0].setTint(btnColor)
 
-        // Changing second chart label color
-        binding.txtChartSecond.setTextColor(btnColor)
-        binding.txtChartSecond.setShadowLayer(5f,0f, 0f, btnColor)
+            // Changing second chart label color
+            binding.txtChartSecond.setTextColor(btnColor)
+            binding.txtChartSecond.setShadowLayer(5f,0f, 0f, btnColor)
+        } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun updateTestResult() {
@@ -197,17 +200,19 @@ class TestDataFragment : Fragment() {
 
                 // Launching room database connection
                 MainScope().launch {
-                    // Creating connection to database
-                    val userDao = Room.databaseBuilder(findNavController().context, AppDatabase::class.java, "user")
-                        .fallbackToDestructiveMigration().build().userDao()
-                    val user = userDao.getUser()[0]
+                    try {
+                        // Creating connection to database
+                        val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                            .fallbackToDestructiveMigration().build().userDao()
+                        val user = userDao.getUser()[0]
 
-                    // Updating initial test boolean
-                    if(!user.initialTest){
-                        user.initialTest = true
-                        userDao.updateUser(user)
-                        (parentFragment as NavBarFragment).changeNavBarButtonsClickable(true)
-                    }
+                        // Updating initial test boolean
+                        if(!user.initialTest){
+                            user.initialTest = true
+                            userDao.updateUser(user)
+                            (parentFragment as NavBarFragment).changeNavBarButtonsClickable(true)
+                        }
+                    } catch(e: java.lang.IllegalStateException) {}
                 }
             }
             // SVQ Test

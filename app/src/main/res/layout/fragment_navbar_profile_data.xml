@@ -139,8 +139,8 @@
         app:autoSizeMaxTextSize="@dimen/max_size"
         app:autoSizeStepGranularity="@dimen/granularity_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_sex"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_number_picker_right"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_sex_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_sex_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_birthday_top" />
 
     <RadioGroup
@@ -154,8 +154,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_birthday_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_number_picker_right"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_sex_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_sex_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_sex" >
 
         <RadioButton
@@ -426,6 +426,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.58" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_sex_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_sex_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_right"
