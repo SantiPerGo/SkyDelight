@@ -11,12 +11,8 @@ import androidx.room.Room
 import androidx.viewpager.widget.ViewPager
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
-import com.example.skydelight.custom.AppDatabase
-import com.example.skydelight.custom.ElementsEditor
-import com.example.skydelight.custom.ValidationsDialogsRequests
-import com.example.skydelight.custom.ViewPageAdapter
+import com.example.skydelight.custom.*
 import com.example.skydelight.databinding.FragmentNavbarTestBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import okhttp3.FormBody
@@ -24,6 +20,7 @@ import okhttp3.Request
 import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 private const val TEST_PARAM = "test"
 
@@ -231,34 +228,26 @@ class TestFragment : Fragment() {
 
                     if(isSameDay || isLessThanOneDay){
                         // Calculating time left to answer the test again
-                        var hour = if (testCalendar.hour > LocalDateTime.now().hour)
-                                (testCalendar.hour - LocalDateTime.now().hour) else
-                                        (LocalDateTime.now().hour - testCalendar.hour)
+                        var fromDateTime = LocalDateTime.from(LocalDateTime.now())
+                        val toDateTime = testCalendar.plusDays(1)
 
-                        var minute = if (testCalendar.minute > LocalDateTime.now().minute)
-                            (testCalendar.minute - LocalDateTime.now().minute) else
-                                    (LocalDateTime.now().minute - testCalendar.minute)
+                        // Getting hours and adding it to get correct minutes
+                        val hour = fromDateTime.until(toDateTime, ChronoUnit.HOURS)
+                        fromDateTime = fromDateTime.plusHours(hour)
 
-                        var second = if (testCalendar.second > LocalDateTime.now().second)
-                            (testCalendar.second - LocalDateTime.now().second) else
-                                    (LocalDateTime.now().second - testCalendar.second)
+                        // Getting minutes and adding it to get correct seconds
+                        val minute = fromDateTime.until(toDateTime, ChronoUnit.MINUTES)
+                        fromDateTime = fromDateTime.plusMinutes(minute)
 
-                        if(isSameDay) {
-                            hour = 23 - hour
-                            minute = 59 - minute
-                            second = 59 - second
-                        }
+                        // Getting seconds
+                        val second = fromDateTime.until(toDateTime, ChronoUnit.SECONDS)
 
                         // Showing introduction for the user
-                        val dialog = MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("¡Espera!")
-                            .setMessage("\nNo puedes responder más de una vez la prueba de estrés $testName en un lapso de 24 horas\n\n" +
-                                    "Debes esperar $hour hora(s) con $minute minuto(s) y $second segundo(s) para responder de nuevo\n")
-                            .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
-                            .show()
-
-                        // Changing neutral button position to center
-                        ElementsEditor().updateDialogButton(dialog)
+                        val dialog = CustomDialog(getString(R.string.test_time_error_title),
+                            getString(R.string.test_time_error_description, testName, hour.toString(), minute.toString(),
+                                second.toString()), R.attr.heart_sad, R.attr.fragment_background, requireContext())
+                        dialog.firstButton(getString(R.string.test_btn_understand)) {}
+                        dialog.show()
                     } else{
                         startTest = true
                     }

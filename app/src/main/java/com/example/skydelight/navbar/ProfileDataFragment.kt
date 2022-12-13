@@ -174,6 +174,7 @@ class ProfileDataFragment : Fragment() {
                     .fallbackToDestructiveMigration().build().userDao().getUser()[0]
 
                 // Setting screen data
+                binding.FieldEmail.text = user.email
                 binding.editTxtName.setText(user.name)
                 binding.numberPickerAge.value = user.age
 

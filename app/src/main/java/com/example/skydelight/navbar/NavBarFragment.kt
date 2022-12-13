@@ -133,7 +133,7 @@ class NavBarFragment : Fragment() {
             val fifthDialog = CustomDialog(getString(R.string.tutorial_four_title),
                 getString(R.string.tutorial_four_description), R.attr.heart_happy,
                 R.attr.fragment_background, requireContext(), false)
-            fifthDialog.firstButton(getString(R.string.btn_next)) {
+            fifthDialog.secondButton(getString(R.string.btn_next)) {
                 // Setting parameters for the next fragment
                 val fragment = TestAnswerFragment()
                 fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
@@ -149,7 +149,7 @@ class NavBarFragment : Fragment() {
             val fourthDialog = CustomDialog(getString(R.string.tutorial_three_title),
                 getString(R.string.tutorial_three_description), R.attr.heart_relaxed,
                 R.attr.fragment_background, requireContext(), false)
-            fourthDialog.firstButton(getString(R.string.btn_next)) {
+            fourthDialog.secondButton(getString(R.string.btn_next)) {
                 // Changing fragment
                 updateNavBarHost(ProfileFragment(), R.id.navbar_profile_fragment, true)
                 itemId = R.id.nav_profile
@@ -161,7 +161,7 @@ class NavBarFragment : Fragment() {
             val thirdDialog = CustomDialog(getString(R.string.tutorial_second_title),
                 getString(R.string.tutorial_second_description), R.attr.heart_laughing,
                 R.attr.fragment_background, requireContext(), false)
-            thirdDialog.firstButton(getString(R.string.btn_next)) {
+            thirdDialog.secondButton(getString(R.string.btn_next)) {
                 // Changing fragment
                 updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, true)
                 itemId = R.id.nav_games
@@ -173,7 +173,7 @@ class NavBarFragment : Fragment() {
             val secondDialog = CustomDialog(getString(R.string.tutorial_first_title),
                 getString(R.string.tutorial_first_description), R.attr.heart_happy,
                 R.attr.fragment_background, requireContext(), false)
-            secondDialog.firstButton(getString(R.string.btn_next)) {
+            secondDialog.secondButton(getString(R.string.btn_next)) {
                 // Changing fragment
                 updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, true)
                 itemId = R.id.nav_test
@@ -201,28 +201,28 @@ class NavBarFragment : Fragment() {
 
             // Setting return buttons for dialogs
 
-            fifthDialog.secondButton(getString(R.string.btn_previous)) {
+            fifthDialog.firstButton(getString(R.string.btn_previous)) {
                 // Changing fragment
                 updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, false)
                 itemId = R.id.nav_games
                 binding.navBar.selectedItemId = R.id.nav_games
                 fourthDialog.show()
             }
-            fourthDialog.secondButton(getString(R.string.btn_previous)) {
+            fourthDialog.firstButton(getString(R.string.btn_previous)) {
                 thirdDialog.show()
                 // Changing fragment
                 updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, false)
                 itemId = R.id.nav_test
                 binding.navBar.selectedItemId = R.id.nav_test
             }
-            thirdDialog.secondButton(getString(R.string.btn_previous)) {
+            thirdDialog.firstButton(getString(R.string.btn_previous)) {
                 // Changing fragment
                 updateNavBarHost(HomeFragment(), R.id.navbar_home_fragment, false)
                 itemId = R.id.nav_home
                 binding.navBar.selectedItemId = R.id.nav_home
                 secondDialog.show()
             }
-            secondDialog.secondButton(getString(R.string.btn_return)) { firstDialog.show() }
+            secondDialog.firstButton(getString(R.string.btn_return)) { firstDialog.show() }
 
             // Launching room database connection
             MainScope().launch {

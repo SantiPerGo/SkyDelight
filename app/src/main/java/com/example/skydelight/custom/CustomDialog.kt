@@ -19,7 +19,8 @@ class CustomDialog() {
     private var isOneButton = true
 
     constructor(title: String, message: String, drawableReference: Int,
-             backgroundReference: Int, context: Context, oneButton: Boolean = true) : this() {
+             backgroundReference: Int, context: Context, oneButton: Boolean = true,
+                isMiniSize: Boolean = false) : this() {
         try {
             // Creating instance of dialog
             dialog = Dialog(context)
@@ -43,6 +44,13 @@ class CustomDialog() {
             if(!oneButton)   {
                 dialog.findViewById<TextView>(R.id.btnClose).visibility = View.GONE
                 dialog.findViewById<LinearLayout>(R.id.linearLayoutButtons).visibility = View.VISIBLE
+            }
+
+            // Changing text size
+            if(isMiniSize) {
+                dialog.findViewById<TextView>(R.id.txtMessageMini).text = message
+                dialog.findViewById<TextView>(R.id.txtMessage).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.txtMessageMini).visibility = View.VISIBLE
             }
         } catch (e: IllegalStateException) {}
     }

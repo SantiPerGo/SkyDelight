@@ -15,10 +15,10 @@ import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.CustomDialog
 import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarProfileBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import okhttp3.FormBody
@@ -60,14 +60,12 @@ class ProfileFragment : Fragment() {
 
         // Returning to the start screen fragment
         binding.btnCloseSession.setOnClickListener {
-            MaterialAlertDialogBuilder(findNavController().context)
-                .setTitle("¡No te Vayas!")
-                .setMessage("¿Realmente Quieres Cerrar Sesión?")
-                .setCancelable(false)
-                .setNeutralButton("¡No!"){ dialog, _ -> dialog.dismiss() }
-                .setPositiveButton("¡Sí!"){ dialog, _ ->
-                    dialog.dismiss()
-
+            try {
+                val dialog = CustomDialog(getString(R.string.profile_close_session_title),
+                    getString(R.string.profile_close_session_description), R.attr.heart_sad,
+                    R.attr.fragment_background, requireContext(), false, true)
+                dialog.firstButton(getString(R.string.profile_btn_no)) {}
+                dialog.secondButton(getString(R.string.profile_btn_yes)) {
                     // Launching room database connection
                     MainScope().launch {
                         try {
@@ -78,64 +76,64 @@ class ProfileFragment : Fragment() {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                         } catch(e: java.lang.IllegalStateException) {}
                     }
-                }.show()
+                }
+                dialog.show()
+            } catch(e: java.lang.IllegalStateException) {}
         }
 
         // Returning to the start screen fragment
         binding.btnDeleteAccount.setOnClickListener {
             try {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("¡Cuidado!")
-                    .setMessage("¿Realmente Quieres Eliminar tu Cuenta?")
-                    .setCancelable(false)
-                    .setNeutralButton("¡No!"){ dialog, _ -> dialog.dismiss() }
-                    .setPositiveButton("¡Sí!"){ dialog, _ ->
-                        dialog.dismiss()
+                val dialog = CustomDialog(getString(R.string.profile_delete_title),
+                    getString(R.string.profile_delete_description), R.attr.heart_dead,
+                    R.attr.fragment_background, requireContext(), false, true)
+                dialog.firstButton(getString(R.string.profile_btn_no)) {}
+                dialog.secondButton(getString(R.string.profile_btn_yes)) {
+                    // Deactivating clickable
+                    (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
 
-                        // Deactivating clickable
-                        (parentFragment as NavBarFragment).changeNavBarButtonsClickable(false)
+                    // Launching room database connection
+                    MainScope().launch {
+                        try {
+                            // Creating connection to database
+                            val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
+                                .fallbackToDestructiveMigration().build().userDao()
+                            val user = userDao.getUser()[0]
 
-                        // Launching room database connection
-                        MainScope().launch {
-                            try {
-                                // Creating connection to database
-                                val userDao = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
-                                    .fallbackToDestructiveMigration().build().userDao()
-                                val user = userDao.getUser()[0]
+                            // Making http request
+                            val request = Request.Builder()
+                                .url("https://apiskydelight.herokuapp.com/usuarios/eliminar-usuario/")
+                                .put(FormBody.Builder().add("email", user.email).build())
+                                .addHeader("Authorization", "Bearer " + user.token)
+                                .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
+                                .build()
 
-                                // Making http request
-                                val request = Request.Builder()
-                                    .url("https://apiskydelight.herokuapp.com/usuarios/eliminar-usuario/")
-                                    .put(FormBody.Builder().add("email", user.email).build())
-                                    .addHeader("Authorization", "Bearer " + user.token)
-                                    .addHeader("KEY-CLIENT", BuildConfig.API_KEY)
-                                    .build()
+                            ValidationsDialogsRequests().httpPetition(request, requireContext(), view,
+                                requireActivity(), getString(R.string.profile_delete_account), binding.btnDeleteAccount,
+                                binding.btnChangePassword, binding.btnCloseSession, binding.btnUpdateAccount, binding.progressBar,
+                                404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
+                            {
+                                try {
+                                    // Launching room database connection
+                                    MainScope().launch {
+                                        // Getting color according of theme
+                                        val btnColor = ElementsEditor().getColor(context, R.attr.btn_background_green)
+                                        val textColor = ElementsEditor().getColor(context, R.attr.btn_text_color_green)
 
-                                ValidationsDialogsRequests().httpPetition(request, requireContext(), view,
-                                    requireActivity(), getString(R.string.profile_delete_account), binding.btnDeleteAccount,
-                                    binding.btnChangePassword, binding.btnCloseSession, binding.btnUpdateAccount, binding.progressBar,
-                                    404, getString(R.string.snackbar_error_recover), (parentFragment as NavBarFragment))
-                                {
-                                    try {
-                                        // Launching room database connection
-                                        MainScope().launch {
-                                            // Getting color according of theme
-                                            val btnColor = ElementsEditor().getColor(context, R.attr.btn_background_green)
-                                            val textColor = ElementsEditor().getColor(context, R.attr.btn_text_color_green)
+                                        ValidationsDialogsRequests().snackBar(view, btnColor, textColor,
+                                            getString(R.string.snackbar_success_delete_account), requireContext())
 
-                                            ValidationsDialogsRequests().snackBar(view, btnColor, textColor,
-                                                getString(R.string.snackbar_success_delete_account), requireContext())
-
-                                            // Cleaning database and changing to start screen fragment
-                                            userDao.deleteUsers()
-                                            findNavController().navigate(R.id.action_navBar_to_startScreen)
-                                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                                        }
-                                    } catch(e: java.lang.IllegalStateException) {}
-                                }
-                            } catch(e: java.lang.IllegalStateException) {}
-                        }
-                    }.show()
+                                        // Cleaning database and changing to start screen fragment
+                                        userDao.deleteUsers()
+                                        findNavController().navigate(R.id.action_navBar_to_startScreen)
+                                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                                    }
+                                } catch(e: java.lang.IllegalStateException) {}
+                            }
+                        } catch(e: java.lang.IllegalStateException) {}
+                    }
+                }
+                dialog.show()
             } catch(e: java.lang.IllegalStateException) {}
         }
 

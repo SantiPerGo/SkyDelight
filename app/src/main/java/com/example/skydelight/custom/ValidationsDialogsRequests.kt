@@ -2,6 +2,7 @@ package com.example.skydelight.custom
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.util.Log
 import android.util.Patterns
@@ -13,6 +14,7 @@ import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.example.skydelight.navbar.NavBarFragment
 import com.google.android.material.snackbar.Snackbar
@@ -65,6 +67,20 @@ class ValidationsDialogsRequests {
         } catch (e: java.lang.IllegalStateException) {}
     }
 
+    private fun errorDialog(activity: Activity, context: Context) {
+        activity.runOnUiThread {
+            val errorDialog = CustomDialog(activity.getString(R.string.custom_dialog_error_title),
+                activity.getString(R.string.custom_dialog_error_description), R.attr.heart_dead,
+                R.attr.fragment_background, context)
+            errorDialog.firstButton(activity.getString(R.string.custom_dialog_error_button)) {
+                val intent = Intent(activity, MainActivity::class.java)
+                activity.startActivity(intent)
+                activity.finishAffinity()
+            }
+            errorDialog.show()
+        }
+    }
+
     fun httpPetition(request: Request, context: Context, view: View, activity: Activity, btnText: String?, button1: Button?,
                      button2: Button?, button3: Button?, button4: Button?, progressBar: ProgressBar?, codeError: Int?,
                      errorMessage: String?, parentFragment: NavBarFragment?, function: (String) -> (Unit)){
@@ -96,16 +112,15 @@ class ValidationsDialogsRequests {
                         function(responseString)
                     }
                     // Custom error code
-                    else if(response.code() == (codeError ?: 400..405))
-                        snackBarOnUIThread(errorMessage ?:
-                        "¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!", btnText,
-                            view, btnColor, textColor, activity, context, button1, button2, button3, button4,
-                            progressBar, parentFragment) {}
+                    else if(codeError != null)
+                        if(response.code() == codeError && errorMessage != null)
+                            snackBarOnUIThread(errorMessage, btnText, view, btnColor, textColor, activity,
+                                context, button1, button2, button3, button4, progressBar, parentFragment) {}
+                        else if(response.code() == codeError)
+                            errorDialog(activity, context)
                     // Connection or server errors
                     else if(response.code() in 400..405 || response.code() == 500)
-                        snackBarOnUIThread("¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!",
-                            btnText, view, btnColor, textColor, activity, context, button1, button2, button3, button4,
-                            progressBar, parentFragment) {}
+                        errorDialog(activity, context)
                 }
 
                 // Print dialog if it's error
@@ -114,9 +129,7 @@ class ValidationsDialogsRequests {
                     Log.d("OKHTTP3-ERROR", e.toString())
 
                     // Showing message to the user
-                    snackBarOnUIThread("¡Ups! ¡Hubo un Problema de Conexión!\n¡Estamos Teniendo Algunas Dificultades!",
-                        btnText, view, btnColor, textColor, activity, context, button1, button2, button3, button4,
-                        progressBar, parentFragment) {}
+                    errorDialog(activity, context)
                 }
             })
         } catch (e: java.lang.IllegalStateException) {}

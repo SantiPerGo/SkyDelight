@@ -5,9 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.example.skydelight.R
 import com.google.android.material.button.MaterialButton
@@ -87,14 +85,6 @@ class ElementsEditor {
                     element.strokeColor = ColorStateList.valueOf(textColor)
             }
         } catch(e: java.lang.IllegalStateException) {}
-    }
-
-    fun updateDialogButton(dialog: AlertDialog){
-        // Changing neutral button position to center
-        val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
-        val layoutParams = positiveButton.layoutParams as LinearLayout.LayoutParams
-        layoutParams.weight = 10f
-        positiveButton.layoutParams = layoutParams
     }
 
     fun elementsClickableState(state: Boolean, textsArray: ArrayList<TextView>?,

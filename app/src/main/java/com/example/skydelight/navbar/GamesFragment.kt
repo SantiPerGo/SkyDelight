@@ -9,15 +9,14 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.skydelight.R
+import com.example.skydelight.custom.CustomDialog
 import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ViewPageAdapter
 import com.example.skydelight.databinding.FragmentNavbarGamesBinding
 import com.example.skydelight.unity.UnityActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.ar.core.ArCoreApk
 
 class GamesFragment : Fragment() {
@@ -51,7 +50,7 @@ class GamesFragment : Fragment() {
                     val intent = Intent(context, UnityActivity::class.java)
                     intent.putExtra("SceneName", "extremeAR")
                     startActivity(intent)
-                } else { ElementsEditor().updateDialogButton(errorDialog(requireContext())) }
+                } else { errorDialog(requireContext()) }
             } catch(e: java.lang.IllegalStateException) {}
         }
 
@@ -70,7 +69,7 @@ class GamesFragment : Fragment() {
                                 val intent = Intent(context, UnityActivity::class.java)
                                 intent.putExtra("SceneName", "extremeAR")
                                 startActivity(intent)
-                            } else { ElementsEditor().updateDialogButton(errorDialog(requireContext())) }
+                            } else { errorDialog(requireContext()) }
                         } catch(e: java.lang.IllegalStateException) {}
                     }
                     updateColors(R.attr.btn_text_color_blue)
@@ -85,7 +84,7 @@ class GamesFragment : Fragment() {
                                 val intent = Intent(context, UnityActivity::class.java)
                                 intent.putExtra("SceneName", "relaxAR")
                                 startActivity(intent)
-                            } else { ElementsEditor().updateDialogButton(errorDialog(requireContext())) }
+                            } else { errorDialog(requireContext()) }
                         } catch(e: java.lang.IllegalStateException) {}
                     }
                     updateColors(R.attr.btn_text_color_green)
@@ -94,20 +93,19 @@ class GamesFragment : Fragment() {
         })
     }
 
-    private fun errorDialog(context: Context): AlertDialog {
+    private fun errorDialog(context: Context) {
         // Error validation
-        val errorDialog = MaterialAlertDialogBuilder(context)
-            .setTitle("Error de Incompatibilidad con ARCore")
-            .setMessage("Parece que tu dispositivo no es compatible con realidad aumentada (ARCore)")
-            .setNeutralButton("¡No!"){ dialog, _ -> dialog.dismiss() }
+        val dialog = CustomDialog(getString(R.string.games_errorAR_title),
+            getString(R.string.games_errorAR_description), R.attr.heart_sad,
+            R.attr.fragment_background, requireContext(), isMiniSize = true)
+        dialog.firstButton(getString(R.string.games_errorAR_understand)) {}
+        dialog.show()
 
         // Loading pictures on view pager and connecting it with dots tab layout
         val imagesArray = arrayOf(R.drawable.wallpaper_beach_2, R.drawable.wallpaper_wingsuit)
         val viewPagerAdapter = ViewPageAdapter(context, imagesArray)
         binding.viewPagerMain.adapter = viewPagerAdapter
         binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
-
-        return errorDialog.show()
     }
 
     private fun updateColors(resource: Int) {

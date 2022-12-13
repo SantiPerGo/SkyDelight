@@ -10,10 +10,10 @@ import androidx.room.Room
 import com.example.skydelight.BuildConfig
 import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
+import com.example.skydelight.custom.CustomDialog
 import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
 import com.example.skydelight.databinding.FragmentNavbarTestAnswerBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import okhttp3.FormBody
@@ -226,75 +226,74 @@ class TestAnswerFragment : Fragment() {
                 binding.btnReturn.isClickable = false
                 binding.btnNext.isClickable = false
 
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("¡Espera!")
-                    .setMessage("¿Realmente Quieres dar por Finalizada la Prueba?")
-                    .setCancelable(false)
-                    .setNeutralButton("¡No!"){ dialog, _ ->
-                        dialog.dismiss()
-                        binding.btnReturn.isClickable = true
-                        binding.btnNext.isClickable = true
-                    }
-                    .setPositiveButton("¡Sí!"){ _, _ ->
-                        // Updating text
-                        var explanation = ""
-                        var result = questionAnswers.sum().toFloat()
-                        when(testNumber){
-                            // SISCO Test
-                            1 -> {
-                                result = (questionAnswers.sum().toFloat() * 100) / 105
-                                explanation = when {
-                                    result <= 33f -> getString(R.string.test_result_low)
-                                    result in 34f..66f -> getString(R.string.test_result_medium)
-                                    else -> getString(R.string.test_result_high)
-                                }
-                            }
-                            // SVQ Test
-                            2 -> {
-                                result = ((questionAnswers.sum().toFloat() - 20) * 100) / 80
-                                explanation = when {
-                                    questionAnswers.sum() <= 49 -> getString(R.string.test_result_vulnerable_low)
-                                    questionAnswers.sum() in 50..69 -> getString(R.string.test_result_vulnerable_medium)
-                                    questionAnswers.sum() in 70..95 -> getString(R.string.test_result_vulnerable_high)
-                                    else -> getString(R.string.test_result_vulnerable_extreme)
-                                }
-                            }
-                            // PSS Test
-                            3 -> {
-                                for(i in questionAnswers.indices)
-                                    if(i+1 == 4 || i+1 == 5 || i+1 == 7 || i+1 == 8)
-                                        when {
-                                            questionAnswers[i] == 0 -> questionAnswers[i] = 4
-                                            questionAnswers[i] == 1 -> questionAnswers[i] = 3
-                                            questionAnswers[i] == 2 -> questionAnswers[i] = 2
-                                            questionAnswers[i] == 3 -> questionAnswers[i] = 1
-                                            else -> questionAnswers[i] = 0
-                                        }
-
-                                explanation = when {
-                                    questionAnswers.sum() <= 13 -> getString(R.string.test_result_low)
-                                    questionAnswers.sum() in 14..26 -> getString(R.string.test_result_medium)
-                                    else -> getString(R.string.test_result_high)
-                                }
-
-                                result = (questionAnswers.sum().toFloat() * 100) / 40
-                            }
-                            // SVS Test
-                            4 -> {
-                                result = questionAnswers.sum().toFloat() / 20
-                                explanation = when {
-                                    result < 1f -> getString(R.string.test_result_vulnerable_low)
-                                    result < 2f -> getString(R.string.test_result_vulnerable_medium)
-                                    result < 3f -> getString(R.string.test_result_vulnerable_high)
-                                    else -> getString(R.string.test_result_vulnerable_extreme)
-                                }
-
-                                result = (result * 100) / 4
+                val dialog = CustomDialog(getString(R.string.test_time_error_title),
+                    getString(R.string.test_finish), R.attr.heart_confused,
+                    R.attr.fragment_background, requireContext(), false, true)
+                dialog.firstButton(getString(R.string.test_cancel_btn_no)) {
+                    binding.btnReturn.isClickable = true
+                    binding.btnNext.isClickable = true
+                }
+                dialog.secondButton(getString(R.string.test_cancel_btn_yes)) {
+                    // Updating text
+                    var explanation = ""
+                    var result = questionAnswers.sum().toFloat()
+                    when(testNumber){
+                        // SISCO Test
+                        1 -> {
+                            result = (questionAnswers.sum().toFloat() * 100) / 105
+                            explanation = when {
+                                result <= 33f -> getString(R.string.test_result_low)
+                                result in 34f..66f -> getString(R.string.test_result_medium)
+                                else -> getString(R.string.test_result_high)
                             }
                         }
+                        // SVQ Test
+                        2 -> {
+                            result = ((questionAnswers.sum().toFloat() - 20) * 100) / 80
+                            explanation = when {
+                                questionAnswers.sum() <= 49 -> getString(R.string.test_result_vulnerable_low)
+                                questionAnswers.sum() in 50..69 -> getString(R.string.test_result_vulnerable_medium)
+                                questionAnswers.sum() in 70..95 -> getString(R.string.test_result_vulnerable_high)
+                                else -> getString(R.string.test_result_vulnerable_extreme)
+                            }
+                        }
+                        // PSS Test
+                        3 -> {
+                            for(i in questionAnswers.indices)
+                                if(i+1 == 4 || i+1 == 5 || i+1 == 7 || i+1 == 8)
+                                    when {
+                                        questionAnswers[i] == 0 -> questionAnswers[i] = 4
+                                        questionAnswers[i] == 1 -> questionAnswers[i] = 3
+                                        questionAnswers[i] == 2 -> questionAnswers[i] = 2
+                                        questionAnswers[i] == 3 -> questionAnswers[i] = 1
+                                        else -> questionAnswers[i] = 0
+                                    }
 
-                        saveTest(explanation, result, questionAnswers)
-                    }.show()
+                            explanation = when {
+                                questionAnswers.sum() <= 13 -> getString(R.string.test_result_low)
+                                questionAnswers.sum() in 14..26 -> getString(R.string.test_result_medium)
+                                else -> getString(R.string.test_result_high)
+                            }
+
+                            result = (questionAnswers.sum().toFloat() * 100) / 40
+                        }
+                        // SVS Test
+                        4 -> {
+                            result = questionAnswers.sum().toFloat() / 20
+                            explanation = when {
+                                result < 1f -> getString(R.string.test_result_vulnerable_low)
+                                result < 2f -> getString(R.string.test_result_vulnerable_medium)
+                                result < 3f -> getString(R.string.test_result_vulnerable_high)
+                                else -> getString(R.string.test_result_vulnerable_extreme)
+                            }
+
+                            result = (result * 100) / 4
+                        }
+                    }
+
+                    saveTest(explanation, result, questionAnswers)
+                }
+                dialog.show()
             }
         } catch(e: java.lang.IllegalStateException) {}
     }
@@ -303,34 +302,29 @@ class TestAnswerFragment : Fragment() {
         try {
             if(questionNumber == 1 && btnCancelState == true) {
                 // Showing introduction for the user
-                val dialog = MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("¡Opción Inválida!")
-                    .setMessage("\nRecuerda que debes completar este primer test para acceder a las demás " +
-                            "funcionalidades de la aplicación = )\n")
-                    .setNeutralButton("¡Entendido!") { dialog, _ -> dialog.dismiss() }
-                    .show()
-
-                // Changing neutral button position to center
-                ElementsEditor().updateDialogButton(dialog)
+                val dialog = CustomDialog(getString(R.string.test_tutorial_error_title),
+                    getString(R.string.test_tutorial_error_description), R.attr.heart_happy,
+                    R.attr.fragment_background, requireContext(), isMiniSize = true)
+                dialog.firstButton(getString(R.string.test_btn_understand)) {}
+                dialog.show()
             } else if(questionNumber == 1 && btnCancelState == false) {
                 binding.btnReturn.isClickable = false
                 binding.btnNext.isClickable = false
 
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("¡No te Vayas!")
-                    .setMessage("¿Realmente Quieres Cancelar la Prueba?")
-                    .setCancelable(false)
-                    .setNeutralButton("¡No!"){ dialog, _ ->
-                        dialog.dismiss()
-                        binding.btnReturn.isClickable = true
-                        binding.btnNext.isClickable = true
-                    }
-                    .setPositiveButton("¡Sí!"){ _, _ ->
-                        // Fragment enters from right
-                        (parentFragment as NavBarFragment).updateNavBarHost(
-                            TestFragment(), R.id.nav_test, false)
-                        (parentFragment as NavBarFragment).updateImgHelp(true)
-                    }.show()
+                val dialog = CustomDialog(getString(R.string.test_cancel_title),
+                    getString(R.string.test_cancel_description), R.attr.heart_sad,
+                    R.attr.fragment_background, requireContext(), false, true)
+                dialog.firstButton(getString(R.string.test_cancel_btn_no)) {
+                    binding.btnReturn.isClickable = true
+                    binding.btnNext.isClickable = true
+                }
+                dialog.secondButton(getString(R.string.test_cancel_btn_yes)) {
+                    // Fragment enters from right
+                    (parentFragment as NavBarFragment).updateNavBarHost(
+                        TestFragment(), R.id.nav_test, false)
+                    (parentFragment as NavBarFragment).updateImgHelp(true)
+                }
+                dialog.show()
             } else {
                 // Changing text of button if it's not last question
                 if(questionNumber == maxQuestionsNumber)
