@@ -84,9 +84,6 @@ class RegisterSecondFragment : Fragment() {
             validateInputsNotEmpty()
         }
 
-        // Showing elements
-        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
-
         binding.btnCreateAccount.setOnClickListener{
             val email = binding.editTxtEmail.text.toString()
             val password = binding.editTxtPassword.text.toString()
@@ -109,7 +106,6 @@ class RegisterSecondFragment : Fragment() {
             val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
 
             // Starting previous fragment
-            elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_registerSecond_to_registerFirst, bundle)
                 findNavController().popBackStack(R.id.register_second_fragment, true)
@@ -130,18 +126,6 @@ class RegisterSecondFragment : Fragment() {
             else
                 ElementsEditor().updateButtonState(binding.btnCreateAccount, false, context, false)
         } catch(e: java.lang.IllegalStateException) {}
-    }
-
-    fun elementsVisibility(state: Boolean){
-        val elementsArray = arrayOf(binding.txtTitle, binding.txtEmail, binding.FieldEmail,
-            binding.txtPassword, binding.FieldPassword, binding.txtConfirmPassword,
-            binding.FieldConfirmPassword, binding.btnCreateAccount, binding.btnReturn)
-
-        for(element in elementsArray)
-            if(state)
-                element.animate().alpha(1f)
-            else
-                element.animate().alpha(0f)
     }
 
     // Function to connect with the api
@@ -219,7 +203,6 @@ class RegisterSecondFragment : Fragment() {
                                     getString(R.string.snackbar_success_register), null, requireView(), btnColor, textColor,
                                     requireActivity(), requireContext(), null, null, null, null,
                                     null, null) {
-                                    elementsVisibility(false)
                                     Handler(Looper.getMainLooper()).postDelayed({
                                         findNavController().navigate(R.id.action_registerSecond_to_registerThird)
                                     }, 500)

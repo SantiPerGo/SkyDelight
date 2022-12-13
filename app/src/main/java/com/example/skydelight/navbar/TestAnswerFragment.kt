@@ -1,6 +1,7 @@
 package com.example.skydelight.navbar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -249,11 +250,10 @@ class TestAnswerFragment : Fragment() {
                         }
                         // SVQ Test
                         2 -> {
-                            result = ((questionAnswers.sum().toFloat() - 20) * 100) / 80
                             explanation = when {
-                                questionAnswers.sum() <= 49 -> getString(R.string.test_result_vulnerable_low)
-                                questionAnswers.sum() in 50..69 -> getString(R.string.test_result_vulnerable_medium)
-                                questionAnswers.sum() in 70..95 -> getString(R.string.test_result_vulnerable_high)
+                                result <= 49f -> getString(R.string.test_result_vulnerable_low)
+                                result in 50f..69f -> getString(R.string.test_result_vulnerable_medium)
+                                result in 70f..95f -> getString(R.string.test_result_vulnerable_high)
                                 else -> getString(R.string.test_result_vulnerable_extreme)
                             }
                         }
@@ -269,13 +269,12 @@ class TestAnswerFragment : Fragment() {
                                         else -> questionAnswers[i] = 0
                                     }
 
+                            result = questionAnswers.sum().toFloat()
                             explanation = when {
-                                questionAnswers.sum() <= 13 -> getString(R.string.test_result_low)
-                                questionAnswers.sum() in 14..26 -> getString(R.string.test_result_medium)
+                                result <= 13f -> getString(R.string.test_result_low)
+                                result in 14f..26f -> getString(R.string.test_result_medium)
                                 else -> getString(R.string.test_result_high)
                             }
-
-                            result = (questionAnswers.sum().toFloat() * 100) / 40
                         }
                         // SVS Test
                         4 -> {
@@ -286,11 +285,8 @@ class TestAnswerFragment : Fragment() {
                                 result < 3f -> getString(R.string.test_result_vulnerable_high)
                                 else -> getString(R.string.test_result_vulnerable_extreme)
                             }
-
-                            result = (result * 100) / 4
                         }
                     }
-
                     saveTest(explanation, result, questionAnswers)
                 }
                 dialog.show()

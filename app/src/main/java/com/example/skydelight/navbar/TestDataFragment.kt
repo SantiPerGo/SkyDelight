@@ -56,10 +56,7 @@ class TestDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Updating text colors
-        updateColorsAndChart()
-
-        // Updating text according of test result
+        // Updating text colors and advice
         updateTestResult()
 
         // Changing to answer test fragment
@@ -71,35 +68,55 @@ class TestDataFragment : Fragment() {
         }
     }
 
-    private fun updateColorsAndChart() {
-        // Updating text
+    private fun updateTestResult() {
+        // Getting scale of each test
+        val originalResult = score!!
         var maxNum = 0f
         var minNum = 0f
         when(testNumber) {
             // SISCO Test
-            1 -> { maxNum = 67f
+            1 -> { maxNum = 66f
                 minNum = 34f }
             // SVQ Test
-            2 -> { maxNum = 70f
+            2 -> { maxNum = 69f
                 minNum = 50f }
             // PSS Test
-            3 -> { maxNum = 67.5f
-                minNum = 35f }
+            3 -> { maxNum = 26f
+                minNum = 14f }
             // SVS Test
-            4 -> { maxNum = 75f
-                minNum = 50f }
+            4 -> { maxNum = 1.99f
+                minNum = 1f }
         }
 
+        // Converting score to percentage according each test
+        val resultPercentage = when(testNumber) {
+            // SISCO Test
+            1 -> score!!.toFloat()
+            // SVQ Test
+            2 -> ((score!!.toFloat() - 20) * 100) / 80
+            // PSS Test
+            3 -> (score!!.toFloat() * 100) / 40
+            // SVS Test
+            else -> (score!!.toFloat() * 100) / 4
+        }
+
+        // Updating text
+        updateTestAdvice(resultPercentage)
+
         // Getting color and title according of results
-        if(score!! >= maxNum) {
-            createPieChart(score!!, R.attr.btn_text_color_red, R.attr.btn_background_red)
-            updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
-        } else if(score!! >= minNum && score!! < maxNum) {
-            createPieChart(score!!, R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
-            updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
-        } else {
-            createPieChart(score!!, R.attr.btn_text_color_green, R.attr.btn_background_green)
-            updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
+        when {
+            originalResult > maxNum -> {
+                createPieChart(resultPercentage, R.attr.btn_text_color_red, R.attr.btn_background_red)
+                updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
+            }
+            originalResult in minNum..maxNum -> {
+                createPieChart(resultPercentage, R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
+                updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
+            }
+            else -> {
+                createPieChart(resultPercentage, R.attr.btn_text_color_green, R.attr.btn_background_green)
+                updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
+            }
         }
     }
 
@@ -181,14 +198,14 @@ class TestDataFragment : Fragment() {
         } catch(e: java.lang.IllegalStateException) {}
     }
 
-    private fun updateTestResult() {
+    private fun updateTestAdvice(score: Float) {
         // Showing text result
         binding.txtDescription.text = stressLevel
 
         // Deleting decimals when necessary
         var scoreString = String.format("%.2f", score)
-        if(score!! % 1f == 0f)
-            scoreString = score?.toInt().toString()
+        if(score % 1f == 0f)
+            scoreString = score.toInt().toString()
 
         // Updating text
         when(testNumber) {

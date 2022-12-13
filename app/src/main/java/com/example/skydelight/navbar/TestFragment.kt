@@ -19,6 +19,7 @@ import okhttp3.FormBody
 import okhttp3.Request
 import org.json.JSONObject
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
@@ -150,14 +151,34 @@ class TestFragment : Fragment() {
                     val testData = JSONObject(it).getString("data")
 
                     if(testData != "[]"){
-                        val lastTest = testData.substring(testData.lastIndexOf("{"), testData.lastIndexOf("}")+1)
-                        var dateOfTest = JSONObject(lastTest).getString("created_at").replace("T", " ")
-                        dateOfTest = dateOfTest.substring(0, dateOfTest.indexOf(".")+4)
+                        // Saving string representation of tests in array
+                        val testArray = testData.substring(2, testData.length-2).split("},{")
+
+                        // Saving date format of tests in array
+                        val testArrayDates = ArrayList<LocalDateTime>()
+                        var dateObject: JSONObject
+                        var dateOfTest: String
+                        testArray.forEach { item ->
+                            // Casting strings into jsons
+                            dateObject = JSONObject("{$item}")
+
+                            // Getting date of test and preparing date format
+                            dateOfTest = dateObject.getString("created_at").replace("T", " ")
+                            dateOfTest = dateOfTest.substring(0, dateOfTest.indexOf(".")+4)
+
+                            // Saving date of test as localDateTime object
+                            testArrayDates.add(LocalDateTime.parse(dateOfTest,
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")))
+                        }
+
+                        // Saving test with last date in database
+                        val maxDateTime: LocalDateTime? =
+                            testArrayDates.maxByOrNull { item -> item.toEpochSecond(ZoneOffset.UTC) }
                         when(testNumber){
-                            1 -> user.siscoCalendar = dateOfTest
-                            2 -> user.svqCalendar = dateOfTest
-                            3 -> user.pssCalendar = dateOfTest
-                            4 -> user.svsCalendar = dateOfTest
+                            1 -> user.siscoCalendar = maxDateTime.toString().replace("T", " ")
+                            2 -> user.svqCalendar = maxDateTime.toString().replace("T", " ")
+                            3 -> user.pssCalendar = maxDateTime.toString().replace("T", " ")
+                            4 -> user.svsCalendar = maxDateTime.toString().replace("T", " ")
                         }
 
                         // Updating user info in local database

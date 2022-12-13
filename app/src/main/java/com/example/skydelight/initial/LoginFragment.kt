@@ -39,9 +39,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Hiding and showing elements
-        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
-
         // Clearing errors when produced
         binding.editTxtEmail.doOnTextChanged { _, _, _, _ ->
             if(binding.FieldEmail.error != null) binding.FieldEmail.error = null
@@ -62,15 +59,16 @@ class LoginFragment : Fragment() {
             val password = binding.editTxtPassword.text.toString()
             if(ValidationsDialogsRequests().validateEmail(email, binding.FieldEmail)
                 && ValidationsDialogsRequests().validatePassword(password, binding.FieldPassword)){
-                ElementsEditor().elementsClickableState(false, null, arrayListOf(binding.btnLogin, binding.btnReturn))
+                ElementsEditor().elementsClickableState(false, null,
+                    arrayListOf(binding.btnLogin, binding.btnReturn))
                 login(email, password)
             }
         }
 
         // Returning to the start screen fragment
         binding.btnReturn.setOnClickListener {
-            ElementsEditor().elementsClickableState(false, null, arrayListOf(binding.btnLogin, binding.btnReturn))
-            elementsVisibility(false)
+            ElementsEditor().elementsClickableState(false, null,
+                arrayListOf(binding.btnLogin, binding.btnReturn))
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_login_to_startScreen)
                 findNavController().popBackStack(R.id.login_fragment, true)
@@ -90,17 +88,6 @@ class LoginFragment : Fragment() {
             else
                 ElementsEditor().updateButtonState(binding.btnLogin, false, context, false)
         } catch(e: java.lang.IllegalStateException) {}
-    }
-
-    fun elementsVisibility(state: Boolean){
-        val elementsArray = arrayListOf(binding.loginTitle, binding.txtEmail,  binding.txtPassword,
-            binding.btnLogin, binding.btnReturn, binding.FieldEmail, binding.FieldPassword, binding.rememberSession)
-
-        for(element in elementsArray)
-            if(state)
-                element.animate().alpha(1f)
-            else
-                element.animate().alpha(0f)
     }
 
     // Function to connect with the api

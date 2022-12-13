@@ -35,9 +35,6 @@ class RecoverPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Showing elements
-        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
-
         // Clearing errors when produced
         binding.editTxtEmail.doOnTextChanged { _, _, _, _ ->
             if(binding.FieldEmail.error != null) binding.FieldEmail.error = null
@@ -64,7 +61,6 @@ class RecoverPasswordFragment : Fragment() {
         binding.btnReturn.setOnClickListener {
             ElementsEditor().elementsClickableState(false,
                 null, arrayListOf(binding.btnRecover, binding.btnReturn))
-            elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
                 findNavController().popBackStack(R.id.recover_password_fragment, true)
@@ -74,17 +70,6 @@ class RecoverPasswordFragment : Fragment() {
         // Disable login button
         try { ElementsEditor().updateButtonState(binding.btnRecover,
             false, context, false) } catch(e: java.lang.IllegalStateException) {}
-    }
-
-    fun elementsVisibility(state: Boolean){
-        val elementsArray = arrayOf(binding.recoverTitle, binding.recoverSubtitle,
-            binding.txtEmail, binding.FieldEmail, binding.btnRecover, binding.btnReturn)
-
-        for(element in elementsArray)
-            if(state)
-                element.animate().alpha(1f)
-            else
-                element.animate().alpha(0f)
     }
 
     // Function to connect with the api
@@ -113,7 +98,6 @@ class RecoverPasswordFragment : Fragment() {
                         getString(R.string.snackbar_success_recover), null, requireView(), btnColor, textColor,
                         requireActivity(), requireContext(), null, null, null, null,
                         null, null) {
-                        elementsVisibility(false)
                         Handler(Looper.getMainLooper()).postDelayed({
                             findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
                         }, 500)

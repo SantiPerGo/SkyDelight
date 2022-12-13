@@ -69,9 +69,6 @@ class RegisterFirstFragment : Fragment() {
                 binding.btnFemale.isChecked = true
         }
 
-        // Showing elements
-        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility(true) }, 500)
-
         // Clearing errors when produced
         binding.editTxtName.doOnTextChanged { _, _, _, _ ->
             if(binding.FieldName.error != null) binding.FieldName.error = null
@@ -103,7 +100,6 @@ class RegisterFirstFragment : Fragment() {
                     val bundle = bundleOf(NAME_PARAM to name, SEX_PARAM to sex, AGE_PARAM to age)
 
                     // Starting next fragment
-                    elementsVisibility(false)
                     Handler(Looper.getMainLooper()).postDelayed({
                         findNavController().navigate(R.id.action_registerFirst_to_registerSecond, bundle)
                     }, 500)
@@ -115,7 +111,6 @@ class RegisterFirstFragment : Fragment() {
         binding.btnReturn.setOnClickListener {
             ElementsEditor().elementsClickableState(false,
                 null, arrayListOf(binding.btnNext, binding.btnReturn))
-            elementsVisibility(false)
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_registerFirst_to_startScreen)
                 findNavController().popBackStack(R.id.register_first_fragment, true)
@@ -136,17 +131,5 @@ class RegisterFirstFragment : Fragment() {
             else
                 ElementsEditor().updateButtonState(binding.btnNext, false, context, false)
         } catch(e: java.lang.IllegalStateException) {}
-    }
-
-    fun elementsVisibility(state: Boolean){
-        val elementsArray = arrayOf(binding.txtTitle, binding.txtName, binding.FieldName,
-            binding.txtBirthday, binding.numberPickerAge, binding.txtSex, binding.radioGroupSex,
-            binding.btnNext, binding.btnReturn)
-
-        for(element in elementsArray)
-            if(state)
-                element.animate().alpha(1f)
-            else
-                element.animate().alpha(0f)
     }
 }

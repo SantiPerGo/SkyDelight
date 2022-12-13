@@ -13,24 +13,24 @@
         <action
             android:id="@+id/action_startScreen_to_login"
             app:destination="@id/login_fragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_exit_to_right" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_startScreen_to_registerFirst"
             app:destination="@id/register_first_fragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_exit_to_right" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_startScreen_to_recoverPassword"
             app:destination="@id/recover_password_fragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_exit_to_right" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -42,18 +42,18 @@
             android:id="@+id/action_login_to_navBar"
             app:destination="@id/navbar_fragment"
             app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_exit_to_right"
             app:popUpTo="@+id/start_screen_fragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_login_to_startScreen"
             app:destination="@id/start_screen_fragment"
-            app:enterAnim="@anim/slide_from_left"
-            app:exitAnim="@anim/slide_exit_to_right"
-            app:popEnterAnim="@anim/slide_from_right"
-            app:popExitAnim="@anim/slide_exit_to_left" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -64,10 +64,10 @@
         <action
             android:id="@+id/action_recoverPassword_to_startScreen"
             app:destination="@id/start_screen_fragment"
-            app:enterAnim="@anim/slide_from_left"
-            app:exitAnim="@anim/slide_exit_to_right"
-            app:popEnterAnim="@anim/slide_from_right"
-            app:popExitAnim="@anim/slide_exit_to_left" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -78,17 +78,17 @@
         <action
             android:id="@+id/action_registerFirst_to_registerSecond"
             app:destination="@id/register_second_fragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_exit_to_right" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_registerFirst_to_startScreen"
             app:destination="@id/start_screen_fragment"
-            app:enterAnim="@anim/slide_from_left"
-            app:exitAnim="@anim/slide_exit_to_right"
-            app:popEnterAnim="@anim/slide_from_right"
-            app:popExitAnim="@anim/slide_exit_to_left" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -99,19 +99,19 @@
         <action
             android:id="@+id/action_registerSecond_to_registerThird"
             app:destination="@id/register_third_fragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_exit_to_right"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
             app:popUpTo="@+id/start_screen_fragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_registerSecond_to_registerFirst"
             app:destination="@id/register_first_fragment"
-            app:enterAnim="@anim/slide_from_left"
-            app:exitAnim="@anim/slide_exit_to_right"
-            app:popEnterAnim="@anim/slide_from_right"
-            app:popExitAnim="@anim/slide_exit_to_left" />
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 
     <fragment
@@ -122,11 +122,11 @@
         <action
             android:id="@+id/action_loadingScreen_to_startScreen"
             app:destination="@id/start_screen_fragment"
-            app:enterAnim="@anim/slide_from_right"
+            app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/slide_exit_to_left"
             app:popEnterAnim="@anim/slide_from_right"
-            app:popExitAnim="@anim/slide_exit_to_left"
-            app:popUpTo="@+id/loading_screen_fragment"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@+id/start_screen_fragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loadingScreen_to_navBar"
@@ -135,7 +135,7 @@
             app:exitAnim="@anim/slide_exit_to_left"
             app:popEnterAnim="@anim/slide_from_right"
             app:popExitAnim="@anim/slide_exit_to_left"
-            app:popUpTo="@+id/loading_screen_fragment"
+            app:popUpTo="@+id/start_screen_fragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -148,10 +148,10 @@
             android:id="@+id/action_registerThird_to_navBar"
             app:destination="@id/navbar_fragment"
             app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_exit_to_right"
-            app:popUpTo="@+id/register_third_fragment"
+            app:popUpTo="@+id/start_screen_fragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -163,10 +163,10 @@
         <action
             android:id="@+id/action_navBar_to_startScreen"
             app:destination="@id/start_screen_fragment"
-            app:enterAnim="@anim/slide_from_right"
+            app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_exit_to_right"
+            app:popEnterAnim="@anim/slide_from_right"
+            app:popExitAnim="@anim/fade_out"
             app:popUpTo="@+id/navbar_fragment"
             app:popUpToInclusive="true" />
     </fragment>

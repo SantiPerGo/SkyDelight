@@ -1,11 +1,10 @@
 package com.example.skydelight.initial
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.skydelight.R
@@ -29,8 +28,8 @@ class RegisterThirdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Showing elements
-        Handler(Looper.getMainLooper()).postDelayed({ elementsVisibility() }, 500)
+        // Overriding back actions
+        backAction()
 
         // Changing to the principal fragment
         binding.btnUnderstand.setOnClickListener{
@@ -39,11 +38,14 @@ class RegisterThirdFragment : Fragment() {
         }
     }
 
-    private fun elementsVisibility(){
-        val elementsArray = arrayListOf(binding.txtTitle, binding.txtExplanation1, binding.txtExplanation2,
-            binding.txtExplanation3, binding.txtExplanation4, binding.txtExplanation5, binding.btnUnderstand)
-
-        for(element in elementsArray)
-            element.animate().alpha(1f)
+    private fun backAction(){
+        try {
+            requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_registerThird_to_navBar)
+                    findNavController().popBackStack(R.id.register_third_fragment, true)
+                }
+            })
+        } catch(e: java.lang.IllegalStateException) {}
     }
 }
