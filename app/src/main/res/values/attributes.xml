@@ -10,6 +10,9 @@
 
     <!-- Background Color -->
     <attr name="fragment_background" format="reference" />
+    <attr name="gradient_radius" format="dimension" />
+    <attr name="fragment_background_radial_center" format="reference" />
+    <attr name="fragment_background_radial_side" format="reference" />
 
     <!-- Text Colors -->
     <attr name="text_color" format="reference" />

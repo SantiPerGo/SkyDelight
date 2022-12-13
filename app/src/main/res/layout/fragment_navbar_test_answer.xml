@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/fragment_background"
+    android:background="@drawable/gradient_background"
     android:orientation="vertical"
     tools:context=".navbar.TestAnswerFragment">
 
@@ -73,7 +73,7 @@
             android:background="@null"
             android:padding="@dimen/corner_radius"
             android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
-            app:tint="?attr/text_color" />
+            app:tint="?attr/colorSecondaryVariant" />
 
         <TextView
             android:id="@+id/txtAnswer"
@@ -83,10 +83,10 @@
             android:padding="@dimen/switch_padding"
             android:text="@string/test_initial_option"
             android:fontFamily="@font/comfortaa"
-            android:textColor="?attr/text_color"
+            android:textColor="?attr/colorSecondaryVariant"
             android:breakStrategy="simple"
             android:gravity="center"
-            android:shadowColor="?attr/text_color"
+            android:shadowColor="?attr/colorSecondaryVariant"
             android:shadowDx="0.0"
             android:shadowDy="0.0"
             android:shadowRadius="@dimen/shadow_radius"
@@ -103,7 +103,7 @@
             android:background="@null"
             android:padding="@dimen/corner_radius"
             android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-            app:tint="?attr/text_color" />
+            app:tint="?attr/colorSecondaryVariant" />
 
     </LinearLayout>
 

@@ -15,6 +15,7 @@
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/custom_toast.xml" value="0.288" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/custom_tooltip.xml" value="0.1535" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/default_dot.xml" value="0.2685" />
+        <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/gradient_background.xml" value="0.198" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.239" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2355" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/drawable/ic_baseline_text_snippet_24.xml" value="0.239" />
@@ -59,7 +60,7 @@
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar.xml" value="0.33" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar_games.xml" value="0.25" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar_home.xml" value="0.25" />
-        <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar_profile.xml" value="0.33" />
+        <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar_profile.xml" value="0.25" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar_profile_data.xml" value="0.25" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar_profile_password.xml" value="0.25" />
         <entry key="..\:/Users/assas/AndroidStudioProjects/SkyDelight/app/src/main/res/layout/fragment_navbar_profile_web.xml" value="0.33" />

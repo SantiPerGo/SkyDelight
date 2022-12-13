@@ -25,6 +25,9 @@
 
         <!-- Background Color -->
         <item name="fragment_background">@color/ultradark</item>
+        <item name="gradient_radius">300dp</item>
+        <item name="fragment_background_radial_center">@color/darkblue2</item>
+        <item name="fragment_background_radial_side">@color/ultradark</item>
 
         <!-- Text Colors -->
         <item name="text_color">@color/darkblue1</item>
