@@ -20,10 +20,10 @@
         <item name="loading_icon_2">@drawable/skydelight_logo_day_2</item>
 
         <!-- Background Pictures -->
-        <item name="loading_screen_heart">@drawable/skydelight_heart_day</item>
         <item name="start_screen_picture">@drawable/wallpaper_beach</item>
 
         <!-- Background Color -->
+        <item name="pulsator_color">@color/darkpink</item>
         <item name="fragment_background">@color/ultralight</item>
         <item name="gradient_radius">500dp</item>
         <item name="fragment_background_radial_center">@color/ultralight</item>
@@ -34,12 +34,12 @@
         <item name="text_color_hint">@color/lightblue3</item>
 
         <!-- Heart Pictures -->
-        <item name="heart_confused">@drawable/heart_confused_night</item>
-        <item name="heart_dead">@drawable/heart_dead_night</item>
-        <item name="heart_happy">@drawable/heart_happy_night</item>
-        <item name="heart_laughing">@drawable/heart_laughing_night</item>
-        <item name="heart_relaxed">@drawable/heart_relaxed_night</item>
-        <item name="heart_sad">@drawable/heart_sad_night</item>
+        <item name="heart_confused">@drawable/heart_confused_day</item>
+        <item name="heart_dead">@drawable/heart_dead_day</item>
+        <item name="heart_happy">@drawable/heart_happy_day</item>
+        <item name="heart_laughing">@drawable/heart_laughing_day</item>
+        <item name="heart_relaxed">@drawable/heart_relaxed_day</item>
+        <item name="heart_sad">@drawable/heart_sad_day</item>
 
         <!-- Blue Button -->
         <item name="btn_text_color_blue">@color/dark</item>

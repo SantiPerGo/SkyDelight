@@ -40,4 +40,9 @@
     <color name="lightgray">#878787</color>
     <color name="mediumgray">#656565</color>
     <color name="darkgray">#444444</color>
+
+    <!-- Pink Principal Colors -->
+    <color name="lightpink">#F89CBB</color>
+    <color name="pink">#F57C9E</color>
+    <color name="darkpink">#CF6986</color>
 </resources>
