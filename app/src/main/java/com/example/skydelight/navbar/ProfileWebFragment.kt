@@ -55,7 +55,8 @@ class ProfileWebFragment : Fragment() {
         // Showing link in title
         val txtTitle = "<a href=\"$originalUrl\">$title</a>"
         binding.txtTitle.text = Html.fromHtml(txtTitle, Html.FROM_HTML_MODE_COMPACT)
-        try { binding.txtTitle.setLinkTextColor(ElementsEditor().getColor(context, R.attr.text_color))
+        try { binding.txtTitle.setLinkTextColor(ElementsEditor().getColor(context,
+            com.google.android.material.R.attr.colorSecondaryVariant))
         } catch(e: java.lang.IllegalStateException) {}
 
         // Instance of webview and settings

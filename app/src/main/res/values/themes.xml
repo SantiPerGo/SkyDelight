@@ -19,13 +19,17 @@
         <item name="loading_icon">@drawable/skydelight_logo_day</item>
         <item name="loading_icon_2">@drawable/skydelight_logo_day_2</item>
 
+        <!-- Font Type -->
+        <item name="font_name">@font/inter</item>
+
         <!-- Background Pictures -->
         <item name="start_screen_picture">@drawable/wallpaper_beach</item>
 
         <!-- Background Color -->
-        <item name="pulsator_color">@color/darkpink</item>
+        <item name="pulsator_color">@color/darkred</item>
         <item name="fragment_background">@color/ultralight</item>
         <item name="gradient_radius">500dp</item>
+        <item name="dialog_gradient_radius">250dp</item>
         <item name="fragment_background_radial_center">@color/ultralight</item>
         <item name="fragment_background_radial_side">@color/lightblue3</item>
 
@@ -41,12 +45,17 @@
         <item name="heart_relaxed">@drawable/heart_relaxed_day</item>
         <item name="heart_sad">@drawable/heart_sad_day</item>
 
+        <!-- Colors -->
+        <item name="dark_green">@color/mediumdarkgreen</item>
+        <item name="dark_red">@color/mediumdarkred</item>
+        <item name="dark_yellow">@color/mediumdarkyellow</item>
+
         <!-- Blue Button -->
         <item name="btn_text_color_blue">@color/dark</item>
-        <item name="btn_background_blue">@color/light</item>
+        <item name="btn_background_blue">@color/lightblue1</item>
 
         <!-- Green Button -->
-        <item name="btn_text_color_green">@color/green</item>
+        <item name="btn_text_color_green">@color/darkgreen</item>
         <item name="btn_background_green">@color/lightgreen</item>
 
         <!-- Red Button -->
@@ -58,7 +67,7 @@
         <item name="btn_background_yellow">@color/lightyellow</item>
 
         <!-- Gray Button -->
-        <item name="btn_text_color_gray">@color/mediumgray</item>
+        <item name="btn_text_color_gray">@color/darkgray</item>
         <item name="btn_background_gray">@color/lightgray</item>
 
         <!-- Material Alert Dialog -->

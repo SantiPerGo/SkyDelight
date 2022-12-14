@@ -44,8 +44,8 @@ class TestFragment : Fragment() {
 
         // Loading pictures on view pager and connecting it with dots tab layout
         try {
-            val imagesArray = arrayOf(R.drawable.wallpaper_study, R.drawable.wallpaper_woman,
-                R.drawable.wallpaper_coast, R.drawable.wallpaper_heart)
+            val imagesArray = arrayOf(R.drawable.wallpaper_heart, R.drawable.wallpaper_study,
+                R.drawable.wallpaper_coast, R.drawable.wallpaper_woman)
             val viewPagerAdapter = ViewPageAdapter(requireContext(), imagesArray)
             binding.viewPagerMain.adapter = viewPagerAdapter
             binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
@@ -82,7 +82,7 @@ class TestFragment : Fragment() {
                         binding.txtDescription.text = getString(R.string.test_pss_description)
                         binding.txtNumberOfQuestions.text = getString(R.string.test_pss_number)
                         binding.btnStart.setOnClickListener { updateTestCalendar(3) }
-                        updateColors(R.attr.btn_text_color_blue)
+                        updateColors(com.google.android.material.R.attr.colorSecondaryVariant)
                     }
                     // SVS
                     3 -> {

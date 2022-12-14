@@ -256,6 +256,7 @@ class TestAnswerFragment : Fragment() {
                                 result in 70f..95f -> getString(R.string.test_result_vulnerable_high)
                                 else -> getString(R.string.test_result_vulnerable_extreme)
                             }
+                            explanation += getString(R.string.test_svq_result)
                         }
                         // PSS Test
                         3 -> {

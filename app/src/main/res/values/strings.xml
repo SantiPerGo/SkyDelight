@@ -20,6 +20,16 @@
     <string name="birthday">Edad:</string>
     <string name="loading">Cargando…</string>
 
+    <!-- Pictures Descriptions Strings -->
+    <string name="picture_logo">Logo de SkyDelight</string>
+    <string name="picture_reload">Recargar Consejo</string>
+    <string name="picture_help">Ayuda</string>
+    <string name="picture_wave_top">Onda en Parte Superior</string>
+    <string name="picture_wave_bottom">Onda en Parte Inferior</string>
+    <string name="picture_arrow_left">Flecha Izquierda</string>
+    <string name="picture_arrow_right">Flecha Derecha</string>
+    <string name="picture_heart_relaxed">Corazón Relajado</string>
+
     <!-- Custom Dialog Strings -->
     <string name="custom_dialog_error_title">¡Error de Conexión!</string>
     <string name="custom_dialog_error_description">Estamos teniendo alguna(s) dificultad(es), te recomendamos verificar tu conexión a internet, reiniciar la aplicación o entrar más tarde</string>
@@ -159,12 +169,13 @@
     <string name="test_finish">¿Realmente Quieres dar por Finalizada la Prueba?</string>
 
     <string name="test_result_low">Presentas un nivel leve o bajo de estrés, se recomienda que apliques los consejos mostrados en la pantalla de inicio para prevenir el estrés</string>
-    <string name="test_result_medium">Presentas un nivel moderado de estrés, debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
-    <string name="test_result_high">Presentas un nivel alto o severo de estrés, es necesario que busques ayuda externa, también debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
+    <string name="test_result_medium">Presentas un nivel moderado de estrés, debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés</string>
+    <string name="test_result_high">Presentas un nivel alto o severo de estrés, es necesario que busques ayuda externa, también debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés</string>
     <string name="test_result_vulnerable_low">No eres vulnerable al estrés, se recomienda que apliques los consejos mostrados en la pantalla de inicio para mejorar tu forma de prevenir el estrés</string>
     <string name="test_result_vulnerable_medium">Eres levemente vulnerable al estrés, se recomienda que apliques los consejos mostrados en la pantalla de inicio para mejorar tu forma de prevenir el estrés</string>
-    <string name="test_result_vulnerable_high">Tu vulnerabilidad al estrés es grave, debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
-    <string name="test_result_vulnerable_extreme">Tu vulnerabilidad al estrés es extrema, es necesario que busques ayuda externa, también debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés, algunos consejos serán personalizados</string>
+    <string name="test_result_vulnerable_high">Tu vulnerabilidad al estrés es grave, debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés</string>
+    <string name="test_result_vulnerable_extreme">Tu vulnerabilidad al estrés es extrema, es necesario que busques ayuda externa, también debes aplicar los consejos mostrados en la pantalla de inicio para prevenir el aumento de estrés</string>
+    <string name="test_svq_result">, algunos consejos serán personalizados</string>
 
     <string name="test_sisco">Inventario Sistémico Cognoscitivista (SISCO) SV-21</string>
     <string name="test_sisco_description">Este cuestionario mide tu estrés académico a partir de lo que te causa estrés, síntomas producidos y formas como lo enfrentas</string>

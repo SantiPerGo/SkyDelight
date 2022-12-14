@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/profile_email"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:textColor="?attr/colorSecondaryVariant"
         android:shadowColor="?attr/colorSecondaryVariant"
@@ -33,11 +33,11 @@
         android:id="@+id/FieldEmail"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/loading"
-        android:textColor="?attr/text_color"
-        android:shadowColor="?attr/text_color"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:shadowColor="?attr/colorSecondaryVariant"
         android:shadowDx="0.0"
         android:shadowDy="0.0"
         android:shadowRadius="@dimen/shadow_radius"
@@ -54,7 +54,7 @@
         android:id="@+id/txtName"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/name"
         android:textColor="?attr/colorSecondaryVariant"
@@ -77,11 +77,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:hint="@string/registerScreen_name_hint"
-        android:textColorHint="?attr/text_color_hint"
-        app:hintTextColor="?attr/text_color"
+        android:textColorHint="?attr/colorSecondaryVariant"
+        app:hintTextColor="?attr/colorSecondaryVariant"
         app:boxStrokeColor="@color/text_input_stroke_color"
         app:startIconDrawable="@drawable/ic_baseline_person_24"
-        app:startIconTint="?attr/text_color"
+        app:startIconTint="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/guideline_name_field_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -91,9 +91,9 @@
             android:id="@+id/editTxtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/comfortaa"
-            android:textColor="?attr/text_color"
-            android:shadowColor="?attr/text_color"
+            android:fontFamily="?attr/font_name"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:shadowColor="?attr/colorSecondaryVariant"
             android:shadowDx="0.0"
             android:shadowDy="0.0"
             android:shadowRadius="@dimen/shadow_radius"
@@ -110,7 +110,7 @@
         android:id="@+id/txtBirthday"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/birthday"
         android:textColor="?attr/colorSecondaryVariant"
@@ -122,10 +122,10 @@
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
         app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_age"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_age_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_number_picker_left"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_sex" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_age_top" />
 
     <NumberPicker
         android:id="@+id/numberPickerAge"
@@ -146,7 +146,7 @@
         android:id="@+id/txtSex"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/sex"
         android:textColor="?attr/colorSecondaryVariant"
@@ -158,10 +158,10 @@
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
         app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_sex"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_sex_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_sex_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_sex_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_birthday_top" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_sex_top" />
 
     <RadioGroup
         android:id="@+id/radioGroupSex"
@@ -176,7 +176,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_birthday_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_sex_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_sex_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_sex" >
+        app:layout_constraintTop_toTopOf="@+id/guideline_sex_bottom" >
 
         <RadioButton
             android:id="@+id/btnMale"
@@ -188,8 +188,8 @@
             android:layout_weight="1"
             android:padding="@dimen/sex_padding"
             android:gravity="center_horizontal|center_vertical"
-            android:buttonTint="?attr/text_color"
-            android:fontFamily="@font/comfortaa"
+            android:buttonTint="?attr/colorSecondaryVariant"
+            android:fontFamily="?attr/font_name"
             android:text="@string/registerScreen_male"
             android:shadowColor="?attr/colorSecondaryVariant"
             android:shadowDx="0.0"
@@ -212,8 +212,8 @@
             android:padding="@dimen/sex_padding"
             android:gravity="center_horizontal|center_vertical"
             android:checked="false"
-            android:buttonTint="?attr/text_color"
-            android:fontFamily="@font/comfortaa"
+            android:buttonTint="?attr/colorSecondaryVariant"
+            android:fontFamily="?attr/font_name"
             android:text="@string/registerScreen_female"
             android:shadowColor="?attr/colorSecondaryVariant"
             android:shadowDx="0.0"
@@ -231,7 +231,7 @@
         android:id="@+id/txtNote"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/profile_note"
         android:textColor="?attr/colorSecondaryVariant"
@@ -255,7 +255,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="?attr/btn_background_blue"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:state_enabled="true"
         android:text="@string/btn_update"
         android:textColor="?attr/btn_text_color_blue"
@@ -293,7 +293,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="?attr/btn_background_green"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:state_enabled="true"
         android:text="@string/btn_cancel"
         android:textColor="?attr/btn_text_color_green"
@@ -364,6 +364,13 @@
         app:layout_constraintGuide_percent="0.37" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_sex_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.37" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_birthday_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -371,14 +378,21 @@
         app:layout_constraintGuide_percent="0.39" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_sex"
+        android:id="@+id/guideline_sex_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.43" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_age_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.45" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_age"
+        android:id="@+id/guideline_age_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -396,14 +410,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.61" />
+        app:layout_constraintGuide_percent="0.59" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_note_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.68" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_next_top"
@@ -452,14 +466,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.58" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_sex_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.57" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_sex_right"

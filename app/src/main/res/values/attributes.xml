@@ -4,6 +4,9 @@
     <attr name="loading_icon" format="reference" />
     <attr name="loading_icon_2" format="reference" />
 
+    <!-- Font Type -->
+    <attr name="font_name" format="reference" />
+
     <!-- Background Pictures -->
     <attr name="start_screen_picture" format="reference" />
 
@@ -11,6 +14,7 @@
     <attr name="pulsator_color" format="reference" />
     <attr name="fragment_background" format="reference" />
     <attr name="gradient_radius" format="dimension" />
+    <attr name="dialog_gradient_radius" format="dimension" />
     <attr name="fragment_background_radial_center" format="reference" />
     <attr name="fragment_background_radial_side" format="reference" />
 
@@ -25,6 +29,11 @@
     <attr name="heart_laughing" format="reference" />
     <attr name="heart_relaxed" format="reference" />
     <attr name="heart_sad" format="reference" />
+
+    <!-- Colors -->
+    <attr name="dark_green" format="reference" />
+    <attr name="dark_red" format="reference" />
+    <attr name="dark_yellow" format="reference" />
 
     <!-- Blue Button -->
     <attr name="btn_text_color_blue" format="reference" />

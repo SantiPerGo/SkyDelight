@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/loading"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:textColor="?attr/colorSecondaryVariant"
         android:textStyle="bold"
@@ -36,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/loading"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:textColor="?attr/colorSecondaryVariant"
         android:breakStrategy="simple"
@@ -73,7 +73,8 @@
             android:background="@null"
             android:padding="@dimen/corner_radius"
             android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
-            app:tint="?attr/colorSecondaryVariant" />
+            app:tint="?attr/colorSecondaryVariant"
+            android:contentDescription="@string/picture_arrow_left" />
 
         <TextView
             android:id="@+id/txtAnswer"
@@ -82,7 +83,7 @@
             android:layout_weight="8"
             android:padding="@dimen/switch_padding"
             android:text="@string/test_initial_option"
-            android:fontFamily="@font/comfortaa"
+            android:fontFamily="?attr/font_name"
             android:textColor="?attr/colorSecondaryVariant"
             android:breakStrategy="simple"
             android:gravity="center"
@@ -103,7 +104,8 @@
             android:background="@null"
             android:padding="@dimen/corner_radius"
             android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-            app:tint="?attr/colorSecondaryVariant" />
+            app:tint="?attr/colorSecondaryVariant"
+            android:contentDescription="@string/picture_arrow_right" />
 
     </LinearLayout>
 
@@ -112,7 +114,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/loading"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:textColor="?attr/text_color"
         android:breakStrategy="simple"
         android:gravity="center"
@@ -163,7 +165,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="?attr/btn_background_blue"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:state_enabled="true"
         android:text="@string/btn_next"
         android:textColor="?attr/btn_text_color_blue"
@@ -201,7 +203,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="?attr/btn_background_green"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:state_enabled="true"
         android:text="@string/btn_cancel"
         android:textColor="?attr/btn_text_color_green"
@@ -241,28 +243,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.19" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_question_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.54" />
+        app:layout_constraintGuide_percent="0.52" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_answers_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.54" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_answers_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.67" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_next_top"

@@ -6,7 +6,7 @@
     <color name="transparent">#rrggbb</color>
 
     <!-- Theme Colors -->
-    <color name="lightblue1">#e6ffff</color>
+    <color name="lightblue1">#C8E1FD</color>
     <color name="lightblue2">#b3d7ff</color>
     <color name="lightblue3">#82a6cc</color>
     <color name="darkblue1">#7da8eb</color>
@@ -22,27 +22,25 @@
     <color name="ultradark2">#2C476A</color>
 
     <!-- Green Principal Colors -->
-    <color name="lightgreen">#97F1E9</color>
-    <color name="green">#009688</color>
-    <color name="darkgreen">#004d40</color>
+    <color name="lightgreen">#B4F4EF</color>
+    <color name="mediumlightgreen">#74F6EA</color>
+    <color name="mediumdarkgreen">#07877A</color>
+    <color name="darkgreen">#01352C</color>
 
     <!-- Red Principal Colors -->
-    <color name="lightred">#ffa4a2</color>
-    <color name="red">#e57373</color>
-    <color name="darkred">#882D30</color>
+    <color name="lightred">#FBB9B8</color>
+    <color name="mediumlightred">#E17070</color>
+    <color name="mediumdarkred">#AC4D4D</color>
+    <color name="darkred">#6E2325</color>
 
     <!-- Yellow Principal Colors -->
-    <color name="lightyellow">#FFEBA2</color>
-    <color name="yellow">#E5CC73</color>
-    <color name="darkyellow">#88792D</color>
+    <color name="lightyellow">#FBEEBC</color>
+    <color name="mediumlightyellow">#D1BB65</color>
+    <color name="mediumdarkyellow">#9A8741</color>
+    <color name="darkyellow">#594F1A</color>
 
     <!-- Gray Principal Colors -->
-    <color name="lightgray">#878787</color>
+    <color name="lightgray">#989898</color>
     <color name="mediumgray">#656565</color>
-    <color name="darkgray">#444444</color>
-
-    <!-- Pink Principal Colors -->
-    <color name="lightpink">#F89CBB</color>
-    <color name="pink">#F57C9E</color>
-    <color name="darkpink">#CF6986</color>
+    <color name="darkgray">#333333</color>
 </resources>

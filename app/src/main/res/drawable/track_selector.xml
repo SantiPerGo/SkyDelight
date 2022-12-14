@@ -4,14 +4,14 @@
         <shape android:dither="true" android:shape="rectangle" android:useLevel="false" android:visible="true">
             <corners android:radius="25dp" />
             <size android:width="5dp" android:height="25dp" />
-            <solid android:color="?attr/btn_background_green" />
+            <solid android:color="?attr/btn_text_color_green" />
         </shape>
     </item>
     <item android:state_checked="false">
         <shape android:dither="true" android:shape="rectangle" android:useLevel="false" android:visible="true">
             <corners android:radius="25dp" />
             <size android:width="5dp" android:height="25dp" />
-            <solid android:color="?attr/text_color" />
+            <solid android:color="?attr/btn_text_color_blue" />
         </shape>
     </item>
 </selector>

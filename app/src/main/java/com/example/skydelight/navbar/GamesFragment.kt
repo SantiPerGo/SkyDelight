@@ -72,7 +72,7 @@ class GamesFragment : Fragment() {
                             } else { errorDialog(requireContext()) }
                         } catch(e: java.lang.IllegalStateException) {}
                     }
-                    updateColors(R.attr.btn_text_color_blue)
+                    updateColors(com.google.android.material.R.attr.colorSecondaryVariant)
                 }
                 // Relax AR
                 else {

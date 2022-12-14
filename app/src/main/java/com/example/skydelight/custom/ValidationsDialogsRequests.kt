@@ -44,7 +44,7 @@ class ValidationsDialogsRequests {
         textView.textSize = 15f
         textView.gravity = Gravity.CENTER
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        textView.setTypeface(ResourcesCompat.getFont(context, R.font.comfortaa), Typeface.BOLD)
+        textView.setTypeface(ResourcesCompat.getFont(context, R.font.inter), Typeface.BOLD)
 
         // Showing
         mySnackbar.show()

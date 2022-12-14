@@ -177,7 +177,8 @@ class HomeFragment : Fragment() {
                         // Showing photo, photographer and pexels links
                         binding.txtCredits.text = Html.fromHtml("$photoUrl by $photographerUrl\non $pexelsUrl",
                             Html.FROM_HTML_MODE_COMPACT)
-                        binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(context, R.attr.text_color))
+                        binding.txtCredits.setLinkTextColor(ElementsEditor().getColor(context,
+                            com.google.android.material.R.attr.colorSecondaryVariant))
 
                         // Loading image from api
                         Glide.with(requireContext())

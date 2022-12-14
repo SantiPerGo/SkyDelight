@@ -19,13 +19,17 @@
         <item name="loading_icon">@drawable/skydelight_logo_night</item>
         <item name="loading_icon_2">@drawable/skydelight_logo_night_2</item>
 
+        <!-- Font Type -->
+        <item name="font_name">@font/inter</item>
+
         <!-- Background Pictures -->
         <item name="start_screen_picture">@drawable/wallpaper_night</item>
 
         <!-- Background Color -->
-        <item name="pulsator_color">@color/lightpink</item>
+        <item name="pulsator_color">@color/lightred</item>
         <item name="fragment_background">@color/ultradark</item>
         <item name="gradient_radius">300dp</item>
+        <item name="dialog_gradient_radius">250dp</item>
         <item name="fragment_background_radial_center">@color/darkblue2</item>
         <item name="fragment_background_radial_side">@color/ultradark</item>
 
@@ -41,25 +45,30 @@
         <item name="heart_relaxed">@drawable/heart_relaxed_night</item>
         <item name="heart_sad">@drawable/heart_sad_night</item>
 
+        <!-- Colors -->
+        <item name="dark_green">@color/mediumlightgreen</item>
+        <item name="dark_red">@color/mediumlightred</item>
+        <item name="dark_yellow">@color/mediumlightyellow</item>
+
         <!-- Blue Button -->
         <item name="btn_text_color_blue">@color/light</item>
         <item name="btn_background_blue">@color/dark</item>
 
         <!-- Green Button -->
         <item name="btn_text_color_green">@color/lightgreen</item>
-        <item name="btn_background_green">@color/green</item>
+        <item name="btn_background_green">@color/mediumdarkgreen</item>
 
         <!-- Red Button -->
         <item name="btn_text_color_red">@color/lightred</item>
-        <item name="btn_background_red">@color/darkred</item>
+        <item name="btn_background_red">@color/mediumdarkred</item>
 
         <!-- Yellow Button -->
         <item name="btn_text_color_yellow">@color/lightyellow</item>
-        <item name="btn_background_yellow">@color/darkyellow</item>
+        <item name="btn_background_yellow">@color/mediumdarkyellow</item>
 
         <!-- Gray Button -->
-        <item name="btn_text_color_gray">@color/mediumgray</item>
-        <item name="btn_background_gray">@color/lightgray</item>
+        <item name="btn_text_color_gray">@color/lightgray</item>
+        <item name="btn_background_gray">@color/darkgray</item>
 
         <!-- Material Alert Dialog -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>

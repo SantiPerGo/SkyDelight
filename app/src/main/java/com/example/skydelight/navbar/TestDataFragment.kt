@@ -106,15 +106,15 @@ class TestDataFragment : Fragment() {
         // Getting color and title according of results
         when {
             originalResult > maxNum -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_red, R.attr.btn_background_red)
+                createPieChart(resultPercentage, R.attr.btn_text_color_red, R.attr.dark_red)
                 updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
             }
             originalResult in minNum..maxNum -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
+                createPieChart(resultPercentage, R.attr.btn_text_color_yellow, R.attr.dark_yellow)
                 updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
             }
             else -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_green, R.attr.btn_background_green)
+                createPieChart(resultPercentage, R.attr.btn_text_color_green, R.attr.dark_green)
                 updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
             }
         }
@@ -171,30 +171,29 @@ class TestDataFragment : Fragment() {
 
             // Loading chart
             binding.pieChart.invalidate()
+
+            // Changing circles colors of chart
+            binding.txtChartFirst.compoundDrawables[0].setTint(textColor)
+            binding.txtChartSecond.compoundDrawables[0].setTint(backgroundColor)
+
+            // Changing second chart label color
+            binding.txtChartFirst.setTextColor(textColor)
+            binding.txtChartFirst.setShadowLayer(5f,0f, 0f, textColor)
+            binding.txtChartSecond.setTextColor(backgroundColor)
+            binding.txtChartSecond.setShadowLayer(5f,0f, 0f, backgroundColor)
         } catch(e: java.lang.IllegalStateException) {}
     }
 
     private fun updateColors(textColorResource: Int, btnColorResource: Int) {
         try {
-            val textColor = ElementsEditor().getColor(context, textColorResource)
-            val btnColor = ElementsEditor().getColor(context, btnColorResource)
-
             // Creating arrays of elements
             val textsArray = arrayListOf(binding.txtTitle, binding.txtDescription,
-                binding.txtNumber, binding.txtChartFirst)
+                binding.txtNumber)
             val buttonsArray = arrayListOf(binding.btnFinish)
 
             // Updating colors
             ElementsEditor().updateColors(textColorResource, context,
                 textsArray, buttonsArray, btnColorResource)
-
-            // Changing circles colors of chart
-            binding.txtChartFirst.compoundDrawables[0].setTint(textColor)
-            binding.txtChartSecond.compoundDrawables[0].setTint(btnColor)
-
-            // Changing second chart label color
-            binding.txtChartSecond.setTextColor(btnColor)
-            binding.txtChartSecond.setShadowLayer(5f,0f, 0f, btnColor)
         } catch(e: java.lang.IllegalStateException) {}
     }
 

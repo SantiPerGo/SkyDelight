@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/test_title_4"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:textColor="?attr/text_color"
         android:textStyle="bold"
@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/loading"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:textColor="?attr/text_color"
         android:breakStrategy="simple"
@@ -48,7 +48,7 @@
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
+        app:autoSizeStepGranularity="@dimen/granularity_mega_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_percentage_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/comfortaa"
+            android:fontFamily="?attr/font_name"
             android:textColor="?attr/text_color"
             android:breakStrategy="simple"
             android:shadowColor="?attr/text_color"
@@ -89,7 +89,7 @@
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="@dimen/min_size"
             app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size"
+            app:autoSizeStepGranularity="@dimen/granularity_mega_size"
             android:padding="@dimen/switch_padding"
             android:drawableLeft="@drawable/ic_baseline_circle_24"
             android:gravity="center"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/switch_padding"
             android:layout_weight="1"
-            android:fontFamily="@font/comfortaa"
+            android:fontFamily="?attr/font_name"
             android:textColor="?attr/text_color"
             android:breakStrategy="simple"
             android:shadowColor="?attr/text_color"
@@ -111,7 +111,7 @@
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="@dimen/min_size"
             app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size"
+            app:autoSizeStepGranularity="@dimen/granularity_mega_size"
             android:drawableLeft="@drawable/ic_baseline_circle_24"
             android:gravity="center"
             android:text="@string/loading" />
@@ -122,7 +122,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/loading"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:textColor="?attr/text_color"
         android:breakStrategy="simple"
@@ -133,7 +133,7 @@
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="@dimen/min_size"
         app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
+        app:autoSizeStepGranularity="@dimen/granularity_mega_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_description_bottom"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -145,7 +145,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:backgroundTint="?attr/btn_background_blue"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:state_enabled="true"
         android:text="@string/test_btn_end"
         android:textColor="?attr/btn_text_color_blue"
@@ -213,21 +213,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.58" />
+        app:layout_constraintGuide_percent="0.52" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_chart_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.58" />
+        app:layout_constraintGuide_percent="0.52" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_description_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.61" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_description_bottom"
@@ -262,7 +262,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_right"

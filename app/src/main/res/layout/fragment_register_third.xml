@@ -11,7 +11,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/registerScreen_title_3"
         android:textColor="?attr/colorSecondaryVariant"
@@ -33,7 +33,7 @@
         android:id="@+id/txtExplanation1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/registerScreen_explanation_1"
         android:textColor="?attr/btn_text_color_green"
@@ -54,7 +54,7 @@
         android:id="@+id/txtExplanation2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/registerScreen_explanation_2"
         android:textColor="?attr/colorSecondaryVariant"
@@ -75,7 +75,7 @@
         android:id="@+id/txtExplanation3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:shadowColor="?attr/btn_text_color_green"
         android:shadowDx="0.0"
@@ -98,7 +98,7 @@
         android:id="@+id/txtExplanation4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/registerScreen_explanation_4"
         android:textColor="?attr/colorSecondaryVariant"
@@ -119,7 +119,7 @@
         android:id="@+id/txtExplanation5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:gravity="center"
         android:text="@string/registerScreen_explanation_5"
         android:textColor="?attr/btn_text_color_green"
@@ -141,7 +141,7 @@
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/comfortaa"
+        android:fontFamily="?attr/font_name"
         android:state_enabled="true"
         android:text="@string/registerScreen_btn_understand"
         android:textColor="?attr/btn_text_color_blue"
@@ -184,70 +184,70 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.23" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation1_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.32" />
+        app:layout_constraintGuide_percent="0.33" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation2_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36" />
+        app:layout_constraintGuide_percent="0.35" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation2_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.44" />
+        app:layout_constraintGuide_percent="0.45" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation3_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.48" />
+        app:layout_constraintGuide_percent="0.47" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation3_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.56" />
+        app:layout_constraintGuide_percent="0.57" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation4_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.59" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation4_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.68" />
+        app:layout_constraintGuide_percent="0.69" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation5_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.72" />
+        app:layout_constraintGuide_percent="0.71" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_explanation5_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.81" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_btn_top"

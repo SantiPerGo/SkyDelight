@@ -17,7 +17,7 @@
     <dimen name="granularity_mega_size">1sp</dimen>
     <dimen name="granularity_size">5sp</dimen>
     <dimen name="granularity_button_size">10sp</dimen>
-    <dimen name="granularity_button_size_2">15sp</dimen>
+    <dimen name="granularity_button_size_2">20sp</dimen>
 
     <!-- Elements Texts Sizes in SP's -->
     <dimen name="button_text_size">20sp</dimen>
