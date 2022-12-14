@@ -132,7 +132,7 @@ class NavBarFragment : Fragment() {
             // Explaining settings or profile screen
             val fifthDialog = CustomDialog(getString(R.string.tutorial_four_title),
                 getString(R.string.tutorial_four_description), R.attr.heart_happy,
-                R.attr.fragment_background, requireContext(), false)
+                R.attr.fragment_background, requireContext(), false, buttonsBicolor = false)
             fifthDialog.secondButton(getString(R.string.btn_next)) {
                 // Setting parameters for the next fragment
                 val fragment = TestAnswerFragment()
@@ -148,7 +148,7 @@ class NavBarFragment : Fragment() {
             // Explaining games screen
             val fourthDialog = CustomDialog(getString(R.string.tutorial_three_title),
                 getString(R.string.tutorial_three_description), R.attr.heart_relaxed,
-                R.attr.fragment_background, requireContext(), false)
+                R.attr.fragment_background, requireContext(), false, buttonsBicolor = false)
             fourthDialog.secondButton(getString(R.string.btn_next)) {
                 // Changing fragment
                 updateNavBarHost(ProfileFragment(), R.id.navbar_profile_fragment, true)
@@ -160,7 +160,7 @@ class NavBarFragment : Fragment() {
             // Explaining test screen
             val thirdDialog = CustomDialog(getString(R.string.tutorial_second_title),
                 getString(R.string.tutorial_second_description), R.attr.heart_laughing,
-                R.attr.fragment_background, requireContext(), false)
+                R.attr.fragment_background, requireContext(), false, buttonsBicolor = false)
             thirdDialog.secondButton(getString(R.string.btn_next)) {
                 // Changing fragment
                 updateNavBarHost(GamesFragment(), R.id.navbar_games_fragment, true)
@@ -172,7 +172,7 @@ class NavBarFragment : Fragment() {
             // Explaining home screen
             val secondDialog = CustomDialog(getString(R.string.tutorial_first_title),
                 getString(R.string.tutorial_first_description), R.attr.heart_happy,
-                R.attr.fragment_background, requireContext(), false)
+                R.attr.fragment_background, requireContext(), false, buttonsBicolor = false)
             secondDialog.secondButton(getString(R.string.btn_next)) {
                 // Changing fragment
                 updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, true)

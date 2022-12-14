@@ -58,7 +58,7 @@ class ElementsEditor {
         return ContextCompat.getDrawable(context, typedValue.resourceId)!!
     }
 
-    fun updateColors(textResource: Int, context: Context?, textsArray: ArrayList<TextView>,
+    fun updateColors(textResource: Int, context: Context?, textsArray: ArrayList<TextView>?,
                      buttonsArray: ArrayList<Button>, backgroundResource: Int? = null) {
         try {
             // Getting reference to resource color
@@ -68,9 +68,9 @@ class ElementsEditor {
                 btnColor = getColor(context, backgroundResource)
 
             // Changing text colors
-            for(element in textsArray){
-                element.setTextColor(textColor)
-                element.setShadowLayer(5f,0f, 0f, textColor)
+            textsArray?.forEach {
+                it.setTextColor(textColor)
+                it.setShadowLayer(5f,0f, 0f, textColor)
             }
 
             // Changing button colors
