@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingDefaultResource">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:cardCornerRadius="@dimen/corner_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_left"
+        app:layout_constraintRight_toRightOf="@id/guideline_right"
+        app:layout_constraintTop_toTopOf="@id/guideline_top">
 
         <LinearLayout
+            android:id="@+id/linearLayoutElements"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:weightSum="3.6"
             android:background="@drawable/gradient_dialog_background"
             android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
 
             <ImageView
                 android:id="@+id/imgIcon"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/custom_dialog_3"
                 android:src="?attr/heart_relaxed"
                 android:elevation="5dp"
                 android:contentDescription="@string/app_name" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
+
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:layout_marginLeft="@dimen/custom_dialog_3"
-                android:layout_marginTop="@dimen/custom_dialog"
                 android:layout_marginRight="@dimen/custom_dialog_3"
                 android:layout_gravity="center"
-                android:padding="5dp"
                 android:text="@string/loading"
                 android:fontFamily="?attr/font_name"
                 android:gravity="center"
@@ -55,15 +66,19 @@
                 app:autoSizeMaxTextSize="@dimen/max_size"
                 app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
+
             <TextView
                 android:id="@+id/txtMessage"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.1"
                 android:layout_marginLeft="@dimen/custom_dialog_3"
-                android:layout_marginTop="@dimen/custom_dialog"
                 android:layout_marginRight="@dimen/custom_dialog_3"
                 android:layout_gravity="center"
-                android:padding="5dp"
                 android:text="@string/loading"
                 android:fontFamily="?attr/font_name"
                 android:gravity="center"
@@ -77,36 +92,19 @@
                 app:autoSizeMaxTextSize="@dimen/max_size"
                 app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
 
-            <TextView
-                android:id="@+id/txtMessageMini"
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginLeft="@dimen/custom_dialog_3"
-                android:layout_marginTop="@dimen/custom_dialog"
-                android:layout_marginRight="@dimen/custom_dialog_3"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/loading"
-                android:fontFamily="?attr/font_name"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textColor="?attr/colorSecondaryVariant"
-                android:shadowColor="?attr/colorSecondaryVariant"
-                android:shadowDx="0.0"
-                android:shadowDy="0.0"
-                android:shadowRadius="@dimen/shadow_radius"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="@dimen/min_size"
-                app:autoSizeMaxTextSize="@dimen/max_size"
-                app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
 
             <Button
                 android:id="@+id/btnClose"
                 style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="200dp"
-                android:layout_height="55dp"
-                android:layout_marginTop="@dimen/custom_dialog_2"
-                android:layout_marginBottom="@dimen/custom_dialog_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="@dimen/custom_dialog_4"
+                android:layout_marginRight="@dimen/custom_dialog_4"
                 android:backgroundTint="?attr/btn_background_blue"
                 android:fontFamily="?attr/font_name"
                 android:state_enabled="true"
@@ -123,24 +121,29 @@
                 app:autoSizeMinTextSize="@dimen/min_size"
                 app:autoSizeMaxTextSize="@dimen/max_size"
                 app:autoSizeStepGranularity="@dimen/granularity_mega_size"
-                app:rippleColor="?attr/btn_text_color_blue"
-                tools:ignore="TextContrastCheck" />
+                app:rippleColor="?attr/btn_text_color_blue" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutButtons"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:visibility="gone"
-                android:layout_marginTop="@dimen/custom_dialog_3"
-                android:layout_marginBottom="@dimen/custom_dialog_3"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2.6">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
 
                 <Button
                     android:id="@+id/btnLeft"
                     style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="150dp"
-                    android:layout_height="55dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:backgroundTint="?attr/btn_background_green"
                     android:fontFamily="?attr/font_name"
                     android:state_enabled="true"
@@ -160,14 +163,16 @@
                     tools:ignore="TextContrastCheck" />
 
                 <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
 
                 <Button
                     android:id="@+id/btnRight"
                     style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="150dp"
-                    android:layout_height="55dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:backgroundTint="?attr/btn_background_red"
                     android:fontFamily="?attr/font_name"
                     android:state_enabled="true"
@@ -186,10 +191,48 @@
                     app:rippleColor="?attr/btn_text_color_red"
                     tools:ignore="TextContrastCheck" />
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/guideline_navbar_left" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/guideline_navbar_right" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

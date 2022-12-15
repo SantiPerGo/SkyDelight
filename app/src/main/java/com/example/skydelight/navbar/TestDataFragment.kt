@@ -212,7 +212,7 @@ class TestDataFragment : Fragment() {
             1 -> {
                 binding.txtNumber.text = "Presentas $scoreString% de estrés académico"
                 binding.txtChartFirst.text = "Estrés\nAcadémico"
-                binding.txtChartSecond.text = "Calma"
+                binding.txtChartSecond.text = "Relajación"
 
                 // Launching room database connection
                 MainScope().launch {
@@ -241,7 +241,7 @@ class TestDataFragment : Fragment() {
             3 -> {
                 binding.txtNumber.text = "Presentas $scoreString% de estrés"
                 binding.txtChartFirst.text = "Estrés"
-                binding.txtChartSecond.text = "Calma"
+                binding.txtChartSecond.text = "Relajación"
             }
             // SVS Test
             4 -> {
