@@ -21,75 +21,315 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtTitle"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerMain"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center"
-        android:text="@string/loading"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textStyle="bold"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_title_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@id/guideline_top"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/loading"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:breakStrategy="simple"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_advice_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_advice_top" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:clickable="true"
+        app:tabPaddingStart="20dp"
+        app:tabPaddingEnd="20dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_tab_layout_top" />
 
-    <TextView
-        android:id="@+id/txtCredits"
+    <LinearLayout
+        android:id="@+id/adviceLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center"
-        android:text="@string/loading"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textStyle="bold"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
+        android:orientation="vertical"
+        android:weightSum="10"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_layout_bottom"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@id/guideline_credits_top"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@id/guideline_top">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textStyle="bold"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6.4"
+            android:text="@string/loading"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:breakStrategy="simple"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/txtCredits"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textStyle="bold"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/statusLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:weightSum="6.75"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_layout_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@id/guideline_top">
+
+        <TextView
+            android:id="@+id/txtStatusTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:text="@string/home_status_title"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textStyle="bold"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/imgHeartLogo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.25"
+                android:contentDescription="@string/picture_heart_relaxed"
+                android:src="?attr/heart_relaxed" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.75"
+                android:orientation="vertical"
+                android:weightSum="3.25">
+
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.25"
+                    android:layout_marginLeft="@dimen/custom_dialog_2"
+                    android:layout_marginRight="@dimen/custom_dialog_2"
+                    android:fontFamily="?attr/font_name"
+                    android:gravity="center"
+                    android:text="@string/home_status_general"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:shadowColor="?attr/colorSecondaryVariant"
+                    android:shadowDx="0.0"
+                    android:shadowDy="0.0"
+                    android:shadowRadius="@dimen/shadow_radius"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="@dimen/min_size"
+                    app:autoSizeMaxTextSize="@dimen/max_size"
+                    app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25" />
+
+                <TextView
+                    android:id="@+id/txtRisk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.75"
+                    android:layout_marginLeft="@dimen/custom_dialog_2"
+                    android:layout_marginRight="@dimen/custom_dialog_2"
+                    android:fontFamily="?attr/font_name"
+                    android:gravity="center"
+                    android:text="@string/home_status_risk"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:shadowColor="?attr/colorSecondaryVariant"
+                    android:shadowDx="0.0"
+                    android:shadowDy="0.0"
+                    android:shadowRadius="@dimen/shadow_radius"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="@dimen/min_size"
+                    app:autoSizeMaxTextSize="@dimen/max_size"
+                    app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/txtStress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:text="@string/home_status_stress_test"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/txtStressResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:text="@string/home_status_stress_result"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/txtVulnerable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:text="@string/home_status_vulnerable_test"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/txtVulnerableResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:fontFamily="?attr/font_name"
+            android:gravity="center"
+            android:text="@string/home_status_vulnerable_result"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:shadowColor="?attr/colorSecondaryVariant"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="@dimen/shadow_radius"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="@dimen/min_size"
+            app:autoSizeMaxTextSize="@dimen/max_size"
+            app:autoSizeStepGranularity="@dimen/granularity_size" />
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
@@ -99,32 +339,18 @@
         app:layout_constraintGuide_percent="@dimen/guideline_navbar_top" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_title_bottom"
+        android:id="@+id/guideline_layout_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.87" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_advice_top"
+        android:id="@+id/guideline_tab_layout_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.23" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_advice_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_credits_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.83" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_bottom"

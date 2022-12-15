@@ -114,6 +114,13 @@
 
     <!-- Home Navbar Fragment Strings -->
     <string name="home_title">¡Qué Bien que Volviste!</string>
+    <string name="home_status_title">Reporte General</string>
+    <string name="home_status_general">Estado: %1$s</string>
+    <string name="home_status_risk">Riesgo de Estrés: %1$s</string>
+    <string name="home_status_stress_test">Último Test de Estrés: %1$s</string>
+    <string name="home_status_stress_result">Porcentaje de Estrés:\n%1$s de 100%</string>
+    <string name="home_status_vulnerable_test">Último Test de Vulnerabilidad: %1$s</string>
+    <string name="home_status_vulnerable_result">Vulnerabilidad al Estrés:\n%1$s de 100%</string>
 
     <!-- Games Navbar Fragment Strings -->
     <string name="games_title">¡Hora de Relajarse!</string>

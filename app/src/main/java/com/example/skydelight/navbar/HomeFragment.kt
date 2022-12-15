@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.room.Room
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DecodeFormat
@@ -19,6 +20,7 @@ import com.example.skydelight.R
 import com.example.skydelight.custom.AppDatabase
 import com.example.skydelight.custom.ElementsEditor
 import com.example.skydelight.custom.ValidationsDialogsRequests
+import com.example.skydelight.custom.ViewPageAdapter
 import com.example.skydelight.databinding.FragmentNavbarHomeBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -51,6 +53,33 @@ class HomeFragment : Fragment() {
         // Enabling links
         Linkify.addLinks(binding.txtCredits, Linkify.WEB_URLS)
         binding.txtCredits.movementMethod = LinkMovementMethod.getInstance()
+
+        // Loading pictures on view pager and connecting it with dots tab layout
+        try {
+            binding.viewPagerMain.adapter = ViewPageAdapter(requireContext(), null, 2)
+            binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
+        } catch(e: java.lang.IllegalStateException) {}
+
+        // Pictures Actions
+        var isAdviceLayout = true
+        binding.viewPagerMain.addOnPageChangeListener ( object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) {
+                // Advice View
+                if(isAdviceLayout) {
+                    binding.adviceLayout.visibility = View.GONE
+                    binding.statusLayout.visibility = View.VISIBLE
+                    isAdviceLayout = false
+                }
+                // Status View
+                else {
+                    binding.adviceLayout.visibility = View.VISIBLE
+                    binding.statusLayout.visibility = View.GONE
+                    isAdviceLayout = true
+                }
+            }
+        })
     }
 
     // Function to connect with the api

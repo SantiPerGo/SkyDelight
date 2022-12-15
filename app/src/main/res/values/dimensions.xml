@@ -10,6 +10,7 @@
     <dimen name="custom_dialog">5dp</dimen>
     <dimen name="custom_dialog_2">10dp</dimen>
     <dimen name="custom_dialog_3">20dp</dimen>
+    <dimen name="custom_dialog_4">75dp</dimen>
 
     <!-- Text Auto Sizes in SP's -->
     <dimen name="min_size">10sp</dimen>
