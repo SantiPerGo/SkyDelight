@@ -118,8 +118,8 @@ class NavBarFragment : Fragment() {
     private fun initialTest(){
         // Deactivating navbar
         changeNavBarButtonsClickable(false)
-        updateImgReload(false)
-        updateImgHelp(false)
+        //updateImgReload(false)
+        //updateImgHelp(false)
 
         // Creating tutorial dialogs
         try {
@@ -348,13 +348,8 @@ class NavBarFragment : Fragment() {
 
     private fun imgAction(){
         binding.ImgReload.setOnClickListener {
-            // Hiding Img Reload
-            updateImgReload(false)
-
             // Updating home advice
-            val fragment = binding.navbarHostFragment.getFragment() as HomeFragment
-            // Showing Img Reload after advice
-            fragment.showAdvice{ updateImgReload(true) }
+            (binding.navbarHostFragment.getFragment() as HomeFragment).showAdvice()
         }
 
         binding.ImgHelp.setOnClickListener {
@@ -388,39 +383,38 @@ class NavBarFragment : Fragment() {
     private fun navBarActions(){
         // Bottom navigation bar actions
         binding.navBar.setOnItemSelectedListener{
-            // Showing Img Help and Img Reload
-            updateImgHelp(true)
-            updateImgReload(false)
-
+            // When user clicked it.itemId
             when(it.itemId){
                 R.id.nav_home -> {
-                    // Showing Img Reload
-                    updateImgReload(true)
+                    // Showing img help
+                    updateImgHelp(true)
 
                     // Changing fragment if actual fragment is not the same
-                    // Fragment enters from left
                     if(itemId != R.id.nav_home)
+                        // Fragment enters from left
                         updateNavBarHost(HomeFragment(), R.id.nav_home, false)
                     true
                 }
                 R.id.nav_test -> {
+                    // Hiding img reload and showing img help
+                    updateImgReload(false)
+                    updateImgHelp(true)
+
                     // Changing fragment if actual fragment is not the same
-                    when (itemId) {
+                    if(itemId != R.id.nav_test)
+                        // Fragment enters from left
+                        if(itemId != R.id.nav_home)
+                            updateNavBarHost(TestFragment(), R.id.nav_test, false)
                         // Fragment enters from right
-                        R.id.nav_home -> updateNavBarHost(TestFragment(), R.id.nav_test, true)
-
-                        // Fragment enters from left
-                        R.id.nav_games -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
-
-                        // Fragment enters from left
-                        R.id.nav_profile -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
-                        R.id.navbar_profile_data_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
-                        R.id.navbar_profile_password_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
-                        R.id.navbar_profile_web_fragment -> updateNavBarHost(TestFragment(), R.id.nav_test, false)
-                    }
+                        else
+                            updateNavBarHost(TestFragment(), R.id.nav_test, true)
                     true
                 }
                 R.id.nav_games -> {
+                    // Hiding img reload and showing img help
+                    updateImgReload(false)
+                    updateImgHelp(true)
+
                     // Changing fragment if actual fragment is not the same
                     when (itemId) {
                         // Fragment enters from right
@@ -440,19 +434,20 @@ class NavBarFragment : Fragment() {
                     true
                 }
                 R.id.nav_profile -> {
-                    // Hiding Img Help
+                    // Hiding img reload and help
+                    updateImgReload(false)
                     updateImgHelp(false)
 
                     // Changing fragment if actual fragment is not the same
                     if(itemId != R.id.nav_profile)
-                    // Fragment enters from left
-                        if(itemId == R.id.navbar_profile_data_fragment || itemId == R.id.navbar_profile_password_fragment
+                        // Fragment enters from left
+                        if(itemId == R.id.navbar_profile_data_fragment
+                            || itemId == R.id.navbar_profile_password_fragment
                             || itemId == R.id.navbar_profile_web_fragment)
                             updateNavBarHost(ProfileFragment(), R.id.nav_profile, false)
                         // Fragment enters from right
                         else
                             updateNavBarHost(ProfileFragment(), R.id.nav_profile, true)
-
                     true
                 }
                 else -> false

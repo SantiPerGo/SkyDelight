@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
@@ -43,16 +44,14 @@ class HomeFragment : Fragment() {
         // return inflater.inflate(R.layout.fragment_navbar_home, container, false)
     }
 
+    private var isLoadingAdvice = false
+
     // After the view is created we can do things
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Showing initial random advice
-        showAdvice{}
-
-        // Enabling links
-        Linkify.addLinks(binding.txtCredits, Linkify.WEB_URLS)
-        binding.txtCredits.movementMethod = LinkMovementMethod.getInstance()
+        // Showing initial random advice with reload icon
+        showAdvice()
 
         // Loading pictures on view pager and connecting it with dots tab layout
         try {
@@ -60,31 +59,54 @@ class HomeFragment : Fragment() {
             binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
         } catch(e: java.lang.IllegalStateException) {}
 
+        // Enabling links
+        Linkify.addLinks(binding.txtCredits, Linkify.WEB_URLS)
+        binding.txtCredits.movementMethod = LinkMovementMethod.getInstance()
+
         // Pictures Actions
         var isAdviceLayout = true
         binding.viewPagerMain.addOnPageChangeListener ( object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
-                // Advice View
+                // Change to Status View
                 if(isAdviceLayout) {
                     binding.adviceLayout.visibility = View.GONE
                     binding.statusLayout.visibility = View.VISIBLE
                     isAdviceLayout = false
+
+                    // Hide reload if isn't loading advice
+                    if(!isLoadingAdvice)
+                        updateImgReloadFromParent(false)
                 }
-                // Status View
+                // Change to Advice View
                 else {
                     binding.adviceLayout.visibility = View.VISIBLE
                     binding.statusLayout.visibility = View.GONE
                     isAdviceLayout = true
+
+                    // Show reload if isn't loading advice
+                    if(!isLoadingAdvice)
+                        updateImgReloadFromParent(true)
                 }
             }
         })
     }
 
+    private fun updateImgReloadFromParent(state: Boolean) {
+        if(parentFragment is NavBarFragment)
+            (parentFragment as NavBarFragment).updateImgReload(state)
+        else {
+            val hostFragment = parentFragment as NavHostFragment
+            (hostFragment.parentFragment as NavBarFragment).updateImgReload(state)
+        }
+    }
+
     // Function to connect with the api
-    fun showAdvice(function:() -> Unit) {
-        // Changing texts
+    fun showAdvice() {
+        // Changing texts and hiding image reload
+        isLoadingAdvice = true
+        updateImgReloadFromParent(false)
         binding.txtTitle.text = getString(R.string.loading)
         binding.textView.text = getString(R.string.loading)
         binding.txtCredits.text = getString(R.string.loading)
@@ -154,7 +176,11 @@ class HomeFragment : Fragment() {
                                     MainScope().launch {
                                         binding.txtTitle.text = "Recomendación\n${JSONObject(it).getString("id")} de 50"
                                         binding.textView.text = JSONObject(it).getString("consejo")
-                                        function()
+                                        isLoadingAdvice = false
+
+                                        // Show reload only on advice layout
+                                        if(binding.adviceLayout.visibility == View.VISIBLE)
+                                            updateImgReloadFromParent(true)
 
                                         // Show random background
                                         showBackground()
