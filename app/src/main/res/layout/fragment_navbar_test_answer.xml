@@ -10,44 +10,23 @@
     tools:context=".navbar.TestAnswerFragment">
 
     <TextView
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/loading"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center"
-        android:textColor="?attr/colorSecondaryVariant"
         android:textStyle="bold"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_title_bottom"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
     <TextView
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtQuestion"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/loading"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:breakStrategy="simple"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_question_bottom"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -77,23 +56,13 @@
             android:contentDescription="@string/picture_arrow_left" />
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtAnswer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="8"
             android:padding="@dimen/switch_padding"
-            android:text="@string/test_initial_option"
-            android:fontFamily="?attr/font_name"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:breakStrategy="simple"
-            android:gravity="center"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size" />
+            android:text="@string/test_initial_option" />
 
         <ImageButton
             android:id="@+id/btnRightArrow"
@@ -109,82 +78,18 @@
 
     </LinearLayout>
 
-    <!--<TextView
-        android:id="@+id/txtAnswer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/loading"
-        android:fontFamily="?attr/font_name"
-        android:textColor="?attr/text_color"
-        android:breakStrategy="simple"
-        android:gravity="center"
-        android:shadowColor="?attr/text_color"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_slider"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_answer_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_answer_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_answers_top" />
-
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_answers_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_slider">
-
-        <com.google.android.material.slider.Slider
-            android:id="@+id/slider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:stepSize="1"
-            android:value="1"
-            android:valueFrom="1"
-            android:valueTo="10"
-            app:trackHeight="15dp"
-            app:thumbRadius="15dp"
-            app:thumbStrokeColor="?attr/btn_background_blue"
-            app:thumbColor="?attr/btn_text_color_blue"
-            app:haloColor="?attr/btn_background_blue"
-            app:labelStyle="@style/Tooltip" />
-
-    </FrameLayout>-->
-
     <Button
+        style="@style/blueButtonBackgroundStyle"
         android:id="@+id/btnNext"
-        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="?attr/btn_background_blue"
-        android:fontFamily="?attr/font_name"
-        android:state_enabled="true"
         android:text="@string/btn_next"
-        android:textColor="?attr/btn_text_color_blue"
-        android:textStyle="bold"
-        android:shadowColor="?attr/text_color"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
         app:cornerRadius="@dimen/corner_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
+        app:rippleColor="?attr/btn_text_color_blue"
         app:layout_constraintBottom_toTopOf="@+id/guideline_next_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_next_top"
-        app:rippleColor="?attr/btn_text_color_blue"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_next_top" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -198,31 +103,17 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_next_top" />
 
     <Button
+        style="@style/greenButtonBackgroundStyle"
         android:id="@+id/btnReturn"
-        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="?attr/btn_background_green"
-        android:fontFamily="?attr/font_name"
-        android:state_enabled="true"
         android:text="@string/btn_cancel"
-        android:textColor="?attr/btn_text_color_green"
-        android:textStyle="bold"
-        android:shadowColor="?attr/btn_text_color_green"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
         app:cornerRadius="@dimen/corner_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
+        app:rippleColor="?attr/btn_text_color_green"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_return_top"
-        app:rippleColor="?attr/btn_text_color_green"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_return_top" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"

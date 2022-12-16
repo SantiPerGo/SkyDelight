@@ -72,7 +72,8 @@ class GamesFragment : Fragment() {
                             } else { errorDialog(requireContext()) }
                         } catch(e: java.lang.IllegalStateException) {}
                     }
-                    updateColors(com.google.android.material.R.attr.colorSecondaryVariant)
+                    updateColors(com.google.android.material.R.attr.colorSecondaryVariant,
+                        com.google.android.material.R.attr.colorPrimaryVariant)
                 }
                 // Relax AR
                 else {
@@ -87,7 +88,7 @@ class GamesFragment : Fragment() {
                             } else { errorDialog(requireContext()) }
                         } catch(e: java.lang.IllegalStateException) {}
                     }
-                    updateColors(R.attr.btn_text_color_green)
+                    updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
                 }
             }
         })
@@ -108,7 +109,7 @@ class GamesFragment : Fragment() {
         binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
     }
 
-    private fun updateColors(resource: Int) {
+    private fun updateColors(textResource: Int, shadowResource: Int) {
         // Creating arrays
         val textsArray = arrayListOf(binding.txtTitle, binding.txtSubtitle,
             binding.txtDescription, binding.btnStart)
@@ -116,11 +117,12 @@ class GamesFragment : Fragment() {
 
         try {
             // Updating design
-            ElementsEditor().updateColors(resource, context, textsArray, buttonsArray)
+            ElementsEditor().updateColors(textResource,
+                shadowResource, context, textsArray, buttonsArray)
 
             // Changing button design
             binding.tabLayout.tabRippleColor =
-                ColorStateList.valueOf(ElementsEditor().getColor(context, resource))
+                ColorStateList.valueOf(ElementsEditor().getColor(context, textResource))
         } catch(e: java.lang.IllegalStateException) {}
     }
 

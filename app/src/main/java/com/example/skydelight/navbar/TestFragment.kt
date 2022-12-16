@@ -66,7 +66,7 @@ class TestFragment : Fragment() {
                         binding.txtDescription.text = getString(R.string.test_sisco_description)
                         binding.txtNumberOfQuestions.text = getString(R.string.test_sisco_number)
                         binding.btnStart.setOnClickListener { updateTestCalendar(1) }
-                        updateColors(R.attr.btn_text_color_green)
+                        updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
                     }
                     // SVQ
                     1 -> {
@@ -74,7 +74,7 @@ class TestFragment : Fragment() {
                         binding.txtDescription.text = getString(R.string.test_svq_description)
                         binding.txtNumberOfQuestions.text = getString(R.string.test_svq_number)
                         binding.btnStart.setOnClickListener { updateTestCalendar(2) }
-                        updateColors(R.attr.btn_text_color_yellow)
+                        updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
                     }
                     // PSS
                     2 -> {
@@ -82,7 +82,8 @@ class TestFragment : Fragment() {
                         binding.txtDescription.text = getString(R.string.test_pss_description)
                         binding.txtNumberOfQuestions.text = getString(R.string.test_pss_number)
                         binding.btnStart.setOnClickListener { updateTestCalendar(3) }
-                        updateColors(com.google.android.material.R.attr.colorSecondaryVariant)
+                        updateColors(com.google.android.material.R.attr.colorSecondaryVariant,
+                            com.google.android.material.R.attr.colorPrimaryVariant)
                     }
                     // SVS
                     3 -> {
@@ -90,16 +91,16 @@ class TestFragment : Fragment() {
                         binding.txtDescription.text = getString(R.string.test_svs_description)
                         binding.txtNumberOfQuestions.text = getString(R.string.test_svs_number)
                         binding.btnStart.setOnClickListener { updateTestCalendar(4) }
-                        updateColors(R.attr.btn_text_color_red)
+                        updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
                     }
                 }
             }
         })
     }
 
-    private fun updateColors(resource: Int) {
+    private fun updateColors(textResource: Int, shadowResource: Int) {
         // Getting reference to resource color
-        val textColor = ElementsEditor().getColor(context, resource)
+        val textColor = ElementsEditor().getColor(context, textResource)
 
         // Changing button design
         binding.tabLayout.tabRippleColor = ColorStateList.valueOf(textColor)
@@ -112,7 +113,8 @@ class TestFragment : Fragment() {
         val buttonsArray = arrayListOf(binding.btnStart)
 
         // Updating colors
-        ElementsEditor().updateColors(resource, context, textsArray, buttonsArray)
+        ElementsEditor().updateColors(textResource,
+            shadowResource, context, textsArray, buttonsArray)
     }
 
     private fun updateTestCalendar(testNumber: Int){

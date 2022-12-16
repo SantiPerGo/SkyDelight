@@ -52,8 +52,9 @@ class CustomDialog() {
 
                 if(!buttonsBicolor)
                     // Updating colors
-                    ElementsEditor().updateColors(R.attr.btn_text_color_blue, context,
-                        null, arrayListOf(binding.btnLeft, binding.btnRight),
+                    ElementsEditor().updateColors(R.attr.btn_text_color_blue,
+                        R.attr.btn_background_blue, context, null,
+                        arrayListOf(binding.btnLeft, binding.btnRight),
                         R.attr.btn_background_blue)
             }
 

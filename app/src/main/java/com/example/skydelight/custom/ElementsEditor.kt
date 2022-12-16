@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.example.skydelight.R
 import com.google.android.material.button.MaterialButton
 
@@ -34,8 +35,9 @@ class ElementsEditor {
             (button as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
 
             // Changing button text color and glow effect
+            val shadowRadius = ResourcesCompat.getFloat(context!!.resources, R.dimen.shadow_radius)
             button.setTextColor(textColor)
-            button.setShadowLayer(5f,0f, 0f, textColor)
+            button.setShadowLayer(shadowRadius,0f, 0f, btnColor)
 
             // Changing button background
             if (background)
@@ -58,25 +60,28 @@ class ElementsEditor {
         return ContextCompat.getDrawable(context, typedValue.resourceId)!!
     }
 
-    fun updateColors(textResource: Int, context: Context?, textsArray: ArrayList<TextView>?,
-                     buttonsArray: ArrayList<Button>, backgroundResource: Int? = null) {
+    fun updateColors(textResource: Int, shadowResource: Int, context: Context?,
+                     textsArray: ArrayList<TextView>?, buttonsArray: ArrayList<Button>,
+                     backgroundResource: Int? = null) {
         try {
             // Getting reference to resource color
             val textColor = getColor(context, textResource)
+            val shadowColor = getColor(context, shadowResource)
             var btnColor = textColor
             if(backgroundResource != null)
                 btnColor = getColor(context, backgroundResource)
 
+            val shadowRadius = ResourcesCompat.getFloat(context!!.resources, R.dimen.shadow_radius)
             // Changing text colors
             textsArray?.forEach {
                 it.setTextColor(textColor)
-                it.setShadowLayer(5f,0f, 0f, textColor)
+                it.setShadowLayer(shadowRadius,0f, 0f, shadowColor)
             }
 
             // Changing button colors
             for(element in buttonsArray){
                 element.setTextColor(textColor)
-                element.setShadowLayer(5f,0f, 0f, textColor)
+                element.setShadowLayer(shadowRadius, 0f, 0f, shadowColor)
                 (element as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
 
                 if(backgroundResource != null)

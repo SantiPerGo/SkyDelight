@@ -1,66 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Textview Styles -->
+    <style name="greenTextViewStyle">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/btn_text_color_green</item>
+        <item name="android:shadowColor">?attr/btn_background_green</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <style name="blueTextViewStyle">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/colorSecondaryVariant</item>
+        <item name="android:shadowColor">?attr/colorPrimaryVariant</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <style name="yellowTextViewStyle">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/btn_text_color_yellow</item>
+        <item name="android:shadowColor">?attr/btn_background_yellow</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <!-- Button with Background Styles -->
+    <style name="blueButtonBackgroundStyle" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundTint">?attr/btn_background_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/btn_text_color_blue</item>
+        <item name="android:shadowColor">?attr/btn_background_blue</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <style name="greenButtonBackgroundStyle" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundTint">?attr/btn_background_green</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/btn_text_color_green</item>
+        <item name="android:shadowColor">?attr/btn_background_green</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <style name="yellowButtonBackgroundStyle" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundTint">?attr/btn_background_yellow</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/btn_text_color_yellow</item>
+        <item name="android:shadowColor">?attr/btn_background_yellow</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <style name="redButtonBackgroundStyle" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundTint">?attr/btn_background_red</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/btn_text_color_red</item>
+        <item name="android:shadowColor">?attr/btn_background_red</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <!-- Button without Background Styles -->
+    <style name="blueButtonStyle" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/btn_text_color_blue</item>
+        <item name="android:shadowColor">?attr/btn_background_blue</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_button_size_2</item>
+    </style>
+
+    <style name="greenButtonStyle" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/btn_text_color_green</item>
+        <item name="android:shadowColor">?attr/btn_background_green</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_button_size_2</item>
+    </style>
+
+    <!-- Age Number Picker Style -->
     <style name="numberPickerStyle">
         <item name="android:fontFamily">?attr/font_name</item>
         <item name="android:textSize">@dimen/text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColorPrimary">?attr/colorSecondaryVariant</item>
         <item name="android:colorControlNormal">?attr/text_color</item>
-        <item name="android:shadowColor">?attr/colorSecondaryVariant</item>
+        <item name="android:descendantFocusability">blocksDescendants</item>
+        <item name="android:shadowColor">?attr/colorPrimaryVariant</item>
         <item name="android:shadowDx">0.0</item>
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">25</item>
-    </style>
-
-    <!-- Slider Tooltip -->
-    <style name="Tooltip" parent="Widget.Material3.Tooltip">
-        <item name="android:textAppearance">@style/TextAppearance.Tooltip</item>
-        <item name="backgroundTint">?attr/btn_background_blue</item>
-        <item name="android:padding">15dp</item>
-    </style>
-    <style name="TextAppearance.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
-        <item name="android:textColor">?attr/btn_text_color_blue</item>
-        <item name="fontFamily">?attr/font_name</item>
-        <item name="android:textSize">@dimen/text_size</item>
-    </style>
-
-    <!-- Principal Style Called from Themes.xml -->
-    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.MaterialComponents">
-        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
-        <item name="shapeAppearanceOverlay">@null</item>
-    </style>
-
-    <!-- Color of Dialog Title -->
-    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
-        <item name="android:textColor">?attr/colorSecondaryVariant</item>
-        <item name="fontFamily">?attr/font_name</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:textSize">@dimen/button_text_size</item>
-    </style>
-
-    <!-- Color of Dialog Title -->
-    <style name="MaterialAlertDialog.MaterialComponents.Body.Text." parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">?attr/text_color_hint</item>
-        <item name="fontFamily">?attr/font_name</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/text_input_size</item>
-    </style>
-
-    <!-- Color of Dialog Buttons -->
-    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="backgroundTint">?attr/btn_background_blue</item>
-        <item name="android:textColor">?attr/btn_text_color_blue</item>
-        <item name="fontFamily">?attr/font_name</item>
-        <item name="android:textStyle">bold</item>
-        <!-- Eliminating Conversion to UpperCase -->
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">@dimen/button_text_size</item>
-    </style>
-
-    <!-- Dialog Form -->
-    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
+        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
     </style>
 </resources>

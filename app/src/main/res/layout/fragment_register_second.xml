@@ -8,43 +8,23 @@
     tools:context=".initial.RegisterSecondFragment">
 
     <TextView
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center"
         android:text="@string/registerScreen_title_2"
-        android:textColor="?attr/colorSecondaryVariant"
         android:textStyle="bold"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_title_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_title_top" />
 
     <TextView
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtEmail"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center_vertical|start"
         android:text="@string/email"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_email_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -67,40 +47,21 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_email_field_top" >
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/blueTextViewStyle"
             android:id="@+id/editTxtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="?attr/font_name"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size"
             android:inputType="textEmailAddress"
-            tools:ignore="TextContrastCheck" />
+            android:gravity="center_vertical|start" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtPassword"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center_vertical|start"
         android:text="@string/password"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_password_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -125,40 +86,21 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_password_field_top" >
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/blueTextViewStyle"
             android:id="@+id/editTxtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="?attr/font_name"
             android:inputType="textPassword"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size"
-            tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+            android:gravity="center_vertical|start" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtConfirmPassword"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:gravity="center_vertical|start"
         android:text="@string/registerScreen_confirm_password"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:shadowColor="?attr/colorSecondaryVariant"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline_confirm_password_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -183,50 +125,28 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_confirm_password_field_top" >
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/blueTextViewStyle"
             android:id="@+id/editTxtConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="?attr/font_name"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size"
             android:inputType="textPassword"
-            tools:ignore="TextContrastCheck" />
+            android:gravity="center_vertical|start" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        style="@style/blueButtonStyle"
         android:id="@+id/btnCreateAccount"
-        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:state_enabled="true"
         android:text="@string/registerScreen_btn_create"
-        android:textColor="?attr/btn_text_color_blue"
-        android:textStyle="bold"
-        android:shadowColor="?attr/btn_text_color_blue"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
         app:cornerRadius="@dimen/corner_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
+        app:rippleColor="?attr/btn_text_color_blue"
+        app:strokeColor="?attr/btn_text_color_blue"
         app:layout_constraintBottom_toTopOf="@+id/guideline_login_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_login_top"
-        app:rippleColor="?attr/btn_text_color_blue"
-        app:strokeColor="?attr/btn_text_color_blue"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_login_top" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -240,31 +160,18 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_login_top" />
 
     <Button
+        style="@style/greenButtonStyle"
         android:id="@+id/btnReturn"
-        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="?attr/font_name"
-        android:state_enabled="true"
         android:text="@string/btn_return"
-        android:textColor="?attr/btn_text_color_green"
-        android:textStyle="bold"
-        android:shadowColor="?attr/btn_text_color_green"
-        android:shadowDx="0.0"
-        android:shadowDy="0.0"
-        android:shadowRadius="@dimen/shadow_radius"
         app:cornerRadius="@dimen/corner_radius"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="@dimen/min_size"
-        app:autoSizeMaxTextSize="@dimen/max_size"
-        app:autoSizeStepGranularity="@dimen/granularity_button_size_2"
+        app:rippleColor="?attr/btn_text_color_green"
+        app:strokeColor="?attr/btn_text_color_green"
         app:layout_constraintBottom_toTopOf="@+id/guideline_return_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_return_top"
-        app:rippleColor="?attr/btn_text_color_green"
-        app:strokeColor="?attr/btn_text_color_green"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_return_top" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_title_top"

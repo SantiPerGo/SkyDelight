@@ -68,7 +68,7 @@
     <string name="registerScreen_name_hint">Nombre Paterno Materno</string>
     <string name="registerScreen_male">Masculino</string>
     <string name="registerScreen_female">Femenino</string>
-    <string name="registerScreen_title_2">¡Ya Casi Terminamos!</string>
+    <string name="registerScreen_title_2">¡Casi Terminamos!</string>
     <string name="registerScreen_confirm_password">Confirmar Contraseña:</string>
     <string name="registerScreen_btn_create">Crear Cuenta</string>
 

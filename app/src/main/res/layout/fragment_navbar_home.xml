@@ -58,23 +58,13 @@
         app:layout_constraintTop_toTopOf="@id/guideline_top">
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
             android:text="@string/loading"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textStyle="bold"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,23 +72,12 @@
             android:layout_weight="0.2" />
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6.4"
-            android:text="@string/loading"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:breakStrategy="simple"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:text="@string/loading" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,23 +85,13 @@
             android:layout_weight="0.2" />
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtCredits"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
             android:text="@string/loading"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textStyle="bold"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,23 +113,13 @@
         app:layout_constraintTop_toTopOf="@id/guideline_top">
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtStatusTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
             android:text="@string/home_status_title"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textStyle="bold"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -190,24 +149,14 @@
                 android:weightSum="3.25">
 
                 <TextView
+                    style="@style/blueTextViewStyle"
                     android:id="@+id/txtStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.25"
                     android:layout_marginLeft="@dimen/custom_dialog_2"
                     android:layout_marginRight="@dimen/custom_dialog_2"
-                    android:fontFamily="?attr/font_name"
-                    android:gravity="center"
-                    android:text="@string/home_status_general"
-                    android:textColor="?attr/colorSecondaryVariant"
-                    android:shadowColor="?attr/colorSecondaryVariant"
-                    android:shadowDx="0.0"
-                    android:shadowDy="0.0"
-                    android:shadowRadius="@dimen/shadow_radius"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="@dimen/min_size"
-                    app:autoSizeMaxTextSize="@dimen/max_size"
-                    app:autoSizeStepGranularity="@dimen/granularity_size" />
+                    android:text="@string/home_status_general" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -215,24 +164,14 @@
                     android:layout_weight="0.25" />
 
                 <TextView
+                    style="@style/blueTextViewStyle"
                     android:id="@+id/txtRisk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.75"
                     android:layout_marginLeft="@dimen/custom_dialog_2"
                     android:layout_marginRight="@dimen/custom_dialog_2"
-                    android:fontFamily="?attr/font_name"
-                    android:gravity="center"
-                    android:text="@string/home_status_risk"
-                    android:textColor="?attr/colorSecondaryVariant"
-                    android:shadowColor="?attr/colorSecondaryVariant"
-                    android:shadowDx="0.0"
-                    android:shadowDy="0.0"
-                    android:shadowRadius="@dimen/shadow_radius"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="@dimen/min_size"
-                    app:autoSizeMaxTextSize="@dimen/max_size"
-                    app:autoSizeStepGranularity="@dimen/granularity_size" />
+                    android:text="@string/home_status_risk" />
 
             </LinearLayout>
         </LinearLayout>
@@ -243,22 +182,12 @@
             android:layout_weight="0.2" />
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtStress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
-            android:text="@string/home_status_stress_test"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:text="@string/home_status_stress_test" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -266,22 +195,12 @@
             android:layout_weight="0.2" />
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtStressResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
-            android:text="@string/home_status_stress_result"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:text="@string/home_status_stress_result" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -289,22 +208,12 @@
             android:layout_weight="0.2" />
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtVulnerable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
-            android:text="@string/home_status_vulnerable_test"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:text="@string/home_status_vulnerable_test" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -312,22 +221,12 @@
             android:layout_weight="0.2" />
 
         <TextView
+            style="@style/blueTextViewStyle"
             android:id="@+id/txtVulnerableResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            android:fontFamily="?attr/font_name"
-            android:gravity="center"
-            android:text="@string/home_status_vulnerable_result"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:shadowColor="?attr/colorSecondaryVariant"
-            android:shadowDx="0.0"
-            android:shadowDy="0.0"
-            android:shadowRadius="@dimen/shadow_radius"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="@dimen/min_size"
-            app:autoSizeMaxTextSize="@dimen/max_size"
-            app:autoSizeStepGranularity="@dimen/granularity_size" />
+            android:text="@string/home_status_vulnerable_result" />
 
     </LinearLayout>
 

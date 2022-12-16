@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.room.Room
 import com.example.skydelight.R
@@ -106,24 +107,29 @@ class TestDataFragment : Fragment() {
         // Getting color and title according of results
         when {
             originalResult > maxNum -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_red, R.attr.dark_red)
+                createPieChart(resultPercentage, R.attr.btn_text_color_red,
+                    R.attr.btn_background_red, R.attr.dark_red)
                 updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
             }
             originalResult in minNum..maxNum -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_yellow, R.attr.dark_yellow)
+                createPieChart(resultPercentage, R.attr.btn_text_color_yellow,
+                    R.attr.btn_background_yellow, R.attr.dark_yellow)
                 updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
             }
             else -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_green, R.attr.dark_green)
+                createPieChart(resultPercentage, R.attr.btn_text_color_green,
+                    R.attr.btn_background_green, R.attr.dark_green)
                 updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
             }
         }
     }
 
-    private fun createPieChart(score: Float, textColorResource: Int, backgroundColorResource: Int) {
+    private fun createPieChart(score: Float, textColorResource: Int,
+                               backgroundColorResource: Int, darkColorResource: Int) {
         try {
             val textColor = ElementsEditor().getColor(context, textColorResource)
             val backgroundColor = ElementsEditor().getColor(context, backgroundColorResource)
+            val darkColor = ElementsEditor().getColor(context, darkColorResource)
             val centerColor = ElementsEditor().getColor(context, R.attr.fragment_background)
 
             // Disable description and legend in chart
@@ -158,7 +164,7 @@ class TestDataFragment : Fragment() {
             val dataset = PieDataSet(entries, "Test Result")
 
             // Setting chart colors
-            val colors = arrayListOf(textColor, backgroundColor)
+            val colors = arrayListOf(textColor, darkColor)
             dataset.colors = colors
 
             // Disable icons and texts
@@ -174,13 +180,14 @@ class TestDataFragment : Fragment() {
 
             // Changing circles colors of chart
             binding.txtChartFirst.compoundDrawables[0].setTint(textColor)
-            binding.txtChartSecond.compoundDrawables[0].setTint(backgroundColor)
+            binding.txtChartSecond.compoundDrawables[0].setTint(darkColor)
 
             // Changing second chart label color
+            val shadowRadius = ResourcesCompat.getFloat(resources, R.dimen.shadow_radius)
             binding.txtChartFirst.setTextColor(textColor)
-            binding.txtChartFirst.setShadowLayer(5f,0f, 0f, textColor)
-            binding.txtChartSecond.setTextColor(backgroundColor)
-            binding.txtChartSecond.setShadowLayer(5f,0f, 0f, backgroundColor)
+            binding.txtChartFirst.setShadowLayer(shadowRadius,0f, 0f, backgroundColor)
+            binding.txtChartSecond.setTextColor(darkColor)
+            binding.txtChartSecond.setShadowLayer(shadowRadius,0f, 0f, backgroundColor)
         } catch(e: java.lang.IllegalStateException) {}
     }
 
@@ -192,8 +199,8 @@ class TestDataFragment : Fragment() {
             val buttonsArray = arrayListOf(binding.btnFinish)
 
             // Updating colors
-            ElementsEditor().updateColors(textColorResource, context,
-                textsArray, buttonsArray, btnColorResource)
+            ElementsEditor().updateColors(textColorResource, btnColorResource,
+                context, textsArray, buttonsArray, btnColorResource)
         } catch(e: java.lang.IllegalStateException) {}
     }
 

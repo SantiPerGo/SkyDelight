@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -194,15 +195,23 @@ class ProfileFragment : Fragment() {
         try {
             binding.btnTheme.isChecked = !state
 
-            val color = when(state) {
+            val textColor = when(state) {
                 true -> ElementsEditor().getColor(context,
                     com.google.android.material.R.attr.colorSecondaryVariant)
                 false -> ElementsEditor().getColor(context,
                     R.attr.btn_text_color_yellow)
             }
 
-            binding.btnTheme.setTextColor(ColorStateList.valueOf(color))
-            binding.btnTheme.setShadowLayer(5f, 0f, 0f, color)
+            val backgroundColor = when(state) {
+                true -> ElementsEditor().getColor(context,
+                    com.google.android.material.R.attr.colorPrimaryVariant)
+                false -> ElementsEditor().getColor(context,
+                    R.attr.btn_background_yellow)
+            }
+
+            val shadowRadius = ResourcesCompat.getFloat(resources, R.dimen.shadow_radius)
+            binding.btnTheme.setTextColor(ColorStateList.valueOf(textColor))
+            binding.btnTheme.setShadowLayer(shadowRadius, 0f, 0f, backgroundColor)
         } catch(e: java.lang.IllegalStateException) {}
     }
 

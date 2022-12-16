@@ -3,7 +3,7 @@
     <style name="Theme.SkyDelight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary color -->
         <item name="colorPrimary">@color/lightblue2</item>
-        <item name="colorPrimaryVariant">@color/lightblue3</item>
+        <item name="colorPrimaryVariant">@color/light</item>
         <item name="colorOnPrimary">@color/black</item>
 
         <!-- Secondary color -->
@@ -69,27 +69,5 @@
         <!-- Gray Button -->
         <item name="btn_text_color_gray">@color/darkgray</item>
         <item name="btn_background_gray">@color/lightgray</item>
-
-        <!-- Material Alert Dialog -->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
-    </style>
-
-    <!-- Material Alert Dialog Style -->
-    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <!-- Background -->
-        <item name="colorSurface">@color/ultralight</item>
-
-        <!-- Color on Button Pressed or On Surface -->
-        <item name="colorPrimary">@color/dark</item>
-        <item name="colorSecondary">@color/dark</item>
-        <item name="colorOnSurface">@color/dark</item>
-
-        <!-- Applying Styles in Styles.xml -->
-        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.MaterialComponents.Body.Text.</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Widget.App.Button</item>
     </style>
 </resources>

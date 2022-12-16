@@ -45,26 +45,15 @@
                 android:layout_weight="0.1" />
 
             <TextView
+                style="@style/blueTextViewStyle"
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:layout_marginLeft="@dimen/custom_dialog_3"
                 android:layout_marginRight="@dimen/custom_dialog_3"
-                android:layout_gravity="center"
-                android:text="@string/loading"
-                android:fontFamily="?attr/font_name"
-                android:gravity="center"
-                android:textColor="?attr/colorSecondaryVariant"
                 android:textStyle="bold"
-                android:shadowColor="?attr/colorSecondaryVariant"
-                android:shadowDx="0.0"
-                android:shadowDy="0.0"
-                android:shadowRadius="@dimen/shadow_radius"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="@dimen/min_size"
-                app:autoSizeMaxTextSize="@dimen/max_size"
-                app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
+                android:text="@string/loading" />
 
             <Space
                 android:layout_width="match_parent"
@@ -72,25 +61,14 @@
                 android:layout_weight="0.1" />
 
             <TextView
+                style="@style/blueTextViewStyle"
                 android:id="@+id/txtMessage"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.1"
                 android:layout_marginLeft="@dimen/custom_dialog_3"
                 android:layout_marginRight="@dimen/custom_dialog_3"
-                android:layout_gravity="center"
-                android:text="@string/loading"
-                android:fontFamily="?attr/font_name"
-                android:gravity="center"
-                android:textColor="?attr/colorSecondaryVariant"
-                android:shadowColor="?attr/colorSecondaryVariant"
-                android:shadowDx="0.0"
-                android:shadowDy="0.0"
-                android:shadowRadius="@dimen/shadow_radius"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="@dimen/min_size"
-                app:autoSizeMaxTextSize="@dimen/max_size"
-                app:autoSizeStepGranularity="@dimen/granularity_mega_size" />
+                android:text="@string/loading" />
 
             <Space
                 android:layout_width="match_parent"
@@ -98,29 +76,15 @@
                 android:layout_weight="0.1" />
 
             <Button
+                style="@style/blueButtonBackgroundStyle"
                 android:id="@+id/btnClose"
-                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:layout_marginLeft="@dimen/custom_dialog_4"
                 android:layout_marginRight="@dimen/custom_dialog_4"
-                android:backgroundTint="?attr/btn_background_blue"
-                android:fontFamily="?attr/font_name"
-                android:state_enabled="true"
                 android:text="@string/loading"
-                android:textColor="?attr/btn_text_color_blue"
-                android:textStyle="bold"
-                android:shadowColor="?attr/btn_text_color_blue"
-                android:shadowDx="0.0"
-                android:shadowDy="0.0"
-                android:shadowRadius="@dimen/shadow_radius"
-                android:layout_gravity="center"
                 app:cornerRadius="@dimen/corner_radius"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="@dimen/min_size"
-                app:autoSizeMaxTextSize="@dimen/max_size"
-                app:autoSizeStepGranularity="@dimen/granularity_mega_size"
                 app:rippleColor="?attr/btn_text_color_blue" />
 
             <LinearLayout
@@ -139,28 +103,14 @@
                     android:layout_weight="0.2" />
 
                 <Button
+                    style="@style/greenButtonBackgroundStyle"
                     android:id="@+id/btnLeft"
-                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:backgroundTint="?attr/btn_background_green"
-                    android:fontFamily="?attr/font_name"
-                    android:state_enabled="true"
                     android:text="@string/loading"
-                    android:textColor="?attr/btn_text_color_green"
-                    android:textStyle="bold"
-                    android:shadowColor="?attr/btn_text_color_green"
-                    android:shadowDx="0.0"
-                    android:shadowDy="0.0"
-                    android:shadowRadius="@dimen/shadow_radius"
                     app:cornerRadius="@dimen/corner_radius"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="@dimen/min_size"
-                    app:autoSizeMaxTextSize="@dimen/max_size"
-                    app:autoSizeStepGranularity="@dimen/granularity_mega_size"
-                    app:rippleColor="?attr/btn_text_color_green"
-                    tools:ignore="TextContrastCheck" />
+                    app:rippleColor="?attr/btn_text_color_green" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -168,28 +118,14 @@
                     android:layout_weight="0.2" />
 
                 <Button
+                    style="@style/redButtonBackgroundStyle"
                     android:id="@+id/btnRight"
-                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:backgroundTint="?attr/btn_background_red"
-                    android:fontFamily="?attr/font_name"
-                    android:state_enabled="true"
                     android:text="@string/loading"
-                    android:textColor="?attr/btn_text_color_red"
-                    android:textStyle="bold"
-                    android:shadowColor="?attr/btn_text_color_red"
-                    android:shadowDx="0.0"
-                    android:shadowDy="0.0"
-                    android:shadowRadius="@dimen/shadow_radius"
                     app:cornerRadius="@dimen/corner_radius"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="@dimen/min_size"
-                    app:autoSizeMaxTextSize="@dimen/max_size"
-                    app:autoSizeStepGranularity="@dimen/granularity_mega_size"
-                    app:rippleColor="?attr/btn_text_color_red"
-                    tools:ignore="TextContrastCheck" />
+                    app:rippleColor="?attr/btn_text_color_red" />
 
                 <Space
                     android:layout_width="wrap_content"
