@@ -65,6 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/profile_delete_account"
+        app:cornerRadius="@dimen/corner_radius"
         app:rippleColor="?attr/btn_text_color_red"
         app:layout_constraintBottom_toTopOf="@+id/guideline_delete_account_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"

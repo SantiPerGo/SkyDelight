@@ -166,11 +166,10 @@ class TestFragment : Fragment() {
 
                             // Getting date of test and preparing date format
                             dateOfTest = dateObject.getString("created_at").replace("T", " ")
-                            dateOfTest = dateOfTest.substring(0, dateOfTest.indexOf(".")+4)
 
                             // Saving date of test as localDateTime object
                             testArrayDates.add(LocalDateTime.parse(dateOfTest,
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")))
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")))
                         }
 
                         // Saving test with last date in database
@@ -223,7 +222,7 @@ class TestFragment : Fragment() {
                 var startTest = false
                 if(date != null){
                     val testCalendar = LocalDateTime.parse(date,
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS"))
 
                     // Validating if is the same day
                     var isSameDay = false

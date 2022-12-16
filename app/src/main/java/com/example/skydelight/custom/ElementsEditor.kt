@@ -61,7 +61,7 @@ class ElementsEditor {
     }
 
     fun updateColors(textResource: Int, shadowResource: Int, context: Context?,
-                     textsArray: ArrayList<TextView>?, buttonsArray: ArrayList<Button>,
+                     textsArray: ArrayList<TextView>?, buttonsArray: ArrayList<Button>?,
                      backgroundResource: Int? = null) {
         try {
             // Getting reference to resource color
@@ -79,15 +79,15 @@ class ElementsEditor {
             }
 
             // Changing button colors
-            for(element in buttonsArray){
-                element.setTextColor(textColor)
-                element.setShadowLayer(shadowRadius, 0f, 0f, shadowColor)
-                (element as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
+            buttonsArray?.forEach {
+                it.setTextColor(textColor)
+                it.setShadowLayer(shadowRadius, 0f, 0f, shadowColor)
+                (it as MaterialButton).rippleColor = ColorStateList.valueOf(textColor)
 
                 if(backgroundResource != null)
-                    element.backgroundTintList = ColorStateList.valueOf(btnColor)
+                    it.backgroundTintList = ColorStateList.valueOf(btnColor)
                 else
-                    element.strokeColor = ColorStateList.valueOf(textColor)
+                    it.strokeColor = ColorStateList.valueOf(textColor)
             }
         } catch(e: java.lang.IllegalStateException) {}
     }

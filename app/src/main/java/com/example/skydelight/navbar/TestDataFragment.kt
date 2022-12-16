@@ -85,7 +85,7 @@ class TestDataFragment : Fragment() {
             3 -> { maxNum = 26f
                 minNum = 14f }
             // SVS Test
-            4 -> { maxNum = 1.99f
+            4 -> { maxNum = 2.99f
                 minNum = 1f }
         }
 

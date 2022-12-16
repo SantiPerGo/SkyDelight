@@ -367,33 +367,16 @@ class TestAnswerFragment : Fragment() {
                     formBody.add("pregunta${i+1}", questionAnswers[i].toString())
 
                 // Choosing api url
-                var apiUrl = ""
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-                when(testNumber) {
+                val apiUrl = when(testNumber) {
                     // SISCO Test
-                    1 -> {
-                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testcisco"
-                        user.siscoCalendar = LocalDateTime.now().format(formatter)
-                    }
+                    1 -> "https://apiskydelight.herokuapp.com/api/crear-testcisco"
                     // SVQ Test
-                    2 -> {
-                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testsqv"
-                        user.svqCalendar = LocalDateTime.now().format(formatter)
-                    }
+                    2 -> "https://apiskydelight.herokuapp.com/api/crear-testsqv"
                     // PSS Test
-                    3 -> {
-                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testpss"
-                        user.pssCalendar = LocalDateTime.now().format(formatter)
-                    }
+                    3 -> "https://apiskydelight.herokuapp.com/api/crear-testpss"
                     // SVS Test
-                    4 -> {
-                        apiUrl = "https://apiskydelight.herokuapp.com/api/crear-testsvs"
-                        user.svsCalendar = LocalDateTime.now().format(formatter)
-                    }
+                    else -> "https://apiskydelight.herokuapp.com/api/crear-testsvs"
                 }
-
-                // Updating user date and hour of test in local database
-                userDao.updateUser(user)
 
                 // Making http request
                 val request = Request.Builder()

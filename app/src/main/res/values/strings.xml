@@ -115,12 +115,19 @@
     <!-- Home Navbar Fragment Strings -->
     <string name="home_title">¡Qué Bien que Volviste!</string>
     <string name="home_status_title">Reporte General</string>
-    <string name="home_status_general">Estado: %1$s</string>
-    <string name="home_status_risk">Riesgo de Estrés: %1$s</string>
-    <string name="home_status_stress_test">Último Test de Estrés: %1$s</string>
-    <string name="home_status_stress_result">Porcentaje de Estrés:\n%1$s de 100%</string>
-    <string name="home_status_vulnerable_test">Último Test de Vulnerabilidad: %1$s</string>
-    <string name="home_status_vulnerable_result">Vulnerabilidad al Estrés:\n%1$s de 100%</string>
+    <string name="home_status_general">Estado:\n%s</string>
+    <string name="home_status_risk">Riesgo de Estrés:\n%s</string>
+    <string name="home_status_stress_test">Último Test de Estrés:\n%s</string>
+    <string name="home_status_stress_result">Porcentaje de Estrés:\n%s</string>
+    <string name="home_status_vulnerable_test">Último Test de Vulnerabilidad:\n%s</string>
+    <string name="home_status_vulnerable_result">Vulnerabilidad al Estrés:\n%s</string>
+    <string name="home_status_low">Relajado(a)</string>
+    <string name="home_status_medium">Normal</string>
+    <string name="home_status_high">Estresado(a)</string>
+    <string name="home_risk_none">Sin Riesgo</string>
+    <string name="home_risk_low">Leve</string>
+    <string name="home_risk_medium">Medio</string>
+    <string name="home_risk_high">Alto</string>
 
     <!-- Games Navbar Fragment Strings -->
     <string name="games_title">¡Hora de Relajarse!</string>

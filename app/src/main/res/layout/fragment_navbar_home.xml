@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="StressStatus"
+            type="com.example.skydelight.custom.StressStatus" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -66,7 +73,7 @@
             android:text="@string/loading"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2" />
@@ -79,7 +86,7 @@
             android:layout_weight="6.4"
             android:text="@string/loading" />
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2" />
@@ -93,7 +100,7 @@
             android:text="@string/loading"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2" />
@@ -105,7 +112,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:weightSum="6.75"
+        android:weightSum="7.2"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_layout_bottom"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
@@ -116,12 +123,12 @@
             style="@style/blueTextViewStyle"
             android:id="@+id/txtStatusTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:text="@string/home_status_title"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2" />
@@ -139,7 +146,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.25"
                 android:contentDescription="@string/picture_heart_relaxed"
-                android:src="?attr/heart_relaxed" />
+                android:src="@{StressStatus.img}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -152,13 +159,13 @@
                     style="@style/blueTextViewStyle"
                     android:id="@+id/txtStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1.25"
                     android:layout_marginLeft="@dimen/custom_dialog_2"
                     android:layout_marginRight="@dimen/custom_dialog_2"
-                    android:text="@string/home_status_general" />
+                    android:text="@{StressStatus.status}" />
 
-                <LinearLayout
+                <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25" />
@@ -167,16 +174,16 @@
                     style="@style/blueTextViewStyle"
                     android:id="@+id/txtRisk"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1.75"
                     android:layout_marginLeft="@dimen/custom_dialog_2"
                     android:layout_marginRight="@dimen/custom_dialog_2"
-                    android:text="@string/home_status_risk" />
+                    android:text="@{StressStatus.risk}" />
 
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2" />
@@ -185,11 +192,11 @@
             style="@style/blueTextViewStyle"
             android:id="@+id/txtStress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="0.75"
-            android:text="@string/home_status_stress_test" />
+            android:text="@{StressStatus.stress}" />
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2" />
@@ -198,11 +205,11 @@
             style="@style/blueTextViewStyle"
             android:id="@+id/txtStressResult"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/home_status_stress_result" />
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:text="@{StressStatus.stressResult}" />
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2" />
@@ -211,11 +218,11 @@
             style="@style/blueTextViewStyle"
             android:id="@+id/txtVulnerable"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="0.75"
-            android:text="@string/home_status_vulnerable_test" />
+            android:text="@{StressStatus.vulnerability}" />
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2" />
@@ -224,9 +231,14 @@
             style="@style/blueTextViewStyle"
             android:id="@+id/txtVulnerableResult"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="0.75"
-            android:text="@string/home_status_vulnerable_result" />
+            android:text="@{StressStatus.vulnerabilityResult}" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
 
     </LinearLayout>
 
@@ -273,3 +285,4 @@
         app:layout_constraintGuide_percent="@dimen/guideline_navbar_right" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
