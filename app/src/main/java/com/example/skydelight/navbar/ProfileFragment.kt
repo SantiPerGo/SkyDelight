@@ -4,9 +4,12 @@ import android.app.Activity
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
@@ -74,7 +77,9 @@ class ProfileFragment : Fragment() {
                             Room.databaseBuilder(requireContext(), AppDatabase::class.java, "user")
                                 .fallbackToDestructiveMigration().build().userDao().deleteUsers()
                             findNavController().navigate(R.id.action_navBar_to_startScreen)
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                            }, 500)
                         } catch(e: java.lang.IllegalStateException) {}
                     }
                 }
@@ -127,7 +132,9 @@ class ProfileFragment : Fragment() {
                                         // Cleaning database and changing to start screen fragment
                                         userDao.deleteUsers()
                                         findNavController().navigate(R.id.action_navBar_to_startScreen)
-                                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                                        Handler(Looper.getMainLooper()).postDelayed({
+                                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                                        }, 500)
                                     }
                                 } catch(e: java.lang.IllegalStateException) {}
                             }
@@ -162,13 +169,10 @@ class ProfileFragment : Fragment() {
 
         binding.btnTheme.setOnClickListener {
             try {
-                if(isDarkTheme(requireActivity())) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    saveUserTheme(false)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    saveUserTheme(true)
-                }
+                if(isDarkTheme(requireActivity()))
+                    changeUserTheme(false)
+                else
+                    changeUserTheme(true)
             } catch(e: java.lang.IllegalStateException) {}
         }
 
@@ -176,7 +180,7 @@ class ProfileFragment : Fragment() {
         try { updateSwitchTheme(isDarkTheme(requireActivity())) } catch(e: java.lang.IllegalStateException) {}
     }
 
-    private fun saveUserTheme(state: Boolean) {
+    private fun changeUserTheme(state: Boolean) {
         // Launching room database connection
         MainScope().launch {
             try {
@@ -185,8 +189,15 @@ class ProfileFragment : Fragment() {
                     .fallbackToDestructiveMigration().build().userDao()
                 val user = userDao.getUser()[0]
 
+                // Saving theme
                 user.isDarkTheme = state
                 userDao.updateUser(user)
+
+                // Changing theme
+                if(state)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                else
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             } catch(e: java.lang.IllegalStateException) {}
         }
     }

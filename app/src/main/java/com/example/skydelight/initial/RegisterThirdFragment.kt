@@ -42,10 +42,7 @@ class RegisterThirdFragment : Fragment() {
         try {
             requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.action_registerThird_to_navBar)
-                    findNavController().popBackStack(R.id.register_third_fragment, true)
-                }
-            })
+                    findNavController().navigate(R.id.action_registerThird_to_navBar) } })
         } catch(e: java.lang.IllegalStateException) {}
     }
 }

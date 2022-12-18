@@ -100,6 +100,7 @@ class RecoverPasswordFragment : Fragment() {
                         null, null) {
                         Handler(Looper.getMainLooper()).postDelayed({
                             findNavController().navigate(R.id.action_recoverPassword_to_startScreen)
+                            findNavController().popBackStack(R.id.recover_password_fragment, true)
                         }, 500)
                     }
                 } catch (e: IllegalStateException) {}

@@ -10,9 +10,6 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
     </style>
 
     <style name="blueTextViewStyle">
@@ -24,9 +21,6 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
     </style>
 
     <style name="yellowTextViewStyle">
@@ -38,9 +32,17 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+    </style>
+
+    <style name="grayTextViewStyle">
+        <item name="android:fontFamily">?attr/font_name</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/btn_text_color_gray</item>
+        <item name="android:shadowColor">?attr/btn_background_gray</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">@dimen/shadow_radius</item>
+        <item name="android:autoSizeTextType">uniform</item>
     </style>
 
     <!-- Button with Background Styles -->
@@ -55,9 +57,7 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="greenButtonBackgroundStyle" parent="Widget.Material3.Button.TonalButton">
@@ -71,9 +71,7 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="yellowButtonBackgroundStyle" parent="Widget.Material3.Button.TonalButton">
@@ -87,9 +85,7 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="redButtonBackgroundStyle" parent="Widget.Material3.Button.TonalButton">
@@ -103,9 +99,7 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <!-- Button without Background Styles -->
@@ -119,9 +113,8 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_button_size_2</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">@dimen/button_padding</item>
     </style>
 
     <style name="greenButtonStyle" parent="Widget.Material3.Button.OutlinedButton">
@@ -134,9 +127,8 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">@dimen/shadow_radius</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_button_size_2</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">@dimen/button_padding</item>
     </style>
 
     <!-- Age Number Picker Style -->
@@ -152,8 +144,5 @@
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">25</item>
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMinTextSize">@dimen/min_size</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/max_size</item>
-        <item name="android:autoSizeStepGranularity">@dimen/granularity_mega_size</item>
     </style>
 </resources>

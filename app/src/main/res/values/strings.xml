@@ -29,6 +29,7 @@
     <string name="picture_arrow_left">Flecha Izquierda</string>
     <string name="picture_arrow_right">Flecha Derecha</string>
     <string name="picture_heart_relaxed">Corazón Relajado</string>
+    <string name="picture_risk_level">Nivel de Riesgo</string>
 
     <!-- Custom Dialog Strings -->
     <string name="custom_dialog_error_title">¡Error de Conexión!</string>
@@ -89,11 +90,11 @@
     <string name="navBar_games">Juegos</string>
     <string name="navBar_profile">Configuración</string>
     <string name="navBar_help_home_title">¿Para qué es el inicio?</string>
-    <string name="navBar_help_home_description">En esta pantalla encontrarás consejos para prevenir el estrés definidos por especialistas en el tema (algunos personalizados si has respondido al menos una vez el test SVQ)</string>
+    <string name="navBar_help_home_description">En esta pantalla podrás encontrar recomendaciones para prevención del estrés académico, así como un reporte general de tu estrés y tu vulnerabilidad a este</string>
     <string name="navBar_help_test_title">¿Para qué son los test?</string>
     <string name="navBar_help_test_description">En esta pantalla puedes responder cuestionarios cada 24 horas para conocer diversos aspectos de tu estrés, pero no olvides visitar el sitio web para dar seguimiento a tus resultados</string>
     <string name="navBar_help_games_title">¿Para qué son los juegos?</string>
-    <string name="navBar_help_games_description">Esta pantalla es para que puedas relajarte usando realidad aumentada (sólo si tu teléfono es compatible con ARCore)</string>
+    <string name="navBar_help_games_description">En esta pantalla podrás disfrutar de actividades usando realidad aumentada para que puedas relajarte (sólo si tu teléfono es compatible con ARCore)</string>
 
     <!-- Tutorial Strings -->
     <string name="tutorial_test_title">¡Casi Terminamos!</string>
@@ -102,11 +103,11 @@
     <string name="tutorial_four_title">Pantalla 4 de 4</string>
     <string name="tutorial_four_description">En esta pantalla podrás actualizar tus datos personales (con excepción del correo electrónico), cerrar sesión, eliminar tu cuenta y saber más de la aplicación</string>
     <string name="tutorial_three_title">Pantalla 3 de 4</string>
-    <string name="tutorial_three_description">En esta pantalla podrás disfrutar de actividades relajantes o extremas con realidad aumentada (sólo si tu teléfono es compatible con ARCore)</string>
+    <string name="tutorial_three_description">En esta pantalla podrás disfrutar de actividades usando realidad aumentada para que puedas relajarte (sólo si tu teléfono es compatible con ARCore)</string>
     <string name="tutorial_second_title">Pantalla 2 de 4</string>
-    <string name="tutorial_second_description">En esta pantalla podrás encontrar diversos cuestionarios que puedes responder cada 24 horas para conocer tu estrés y tu vulnerabilidad a este</string>
+    <string name="tutorial_second_description">En esta pantalla puedes responder cuestionarios cada 24 horas para conocer diversos aspectos de tu estrés, pero no olvides visitar el sitio web para dar seguimiento a tus resultados</string>
     <string name="tutorial_first_title">Pantalla 1 de 4</string>
-    <string name="tutorial_first_description">En esta pantalla podrás encontrar diversas recomendaciones para prevención del estrés académico</string>
+    <string name="tutorial_first_description">En esta pantalla podrás encontrar recomendaciones para prevención del estrés académico, así como un reporte general de tu estrés y tu vulnerabilidad a este</string>
     <string name="tutorial_title">¡Bienvenido(a)!</string>
     <string name="tutorial_description">Te recomendamos completar un pequeño tutorial antes de empezar a usar la aplicación</string>
     <string name="tutorial_btn_start">Empezar</string>
@@ -115,6 +116,8 @@
     <!-- Home Navbar Fragment Strings -->
     <string name="home_title">¡Qué Bien que Volviste!</string>
     <string name="home_status_title">Reporte General</string>
+    <string name="home_status_empty">Debes responder al menos un cuestionario SISCO o PSS en la sección de Test para conocer tu estrés</string>
+    <string name="home_risk_empty">Debes responder al menos un cuestionario SVQ o SVS en la sección de Test para conocer tu vulnerabilidad al estrés</string>
     <string name="home_status_general">Estado:\n%s</string>
     <string name="home_status_risk">Riesgo de Estrés:\n%s</string>
     <string name="home_status_stress_test">Último Test de Estrés:\n%s</string>
@@ -175,7 +178,7 @@
     <string name="test_time_error_title">¡Espera!</string>
     <string name="test_time_error_description">No puedes responder más de una vez la prueba %1$s en un lapso de 24 horas. Debes esperar %2$s hora(s) con %3$s minuto(s) y %4$s segundo(s) para responder de nuevo</string>
     <string name="test_tutorial_error_title">¡Opción Inválida!</string>
-    <string name="test_tutorial_error_description">Debes completar este test para acceder a las demás funcionalidades de la aplicación</string>
+    <string name="test_tutorial_error_description">Completa este test para acceder a las demás funcionalidades</string>
     <string name="test_cancel_title">¡No te Vayas!</string>
     <string name="test_cancel_description">¿Realmente Quieres Cancelar la Prueba?</string>
     <string name="test_cancel_btn_yes">¡Sí!</string>

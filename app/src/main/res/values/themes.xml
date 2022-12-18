@@ -46,6 +46,7 @@
         <item name="heart_sad">@drawable/heart_sad_day</item>
 
         <!-- Colors -->
+        <item name="dark_blue">@color/medium</item>
         <item name="dark_green">@color/mediumdarkgreen</item>
         <item name="dark_red">@color/mediumdarkred</item>
         <item name="dark_yellow">@color/mediumdarkyellow</item>

@@ -74,19 +74,30 @@ class TestDataFragment : Fragment() {
         val originalResult = score!!
         var maxNum = 0f
         var minNum = 0f
+        var maxNumLow = 0f
+        var minNumLow = 0f
+        var isVulnerabilityTest = false
         when(testNumber) {
             // SISCO Test
             1 -> { maxNum = 66f
                 minNum = 34f }
             // SVQ Test
-            2 -> { maxNum = 69f
-                minNum = 50f }
+            2 -> { isVulnerabilityTest = true
+                maxNum = 95f
+                minNum = 70f
+                maxNumLow = 69f
+                minNumLow = 50f
+            }
             // PSS Test
             3 -> { maxNum = 26f
                 minNum = 14f }
             // SVS Test
-            4 -> { maxNum = 2.99f
-                minNum = 1f }
+            4 -> { isVulnerabilityTest = true
+                maxNum = 2.99f
+                minNum = 2f
+                maxNumLow = 1.99f
+                minNumLow = 1f
+            }
         }
 
         // Converting score to percentage according each test
@@ -105,23 +116,47 @@ class TestDataFragment : Fragment() {
         updateTestAdvice(resultPercentage)
 
         // Getting color and title according of results
-        when {
-            originalResult > maxNum -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_red,
-                    R.attr.btn_background_red, R.attr.dark_red)
-                updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
+        if(isVulnerabilityTest)
+            when {
+                originalResult > maxNum -> {
+                    createPieChart(resultPercentage, R.attr.btn_text_color_red,
+                        R.attr.btn_background_red, R.attr.dark_red)
+                    updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
+                }
+                originalResult in minNum..maxNum -> {
+                    createPieChart(resultPercentage, R.attr.btn_text_color_yellow,
+                        R.attr.btn_background_yellow, R.attr.dark_yellow)
+                    updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
+                }
+                originalResult in minNumLow..maxNumLow -> {
+                    createPieChart(resultPercentage, R.attr.btn_text_color_green,
+                        R.attr.btn_background_green, R.attr.dark_green)
+                    updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
+                }
+                else -> {
+                    createPieChart(resultPercentage, R.attr.btn_text_color_blue,
+                        R.attr.btn_background_blue, R.attr.dark_blue)
+                    updateColors(R.attr.btn_text_color_blue, R.attr.btn_background_blue)
+                }
             }
-            originalResult in minNum..maxNum -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_yellow,
-                    R.attr.btn_background_yellow, R.attr.dark_yellow)
-                updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
+        else
+            when {
+                originalResult > maxNum -> {
+                    createPieChart(resultPercentage, R.attr.btn_text_color_red,
+                        R.attr.btn_background_red, R.attr.dark_red)
+                    updateColors(R.attr.btn_text_color_red, R.attr.btn_background_red)
+                }
+                originalResult in minNum..maxNum -> {
+                    createPieChart(resultPercentage, R.attr.btn_text_color_yellow,
+                        R.attr.btn_background_yellow, R.attr.dark_yellow)
+                    updateColors(R.attr.btn_text_color_yellow, R.attr.btn_background_yellow)
+                }
+                else -> {
+                    createPieChart(resultPercentage, R.attr.btn_text_color_green,
+                        R.attr.btn_background_green, R.attr.dark_green)
+                    updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
+                }
             }
-            else -> {
-                createPieChart(resultPercentage, R.attr.btn_text_color_green,
-                    R.attr.btn_background_green, R.attr.dark_green)
-                updateColors(R.attr.btn_text_color_green, R.attr.btn_background_green)
-            }
-        }
     }
 
     private fun createPieChart(score: Float, textColorResource: Int,

@@ -3,6 +3,7 @@ package com.example.skydelight.unity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.skydelight.MainActivity
 import com.example.skydelight.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,6 +23,7 @@ class UnityActivity : AppCompatActivity() {
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{
             //unityPlayer.quit()
             restartApp(this)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
     }
 

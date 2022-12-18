@@ -1,6 +1,7 @@
 package com.example.skydelight.navbar
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
@@ -9,6 +10,7 @@ import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
@@ -28,7 +30,6 @@ import okhttp3.FormBody
 import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.NullPointerException
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -48,20 +49,18 @@ class HomeFragment : Fragment() {
         // return inflater.inflate(R.layout.fragment_navbar_home, container, false)
     }
 
-    private var isLoadingAdvice = false
-
     // After the view is created we can do things
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Loading pictures on view pager and connecting it with dots tab layout
-        try {
-            val loadingText = getString(R.string.loading)
-            stressStatus = StressStatus(loadingText, loadingText, loadingText, loadingText,
-                loadingText, loadingText, ElementsEditor().getDrawable(requireContext(), R.attr.heart_relaxed))
-            binding.stressStatus = stressStatus
+        // Changing linear layouts transparency
+        val linearLayoutArray = arrayOf(binding.linearLayoutOne, binding.linearLayoutTwo,
+            binding.linearLayoutOneEmpty, binding.linearLayoutTwoEmpty)
+        for(layout in linearLayoutArray)
+            layout.background.alpha = (50 * 255) / 100
 
-            binding.viewPagerMain.adapter = ViewPageAdapter(requireContext(), null, 2)
+        // Loading pictures on view pager and connecting it with dots tab layout
+        try { binding.viewPagerMain.adapter = ViewPageAdapter(requireContext(), null, 2)
             binding.tabLayout.setupWithViewPager(binding.viewPagerMain, true)
         } catch(e: java.lang.IllegalStateException) {}
 
@@ -69,12 +68,8 @@ class HomeFragment : Fragment() {
         Linkify.addLinks(binding.txtCredits, Linkify.WEB_URLS)
         binding.txtCredits.movementMethod = LinkMovementMethod.getInstance()
 
-        // Showing initial random advice with reload icon
-        showAdvice()
-
-        // Getting last test dates
-        for(testNumber in 1..4)
-            updateTestCalendar(testNumber)
+        // Showing initial random advice and status with reload icon
+        showAdviceAndReloadStatus()
 
         // Pictures Actions
         var isAdviceLayout = true
@@ -87,23 +82,54 @@ class HomeFragment : Fragment() {
                     binding.adviceLayout.visibility = View.GONE
                     binding.statusLayout.visibility = View.VISIBLE
                     isAdviceLayout = false
-
-                    // Hide reload if isn't loading advice
-                    if(!isLoadingAdvice)
-                        updateImgReloadFromParent(false)
                 }
                 // Change to Advice View
                 else {
                     binding.adviceLayout.visibility = View.VISIBLE
                     binding.statusLayout.visibility = View.GONE
                     isAdviceLayout = true
-
-                    // Show reload if isn't loading advice
-                    if(!isLoadingAdvice)
-                        updateImgReloadFromParent(true)
                 }
             }
         })
+    }
+
+    // Function to connect with the api
+    fun showAdviceAndReloadStatus() {
+        // Restarting values
+        try {
+            // Changing texts and hiding image reload
+            updateImgReloadFromParent(false)
+            binding.txtTitle.text = getString(R.string.loading)
+            binding.textView.text = getString(R.string.loading)
+            binding.txtCredits.text = getString(R.string.loading)
+
+            // Initial colors for all elements in gray
+            ElementsEditor().updateColors(R.attr.btn_text_color_gray, R.attr.btn_background_gray, context,
+                arrayListOf(binding.txtStatus, binding.txtStress, binding.txtStressResult,
+                    binding.txtRisk, binding.txtVulnerable, binding.txtVulnerableResult), null)
+            binding.imgHeartLogo.setColorFilter(ElementsEditor().getColor(context, R.attr.btn_text_color_gray))
+            binding.imgRiskLogo.setColorFilter(ElementsEditor().getColor(context, R.attr.btn_text_color_gray))
+            binding.linearLayoutOne.background.setTint(ElementsEditor().getColor(context, R.attr.btn_background_gray))
+            binding.linearLayoutTwo.background.setTint(ElementsEditor().getColor(context, R.attr.btn_background_gray))
+            binding.linearLayoutOneEmpty.background.setTint(ElementsEditor().getColor(context, R.attr.btn_background_gray))
+            binding.linearLayoutTwoEmpty.background.setTint(ElementsEditor().getColor(context, R.attr.btn_background_gray))
+
+            // Loading initial values for status and risk
+            val loadingText = getString(R.string.loading)
+            stressStatus = StressStatus(loadingText, loadingText, loadingText, loadingText, loadingText, loadingText,
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_help_outline_24)!!,
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_help_outline_24)!!)
+
+            // Updating view
+            binding.stressStatus = stressStatus
+        } catch(e: java.lang.IllegalStateException) {}
+
+        // Showing stress and risk status
+        for(testNumber in 1..4)
+            updateTestCalendar(testNumber)
+
+        // Showing advice
+        showAdvice()
     }
 
     private fun updateImgReloadFromParent(state: Boolean) {
@@ -117,15 +143,7 @@ class HomeFragment : Fragment() {
         } catch (e: NullPointerException) {}
     }
 
-    // Function to connect with the api
-    fun showAdvice() {
-        // Changing texts and hiding image reload
-        isLoadingAdvice = true
-        updateImgReloadFromParent(false)
-        binding.txtTitle.text = getString(R.string.loading)
-        binding.textView.text = getString(R.string.loading)
-        binding.txtCredits.text = getString(R.string.loading)
-
+    private fun showAdvice() {
         // Launching room database connection
         MainScope().launch {
             try {
@@ -164,13 +182,13 @@ class HomeFragment : Fragment() {
                             // Preparing selected answers to http petition
                             if(questionsList.size < 20)
                                 formBody.add("type_advice", "especifico")
-                                        .add("list_excluded", questionsList.toString())
+                                    .add("list_excluded", questionsList.toString())
                             else
                                 formBody.add("type_advice", "general")
-                                        .add("list_excluded", "[]")
+                                    .add("list_excluded", "[]")
                         } else
                             formBody.add("type_advice", "general")
-                                    .add("list_excluded", "[]")
+                                .add("list_excluded", "[]")
 
                         // Making http request
                         request = Request.Builder().url("https://apiskydelight.herokuapp.com/api/consejo")
@@ -191,11 +209,9 @@ class HomeFragment : Fragment() {
                                     MainScope().launch {
                                         binding.txtTitle.text = "Recomendación\n${JSONObject(it).getString("id")} de 50"
                                         binding.textView.text = JSONObject(it).getString("consejo")
-                                        isLoadingAdvice = false
 
                                         // Show reload only on advice layout
-                                        if(binding.adviceLayout.visibility == View.VISIBLE)
-                                            updateImgReloadFromParent(true)
+                                        updateImgReloadFromParent(true)
 
                                         // Show random background
                                         showBackground()
@@ -325,15 +341,17 @@ class HomeFragment : Fragment() {
                         // Saving test with last date in database
                         val maxDateTime: LocalDateTime? =
                             testArrayDates.maxByOrNull { item -> item.toEpochSecond(ZoneOffset.UTC) }
-                        when(testNumber){
-                            1 -> user.siscoCalendar = maxDateTime.toString().replace("T", " ")
-                            2 -> user.svqCalendar = maxDateTime.toString().replace("T", " ")
-                            3 -> user.pssCalendar = maxDateTime.toString().replace("T", " ")
-                            4 -> user.svsCalendar = maxDateTime.toString().replace("T", " ")
-                        }
+                        val dateString = maxDateTime.toString().replace("T", " ")
 
                         // Updating user info in local database
-                        MainScope().launch { userDao.updateUser(user) }
+                        MainScope().launch {
+                            when(testNumber){
+                                1 -> userDao.updateSiscoCalendar(user.email, dateString)
+                                2 -> userDao.updateSvqCalendar(user.email, dateString)
+                                3 -> userDao.updatePssCalendar(user.email, dateString)
+                                4 -> userDao.updateSvsCalendar(user.email, dateString)
+                            }
+                        }
 
                         // Show user stress status
                         showStressStatus()
@@ -352,6 +370,13 @@ class HomeFragment : Fragment() {
                     .fallbackToDestructiveMigration().build().userDao()
                 val user = userDao.getUser()[0]
 
+                // Showing linear layouts with results
+                binding.linearLayoutOne.visibility = View.VISIBLE
+                binding.linearLayoutOneEmpty.visibility = View.GONE
+                binding.linearLayoutTwo.visibility = View.VISIBLE
+                binding.linearLayoutTwoEmpty.visibility = View.GONE
+
+                // Date formatter
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
 
                 if(user.siscoCalendar != null && user.pssCalendar != null) {
@@ -379,6 +404,9 @@ class HomeFragment : Fragment() {
                     stressStatus.status = getString(R.string.home_status_general, "Desconocido")
                     stressStatus.stress = getString(R.string.home_status_stress_test, "Ninguno")
                     stressStatus.stressResult = getString(R.string.home_status_stress_result, "Desconocido")
+                    stressStatus.heartImg = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_help_outline_24)!!
+                    binding.linearLayoutOne.visibility = View.GONE
+                    binding.linearLayoutOneEmpty.visibility = View.VISIBLE
                 }
 
                 if(user.svqCalendar != null && user.svsCalendar != null) {
@@ -406,6 +434,9 @@ class HomeFragment : Fragment() {
                     stressStatus.risk = getString(R.string.home_status_risk, "Desconocido")
                     stressStatus.vulnerability = getString(R.string.home_status_vulnerable_test, "Ninguno")
                     stressStatus.vulnerabilityResult = getString(R.string.home_status_vulnerable_result, "Desconocido")
+                    stressStatus.riskImg = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_help_outline_24)!!
+                    binding.linearLayoutTwo.visibility = View.GONE
+                    binding.linearLayoutTwoEmpty.visibility = View.VISIBLE
                 }
 
                 binding.stressStatus = stressStatus
@@ -468,35 +499,38 @@ class HomeFragment : Fragment() {
                             testScore = dateObject.getString("total").toFloat()
 
                             if(dateOfTest == testDate) {
-                                statusOrRisk = scoreToStatusOrRisk(testNumber, testScore)
-                                testResult = floatToPercentage(testNumber, testScore)
-
                                 MainScope().launch {
                                     try {
+                                        statusOrRisk = scoreToStatusOrRisk(testNumber, testScore)
+                                        testResult = floatToPercentage(testNumber, testScore)
                                         updateStressRiskColors(testNumber, testScore, requireContext())
                                         when (testNumber) {
                                             // SISCO Test
                                             1 -> {
-                                                stressStatus.img = scoreToImage(testNumber, testScore, requireContext())
+                                                binding.imgHeartLogo.setColorFilter(Color.TRANSPARENT)
+                                                stressStatus.heartImg = scoreToImage(testNumber, testScore, requireContext())
                                                 stressStatus.status = getString(R.string.home_status_general, statusOrRisk)
                                                 stressStatus.stress = getString(R.string.home_status_stress_test, "SISCO")
                                                 stressStatus.stressResult = getString(R.string.home_status_stress_result, testResult)
                                             }
                                             // SVQ Test
                                             2 -> {
+                                                stressStatus.riskImg = scoreToImage(testNumber, testScore, requireContext())
                                                 stressStatus.risk = getString(R.string.home_status_risk, statusOrRisk)
                                                 stressStatus.vulnerability = getString(R.string.home_status_vulnerable_test, "SVQ")
                                                 stressStatus.vulnerabilityResult = getString(R.string.home_status_vulnerable_result, testResult)
                                             }
                                             // PSS Test
                                             3 -> {
-                                                stressStatus.img = scoreToImage(testNumber, testScore, requireContext())
+                                                binding.imgHeartLogo.setColorFilter(Color.TRANSPARENT)
+                                                stressStatus.heartImg = scoreToImage(testNumber, testScore, requireContext())
                                                 stressStatus.status = getString(R.string.home_status_general, statusOrRisk)
                                                 stressStatus.stress = getString(R.string.home_status_stress_test, "PSS")
                                                 stressStatus.stressResult = getString(R.string.home_status_stress_result, testResult)
                                             }
                                             // SVS Test
                                             else -> {
+                                                stressStatus.riskImg = scoreToImage(testNumber, testScore, requireContext())
                                                 stressStatus.risk = getString(R.string.home_status_risk, statusOrRisk)
                                                 stressStatus.vulnerability = getString(R.string.home_status_vulnerable_test, "SVS")
                                                 stressStatus.vulnerabilityResult = getString(R.string.home_status_vulnerable_result, testResult)
@@ -518,9 +552,10 @@ class HomeFragment : Fragment() {
         val explanation = when(testNumber){
             // SISCO Test
             1 -> {
+                val siscoResult = (result * 100) / 105
                 when {
-                    result <= 33f -> getString(R.string.home_status_low)
-                    result in 34f..66f -> getString(R.string.home_status_medium)
+                    siscoResult <= 33f -> getString(R.string.home_status_low)
+                    siscoResult in 34f..66f -> getString(R.string.home_status_medium)
                     else -> getString(R.string.home_status_high)
                 }
             }
@@ -577,84 +612,181 @@ class HomeFragment : Fragment() {
     }
 
     private fun scoreToImage(testNumber: Int, result: Float, context: Context): Drawable {
-        val imageReference = when(testNumber){
+        return when(testNumber){
             // SISCO Test
             1 -> {
-                when {
-                    result <= 33f -> R.attr.heart_laughing
-                    result in 34f..66f -> R.attr.heart_happy
+                val siscoResult = (result * 100) / 105
+                val imgReference = when {
+                    siscoResult <= 33f -> R.attr.heart_laughing
+                    siscoResult in 34f..66f -> R.attr.heart_happy
                     else -> R.attr.heart_sad
                 }
+                ElementsEditor().getDrawable(context, imgReference)
+            }
+            // SVQ Test
+            2 -> {
+                val imgReference = when {
+                    result <= 49f -> R.drawable.ic_baseline_security_24
+                    result in 50f..69f -> R.drawable.ic_baseline_check_circle_outline_24
+                    result in 70f..95f -> R.drawable.ic_baseline_warning_amber_24
+                    else -> R.drawable.ic_outline_dangerous_24
+                }
+                ContextCompat.getDrawable(context, imgReference)!!
             }
             // PSS Test
-            else -> {
-                when {
+            3 -> {
+                val imgReference = when {
                     result <= 13f -> R.attr.heart_laughing
                     result in 14f..26f -> R.attr.heart_happy
                     else -> R.attr.heart_sad
                 }
+                ElementsEditor().getDrawable(context, imgReference)
+            }
+            // SVS Test
+            else -> {
+                val imgReference = when {
+                    result < 1f -> R.drawable.ic_baseline_security_24
+                    result < 2f -> R.drawable.ic_baseline_check_circle_outline_24
+                    result < 3f -> R.drawable.ic_baseline_warning_amber_24
+                    else -> R.drawable.ic_outline_dangerous_24
+                }
+                ContextCompat.getDrawable(context, imgReference)!!
             }
         }
-        return ElementsEditor().getDrawable(context, imageReference)
     }
 
     private fun updateStressRiskColors(testNumber: Int, result: Float, context: Context) {
         val stressTexts = arrayListOf(binding.txtStatus, binding.txtStress, binding.txtStressResult)
         val vulnerabilityTexts = arrayListOf(binding.txtRisk, binding.txtVulnerable, binding.txtVulnerableResult)
+        val blueText = R.attr.btn_text_color_blue
+        val blueShadow = R.attr.btn_background_blue
         val greenText = R.attr.btn_text_color_green
-        val greenBtn = R.attr.btn_background_green
+        val greenShadow = R.attr.btn_background_green
         val yellowText = R.attr.btn_text_color_yellow
-        val yellowBtn = R.attr.btn_background_yellow
+        val yellowShadow = R.attr.btn_background_yellow
         val redText = R.attr.btn_text_color_red
-        val redBtn = R.attr.btn_background_red
+        val redShadow = R.attr.btn_background_red
 
+        val siscoResult = (result * 100) / 105
         when(testNumber){
             // SISCO Test
             1 -> {
                 when {
-                    result <= 33f -> ElementsEditor().updateColors(greenText,
-                        greenBtn, context, stressTexts, null)
-                    result in 34f..66f -> ElementsEditor().updateColors(yellowText,
-                        yellowBtn, context, stressTexts, null)
-                    else -> ElementsEditor().updateColors(redText,
-                        redBtn, context, stressTexts, null)
+                    siscoResult <= 33f -> {
+                        binding.linearLayoutOne.background.setTint(
+                            ElementsEditor().getColor(context, greenShadow))
+                        ElementsEditor().updateColors(greenText,
+                            greenShadow, context, stressTexts, null)
+                    }
+                    siscoResult in 34f..66f -> {
+                        binding.linearLayoutOne.background.setTint(
+                            ElementsEditor().getColor(context, yellowShadow))
+                        ElementsEditor().updateColors(yellowText,
+                            yellowShadow, context, stressTexts, null)
+                    }
+                    else -> {
+                        binding.linearLayoutOne.background.setTint(
+                            ElementsEditor().getColor(context, redShadow))
+                        ElementsEditor().updateColors(redText,
+                            redShadow, context, stressTexts, null)
+                    }
                 }
             }
             // SVQ Test
             2 -> {
                 when {
-                    result <= 49f -> ElementsEditor().updateColors(greenText,
-                        greenBtn, context, vulnerabilityTexts, null)
-                    result in 50f..69f -> ElementsEditor().updateColors(yellowText,
-                        yellowBtn, context, vulnerabilityTexts, null)
-                    result in 70f..95f -> ElementsEditor().updateColors(redText,
-                        redBtn, context, vulnerabilityTexts, null)
-                    else -> ElementsEditor().updateColors(redText,
-                        redBtn, context, vulnerabilityTexts, null)
+                    result <= 49f -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, blueShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, blueText))
+                        ElementsEditor().updateColors(blueText, blueShadow,
+                            context, vulnerabilityTexts, null)
+                    }
+                    result in 50f..69f -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, greenShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, greenText))
+                        ElementsEditor().updateColors(greenText, greenShadow,
+                            context, vulnerabilityTexts, null)
+                    }
+                    result in 70f..95f -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, yellowShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, yellowText))
+                        ElementsEditor().updateColors(yellowText, yellowShadow,
+                            context, vulnerabilityTexts, null)
+                    }
+                    else -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, redShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, redText))
+                        ElementsEditor().updateColors(redText, redShadow,
+                            context, vulnerabilityTexts, null)
+                    }
                 }
             }
             // PSS Test
             3 -> {
                 when {
-                    result <= 13f -> ElementsEditor().updateColors(greenText,
-                        greenBtn, context, stressTexts, null)
-                    result in 14f..26f -> ElementsEditor().updateColors(yellowText,
-                        yellowBtn, context, stressTexts, null)
-                    else -> ElementsEditor().updateColors(redText,
-                        redBtn, context, stressTexts, null)
+                    result <= 13f -> {
+                        binding.linearLayoutOne.background.setTint(
+                            ElementsEditor().getColor(context, greenShadow))
+                        ElementsEditor().updateColors(greenText,
+                            greenShadow, context, stressTexts, null)
+                    }
+                    result in 14f..26f -> {
+                        binding.linearLayoutOne.background.setTint(
+                            ElementsEditor().getColor(context, yellowShadow))
+                        ElementsEditor().updateColors(yellowText,
+                            yellowShadow, context, stressTexts, null)
+                    }
+                    else -> {
+                        binding.linearLayoutOne.background.setTint(
+                            ElementsEditor().getColor(context, redShadow))
+                        ElementsEditor().updateColors(redText,
+                            redShadow, context, stressTexts, null)
+                    }
                 }
             }
             // SVS Test
             else -> {
                 when {
-                    result < 1f -> ElementsEditor().updateColors(greenText,
-                        greenBtn, context, vulnerabilityTexts, null)
-                    result < 2f -> ElementsEditor().updateColors(yellowText,
-                        yellowBtn, context, vulnerabilityTexts, null)
-                    result < 3f -> ElementsEditor().updateColors(yellowText,
-                        yellowBtn, context, vulnerabilityTexts, null)
-                    else -> ElementsEditor().updateColors(redText,
-                        redBtn, context, vulnerabilityTexts, null)
+                    result < 1f -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, blueShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, blueText))
+                        ElementsEditor().updateColors(blueText, blueShadow,
+                            context, vulnerabilityTexts, null)
+                    }
+                    result < 2f -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, greenShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, greenText))
+                        ElementsEditor().updateColors(greenText, greenShadow,
+                            context, vulnerabilityTexts, null)
+                    }
+                    result < 3f -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, yellowShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, yellowText))
+                        ElementsEditor().updateColors(yellowText, yellowShadow,
+                            context, vulnerabilityTexts, null)
+                    }
+                    else -> {
+                        binding.linearLayoutTwo.background.setTint(
+                            ElementsEditor().getColor(context, redShadow))
+                        binding.imgRiskLogo.setColorFilter(
+                            ElementsEditor().getColor(context, redText))
+                        ElementsEditor().updateColors(redText, redShadow,
+                            context, vulnerabilityTexts, null)
+                    }
                 }
             }
         }

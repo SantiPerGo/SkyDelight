@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.skydelight.MainActivity
@@ -33,6 +34,16 @@ class StartScreenFragment : Fragment() {
 
         // Showing image view
         (activity as MainActivity).imgBackgroundVisibility(true)
+
+        // If user press back button then close app
+        try { requireActivity().onBackPressedDispatcher.addCallback(requireActivity(),
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        if(findNavController().currentDestination?.id == R.id.start_screen_fragment)
+                            try { requireActivity().moveTaskToBack(true)
+                            } catch (e: java.lang.IllegalStateException) {}
+                    } })
+        } catch (e: java.lang.IllegalStateException) {}
 
         // Changing to the login fragment
         binding.btnLogin.setOnClickListener{

@@ -124,9 +124,9 @@
             app:destination="@id/start_screen_fragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/slide_exit_to_left"
-            app:popEnterAnim="@anim/slide_from_right"
+            app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/fade_out"
-            app:popUpTo="@+id/start_screen_fragment"
+            app:popUpTo="@+id/loading_screen_fragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loadingScreen_to_navBar"
@@ -135,7 +135,7 @@
             app:exitAnim="@anim/slide_exit_to_left"
             app:popEnterAnim="@anim/slide_from_right"
             app:popExitAnim="@anim/slide_exit_to_left"
-            app:popUpTo="@+id/start_screen_fragment"
+            app:popUpTo="@+id/loading_screen_fragment"
             app:popUpToInclusive="true" />
     </fragment>
 

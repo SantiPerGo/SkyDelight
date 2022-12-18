@@ -118,8 +118,6 @@ class NavBarFragment : Fragment() {
     private fun initialTest(){
         // Deactivating navbar
         changeNavBarButtonsClickable(false)
-        //updateImgReload(false)
-        //updateImgHelp(false)
 
         // Creating tutorial dialogs
         try {
@@ -174,6 +172,9 @@ class NavBarFragment : Fragment() {
                 getString(R.string.tutorial_first_description), R.attr.heart_happy,
                 R.attr.fragment_background, requireContext(), false, buttonsBicolor = false)
             secondDialog.secondButton(getString(R.string.btn_next)) {
+                // Hiding reload icon
+                updateImgReload(false)
+
                 // Changing fragment
                 updateNavBarHost(TestFragment(), R.id.navbar_test_fragment, true)
                 itemId = R.id.nav_test
@@ -188,6 +189,9 @@ class NavBarFragment : Fragment() {
             firstDialog.firstButton(getString(R.string.tutorial_btn_start)) {
                 secondDialog.show() }
             firstDialog.secondButton(getString(R.string.tutorial_btn_skip)) {
+                // Hiding reload icon
+                updateImgReload(false)
+
                 // Setting parameters for the next fragment
                 val fragment = TestAnswerFragment()
                 fragment.arguments = bundleOf("test" to 1, "btn_cancel" to true)
@@ -349,7 +353,7 @@ class NavBarFragment : Fragment() {
     private fun imgAction(){
         binding.ImgReload.setOnClickListener {
             // Updating home advice
-            (binding.navbarHostFragment.getFragment() as HomeFragment).showAdvice()
+            (binding.navbarHostFragment.getFragment() as HomeFragment).showAdviceAndReloadStatus()
         }
 
         binding.ImgHelp.setOnClickListener {

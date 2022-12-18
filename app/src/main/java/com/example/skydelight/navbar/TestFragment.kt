@@ -175,15 +175,17 @@ class TestFragment : Fragment() {
                         // Saving test with last date in database
                         val maxDateTime: LocalDateTime? =
                             testArrayDates.maxByOrNull { item -> item.toEpochSecond(ZoneOffset.UTC) }
-                        when(testNumber){
-                            1 -> user.siscoCalendar = maxDateTime.toString().replace("T", " ")
-                            2 -> user.svqCalendar = maxDateTime.toString().replace("T", " ")
-                            3 -> user.pssCalendar = maxDateTime.toString().replace("T", " ")
-                            4 -> user.svsCalendar = maxDateTime.toString().replace("T", " ")
-                        }
+                        val dateString = maxDateTime.toString().replace("T", " ")
 
                         // Updating user info in local database
-                        MainScope().launch { userDao.updateUser(user) }
+                        MainScope().launch {
+                            when(testNumber){
+                                1 -> userDao.updateSiscoCalendar(user.email, dateString)
+                                2 -> userDao.updateSvqCalendar(user.email, dateString)
+                                3 -> userDao.updatePssCalendar(user.email, dateString)
+                                4 -> userDao.updateSvsCalendar(user.email, dateString)
+                            }
+                        }
                     }
 
                     changeToTestDataFragment(testNumber)

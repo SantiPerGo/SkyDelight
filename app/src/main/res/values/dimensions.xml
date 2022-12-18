@@ -6,18 +6,11 @@
     <dimen name="switch_padding">10dp</dimen>
     <dimen name="icon_padding_2">1dp</dimen>
     <dimen name="sex_padding">5dp</dimen>
+    <dimen name="button_padding">15dp</dimen>
     <dimen name="custom_dialog">5dp</dimen>
     <dimen name="custom_dialog_2">10dp</dimen>
     <dimen name="custom_dialog_3">20dp</dimen>
     <dimen name="custom_dialog_4">75dp</dimen>
-
-    <!-- Text Auto Sizes in SP's -->
-    <dimen name="min_size">10sp</dimen>
-    <dimen name="max_size">45sp</dimen>
-    <dimen name="granularity_mega_size">1sp</dimen>
-    <dimen name="granularity_size">5sp</dimen>
-    <dimen name="granularity_button_size">10sp</dimen>
-    <dimen name="granularity_button_size_2">20sp</dimen>
 
     <!-- Elements Texts Sizes in SP's -->
     <dimen name="button_text_size">20sp</dimen>
