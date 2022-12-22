@@ -8,33 +8,21 @@
     android:background="@drawable/gradient_background"
     tools:context=".navbar.GamesFragment">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPagerMain"
+    <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/wallpaper_beach_2"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:alpha="@dimen/image_alpha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:clickable="true"
-        app:tabPaddingStart="20dp"
-        app:tabPaddingEnd="20dp"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_tab_layout_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_tab_layout_top" />
-
     <TextView
-        style="@style/greenTextViewStyle"
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -46,7 +34,7 @@
         app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
     <TextView
-        style="@style/greenTextViewStyle"
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtSubtitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -57,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_ar_title_top" />
 
     <TextView
-        style="@style/greenTextViewStyle"
+        style="@style/blueTextViewStyle"
         android:id="@+id/txtDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -68,15 +56,17 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_description_top" />
 
     <Button
-        style="@style/greenButtonStyle"
+        style="@style/blueButtonStyle"
         android:id="@+id/btnStart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/btn_start"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:shadowColor="?attr/colorPrimaryVariant"
         app:cornerRadius="@dimen/corner_radius"
-        app:rippleColor="?attr/btn_text_color_green"
-        app:strokeColor="?attr/btn_text_color_green"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_start_bottom"
+        app:rippleColor="?attr/colorSecondaryVariant"
+        app:strokeColor="?attr/colorSecondaryVariant"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_start_top" />
@@ -107,45 +97,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.34" />
+        app:layout_constraintGuide_percent="0.37" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_description_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.38" />
+        app:layout_constraintGuide_percent="0.41" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_description_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.76" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.74" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_start_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.84" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_tab_layout_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_tab_layout_bottom"
+        android:id="@+id/guideline_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

@@ -1,0 +1,1 @@
+com.SkyDelight.ARTemplate.BuildConfig

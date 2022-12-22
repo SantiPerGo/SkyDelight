@@ -83,12 +83,14 @@ class NavBarFragment : Fragment() {
     }
 
     fun updateImgReload(state: Boolean){
-        binding.ImgReload.isClickable = state
+        if(itemId == R.id.nav_home) {
+            binding.ImgReload.isClickable = state
 
-        if(state)
-            binding.ImgReload.animate().alpha(1f)
-        else
-            binding.ImgReload.animate().alpha(0f)
+            if (state)
+                binding.ImgReload.animate().alpha(1f)
+            else
+                binding.ImgReload.animate().alpha(0f)
+        }
     }
 
     // Function to change fragment of navbar host

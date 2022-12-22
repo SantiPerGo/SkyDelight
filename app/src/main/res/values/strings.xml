@@ -94,7 +94,7 @@
     <string name="navBar_help_test_title">¿Para qué son los test?</string>
     <string name="navBar_help_test_description">En esta pantalla puedes responder cuestionarios cada 24 horas para conocer diversos aspectos de tu estrés, pero no olvides visitar el sitio web para dar seguimiento a tus resultados</string>
     <string name="navBar_help_games_title">¿Para qué son los juegos?</string>
-    <string name="navBar_help_games_description">En esta pantalla podrás disfrutar de actividades usando realidad aumentada para que puedas relajarte (sólo si tu teléfono es compatible con ARCore)</string>
+    <string name="navBar_help_games_description">En esta pantalla podrás disfrutar de una actividad usando realidad aumentada para que puedas relajarte (sólo si tu teléfono es compatible con ARCore)</string>
 
     <!-- Tutorial Strings -->
     <string name="tutorial_test_title">¡Casi Terminamos!</string>
@@ -103,7 +103,7 @@
     <string name="tutorial_four_title">Pantalla 4 de 4</string>
     <string name="tutorial_four_description">En esta pantalla podrás actualizar tus datos personales (con excepción del correo electrónico), cerrar sesión, eliminar tu cuenta y saber más de la aplicación</string>
     <string name="tutorial_three_title">Pantalla 3 de 4</string>
-    <string name="tutorial_three_description">En esta pantalla podrás disfrutar de actividades usando realidad aumentada para que puedas relajarte (sólo si tu teléfono es compatible con ARCore)</string>
+    <string name="tutorial_three_description">En esta pantalla podrás disfrutar de una actividad usando realidad aumentada para que puedas relajarte (sólo si tu teléfono es compatible con ARCore)</string>
     <string name="tutorial_second_title">Pantalla 2 de 4</string>
     <string name="tutorial_second_description">En esta pantalla puedes responder cuestionarios cada 24 horas para conocer diversos aspectos de tu estrés, pero no olvides visitar el sitio web para dar seguimiento a tus resultados</string>
     <string name="tutorial_first_title">Pantalla 1 de 4</string>
@@ -134,12 +134,12 @@
 
     <!-- Games Navbar Fragment Strings -->
     <string name="games_title">¡Hora de Relajarse!</string>
-    <string name="games_relaxAR_title">Actividades Relajantes</string>
-    <string name="games_relaxAR_description">En esta actividad podrás usar una puerta para visitar lugares relajantes como: una playa, una costa, un lago o una cascada</string>
-    <string name="games_extremeAR_title">Actividades Extremas</string>
-    <string name="games_extremeAR_description">En esta actividad podrás sentarte a disfrutar experiencias extremas como: descenso en trineo, caída libre, montaña rusa o paracaidismo</string>
-    <string name="games_errorAR_title">Error de Incompatibilidad con ARCore</string>
-    <string name="games_errorAR_description">Parece que tu dispositivo no es compatible con realidad aumentada (ARCore)</string>
+    <string name="games_relaxAR_title">Lugares Relajantes</string>
+    <string name="games_relaxAR_description">En esta sección podrás usar una puerta para visitar lugares relajantes como: una playa, una costa, un lago o una cascada</string>
+    <string name="games_errorAR_title">Error de Incompatibilidad</string>
+    <string name="games_errorAR_description">Parece que tu dispositivo no es compatible con ARCore</string>
+    <string name="games_errorCamera_title">Error de Permisos</string>
+    <string name="games_errorCamera_description">Para esta actividad se requiere realidad aumentada, por lo que debes permitir el acceso a la cámara</string>
     <string name="games_errorAR_understand">¡Entendido!</string>
 
     <!-- Profile Navbar Fragment Strings -->
