@@ -1,17 +1,17 @@
 com.SkyDelight.ARTemplate.R$style
-com.SkyDelight.ARTemplate.R$mipmap
 com.SkyDelight.ARTemplate.R$string
+com.SkyDelight.ARTemplate.R$mipmap
 com.SkyDelight.ARTemplate.R
-com.SkyDelight.ARTemplate.R$mipmap: int app_icon
 com.SkyDelight.ARTemplate.R$style: int BaseUnityTheme
 com.SkyDelight.ARTemplate.R$mipmap: int app_icon_round
+com.SkyDelight.ARTemplate.R$mipmap: int ic_launcher_background
+com.SkyDelight.ARTemplate.R$mipmap: int ic_launcher_foreground
+com.SkyDelight.ARTemplate.R$style: int UnityThemeSelector_Translucent
+com.SkyDelight.ARTemplate.R$string: int game_view_content_description
+com.SkyDelight.ARTemplate.R$mipmap: int app_icon
 com.SkyDelight.ARTemplate.R$string: int app_name
 com.SkyDelight.ARTemplate.R$style: int UnityThemeSelector
-com.SkyDelight.ARTemplate.R$mipmap: int ic_launcher_background
-com.SkyDelight.ARTemplate.R$string: int game_view_content_description
-com.SkyDelight.ARTemplate.R$style: int UnityThemeSelector_Translucent
-com.SkyDelight.ARTemplate.R$mipmap: int ic_launcher_foreground
+com.SkyDelight.ARTemplate.R$string: R$string()
 com.SkyDelight.ARTemplate.R: R()
 com.SkyDelight.ARTemplate.R$style: R$style()
-com.SkyDelight.ARTemplate.R$string: R$string()
 com.SkyDelight.ARTemplate.R$mipmap: R$mipmap()

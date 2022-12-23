@@ -140,6 +140,8 @@
     <string name="games_errorAR_description">Parece que tu dispositivo no es compatible con ARCore</string>
     <string name="games_errorCamera_title">Error de Permisos</string>
     <string name="games_errorCamera_description">Para esta actividad se requiere realidad aumentada, por lo que debes permitir el acceso a la cámara</string>
+    <string name="games_errorValidation_title">Demasiados Intentos</string>
+    <string name="games_errorValidation_description">Si no puedes actualizar ARCore o tu dispositivo no es compatible, no podrás hacer uso de esta sección. Por favor, intenta de nuevo más tarde</string>
     <string name="games_errorAR_understand">¡Entendido!</string>
 
     <!-- Profile Navbar Fragment Strings -->

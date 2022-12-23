@@ -19,6 +19,7 @@ import com.example.skydelight.custom.CustomDialog
 import com.example.skydelight.databinding.FragmentNavbarGamesBinding
 import com.example.skydelight.unity.UnityActivity
 import com.google.ar.core.ArCoreApk
+import com.google.ar.core.exceptions.FatalException
 
 class GamesFragment : Fragment() {
     // Binding variable to use elements in the xml layout
@@ -56,12 +57,14 @@ class GamesFragment : Fragment() {
         if(isCompatibleWithArCore(context)) {
             // requestInstall(Activity, true) will triggers installation of
             // Google Play Services for AR if necessary.
-            if (ArCoreApk.getInstance().requestInstall(activity, true) == ArCoreApk.InstallStatus.INSTALLED) {
-                // Check and request camera permission
-                if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED)
-                    requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-                 else loadUnityGame(context)
-            }
+            try {
+                if (ArCoreApk.getInstance().requestInstall(activity, true) == ArCoreApk.InstallStatus.INSTALLED) {
+                    // Check and request camera permission
+                    if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED)
+                        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                     else loadUnityGame(context)
+                }
+            } catch(e: FatalException) { errorValidationDialog() }
         } else errorDialog()
     }
 
@@ -85,6 +88,15 @@ class GamesFragment : Fragment() {
     private fun errorCameraDialog() {
         val dialog = CustomDialog(getString(R.string.games_errorCamera_title),
             getString(R.string.games_errorCamera_description), R.attr.heart_sad,
+            R.attr.fragment_background, requireContext())
+        dialog.firstButton(getString(R.string.games_errorAR_understand)) {}
+        dialog.show()
+    }
+
+    // Error validation
+    private fun errorValidationDialog() {
+        val dialog = CustomDialog(getString(R.string.games_errorValidation_title),
+            getString(R.string.games_errorValidation_description), R.attr.heart_sad,
             R.attr.fragment_background, requireContext())
         dialog.firstButton(getString(R.string.games_errorAR_understand)) {}
         dialog.show()
