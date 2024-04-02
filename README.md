@@ -1,1 +1,1 @@
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_15oiPriTbs?si=Z8-QNEWWm63xrzQB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[Click this link to watch the video demo 👀](https://www.youtube.com/watch?v=_15oiPriTbs)
